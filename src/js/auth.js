@@ -25,7 +25,7 @@ class Auth {
             id: generateId(),
             name: 'Demo Gebruiker',
             email: 'demo@gazonapp.nl',
-            picture: '/src/assets/icons/icon-192x192.png',
+            picture: './src/assets/icons/icon-192x192.png',
             createdAt: new Date().toISOString(),
             lastLogin: new Date().toISOString()
         };
