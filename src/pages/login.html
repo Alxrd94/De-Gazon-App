@@ -1,12 +1,12 @@
-<div class="page login-page" style="opacity: 1 !important;">
+<div class="page login-page" style="opacity: 1 !important; animation: none !important; position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #2e463b;">
     <!-- Background image with gradient overlay -->
-    <div class="login-background">
-        <div class="grass-image" style="background-image: url('./src/assets/images/grass-top.jpg');"></div>
-        <div class="gradient-overlay" style="background: linear-gradient(180deg, rgba(46, 70, 59, 0.8) 0%, rgba(26, 43, 35, 0.95) 100%); position: absolute; inset: 0;"></div>
+    <div class="login-background" style="position: absolute; inset: 0; z-index: 0;">
+        <div class="grass-image" style="background-image: url('./src/assets/images/grass-top.jpg'); position: absolute; inset: 0; background-size: cover; background-position: center;"></div>
+        <div class="gradient-overlay" style="background: linear-gradient(180deg, rgba(46, 70, 59, 0.8) 0%, rgba(26, 43, 35, 0.95) 100%); position: absolute; inset: 0; z-index: 1;"></div>
     </div>
 
     <!-- Content -->
-    <div class="login-container" style="position: relative; z-index: 1;">
+    <div class="login-container" style="position: relative; z-index: 10; width: 100%; max-width: 440px; padding: 1.5rem;">
         <!-- Logo and branding -->
         <div class="login-header" style="text-align: center; padding: 2rem 0;">
             <div class="login-logo">
@@ -19,14 +19,14 @@
 
         <!-- Login content card -->
         <div class="login-content" style="padding: 0 1rem;">
-            <div class="login-card" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); border-radius: 1rem; padding: 2rem; border: 1px solid rgba(255,255,255,0.2);">
+            <div class="login-card" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(12px); border-radius: 1rem; padding: 2rem; border: 1px solid rgba(255,255,255,0.2); opacity: 1 !important; animation: none !important;">
                 <h2 class="login-heading" style="color: white; font-size: 1.5rem; text-align: center; margin-bottom: 0.5rem;">Welkom terug!</h2>
                 <p class="login-description" style="color: rgba(255,255,255,0.9); text-align: center; margin-bottom: 1.5rem;">Log in om toegang te krijgen tot je persoonlijke gazon dashboard</p>
 
                 <!-- Login buttons -->
                 <div class="login-buttons" style="display: flex; flex-direction: column; gap: 0.75rem;">
                     <!-- Google Login -->
-                    <button class="login-btn login-btn-google" id="google-login-btn" data-provider="google" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background: white; color: #1a2b23; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 500; cursor: pointer;">
+                    <button class="login-btn login-btn-google" id="google-login-btn" data-provider="google" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background: white; color: #1a2b23; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 500; cursor: pointer; opacity: 1 !important; animation: none !important;">
                         <svg class="btn-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -37,7 +37,7 @@
                     </button>
 
                     <!-- Apple Login -->
-                    <button class="login-btn login-btn-apple" id="apple-login-btn" data-provider="apple" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background: black; color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 500; cursor: pointer;">
+                    <button class="login-btn login-btn-apple" id="apple-login-btn" data-provider="apple" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background: black; color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 500; cursor: pointer; opacity: 1 !important; animation: none !important;">
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
                             <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
                         </svg>
@@ -45,7 +45,7 @@
                     </button>
 
                     <!-- Email Login -->
-                    <button class="login-btn login-btn-email" id="email-login-btn" data-provider="email" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background: linear-gradient(135deg, #89b865 0%, #538731 100%); color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 500; cursor: pointer;">
+                    <button class="login-btn login-btn-email" id="email-login-btn" data-provider="email" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background: linear-gradient(135deg, #89b865 0%, #538731 100%); color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 500; cursor: pointer; opacity: 1 !important; animation: none !important;">
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px;">
                             <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
