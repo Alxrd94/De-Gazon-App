@@ -42,6 +42,7 @@ class App {
      */
     setupRouter() {
         // Register routes
+        router.register('splash', './src/pages/splash.html', () => this.onSplashPage());
         router.register('login', './src/pages/login.html', () => this.onLoginPage());
         router.register('home', './src/pages/home.html', () => this.onHomePage());
         router.register('photo-analysis', './src/pages/photo-analysis.html', () => this.onPhotoAnalysisPage());
@@ -66,21 +67,51 @@ class App {
     }
 
     /**
+     * Splash page loaded callback
+     */
+    onSplashPage() {
+        console.log('Splash page loaded');
+        // Auto-navigate to login after 2 seconds
+        setTimeout(() => {
+            router.navigate('login');
+        }, 2000);
+    }
+
+    /**
      * Login page loaded callback
      */
     onLoginPage() {
         console.log('Login page loaded');
 
-        const loginBtn = document.getElementById('google-login-btn');
-        if (loginBtn) {
-            loginBtn.addEventListener('click', async () => {
+        // Handle all login buttons
+        const loginButtons = document.querySelectorAll('.login-btn');
+        loginButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                const provider = button.dataset.provider;
+                console.log(`Login with ${provider}`);
+
                 try {
+                    // All providers use the same mock login for now
                     await auth.loginWithGoogle();
                     auth.initializeWelcomeBonus();
                     await router.navigate('home');
                 } catch (error) {
                     console.error('Login error:', error);
                 }
+            });
+        });
+
+        // Handle register link
+        const registerLink = document.getElementById('register-link');
+        if (registerLink) {
+            registerLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Register clicked - would navigate to registration');
+                // For now, just login (mock)
+                auth.loginWithGoogle().then(() => {
+                    auth.initializeWelcomeBonus();
+                    router.navigate('home');
+                });
             });
         }
     }
@@ -202,7 +233,7 @@ class App {
     async registerServiceWorker() {
         if ('serviceWorker' in navigator) {
             try {
-                const registration = await navigator.serviceWorker.register('/service-worker.js');
+                const registration = await navigator.serviceWorker.register('./service-worker.js');
                 console.log('Service Worker registered:', registration.scope);
 
                 // Check for updates
