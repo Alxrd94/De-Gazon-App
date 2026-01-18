@@ -61,59 +61,24 @@
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [
-    {
-      "src": "./src/assets/images/screenshot-mobile-1.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow"
-    },
-    {
-      "src": "./src/assets/images/screenshot-mobile-2.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow"
-    }
-  ],
   "shortcuts": [
     {
       "name": "Foto Analyse",
       "short_name": "Analyse",
       "description": "Start een nieuwe gazon foto analyse",
-      "url": "./?page=photo-analysis",
-      "icons": [
-        {
-          "src": "./src/assets/icons/shortcut-camera.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
+      "url": "./?page=photo-analysis"
     },
     {
       "name": "Bemestingsplanner",
       "short_name": "Planner",
       "description": "Open de bemestingsplanner",
-      "url": "./?page=fertilizer-planner",
-      "icons": [
-        {
-          "src": "./src/assets/icons/shortcut-calendar.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
+      "url": "./?page=fertilizer-planner"
     },
     {
       "name": "GazonPunten",
       "short_name": "Punten",
       "description": "Bekijk je GazonPunten",
-      "url": "./?page=loyalty",
-      "icons": [
-        {
-          "src": "./src/assets/icons/shortcut-star.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
+      "url": "./?page=loyalty"
     }
   ],
   "share_target": {
