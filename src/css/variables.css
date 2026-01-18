@@ -7,6 +7,33 @@
     --brand-green-dark: #2e463b;
     --brand-orange: #f29f40;
 
+    /* ===== BASE COLORS ===== */
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    /* Gray scale */
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1f2937;
+    --color-gray-900: #111827;
+
+    /* Primary color variations */
+    --color-primary-light: rgba(137, 184, 101, 0.15);
+    --color-secondary-light: #538731;
+
+    /* Gradient shortcuts */
+    --color-primary-gradient: linear-gradient(135deg, var(--brand-green-light) 0%, var(--green-600) 100%);
+
+    /* Z-index shortcuts */
+    --z-index-sticky: 1020;
+    --z-index-fixed: 1030;
+
     /* Green variations */
     --green-50: #f0f7ea;
     --green-100: #d9ecc7;
