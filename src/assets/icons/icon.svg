@@ -1,28 +1,6 @@
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
-  <rect width="512" height="512" rx="128" fill="#2E7D32"/>
-
-  <!-- Grass blades (simplified lawn icon) -->
-  <g fill="#4CAF50">
-    <!-- Left blade -->
-    <path d="M 180 380 Q 160 320 140 260 Q 130 220 140 180 Q 150 200 155 220 Q 160 240 165 260 Q 180 320 200 380 Z" fill="#66BB6A"/>
-
-    <!-- Middle blade -->
-    <path d="M 256 380 Q 236 320 216 260 Q 206 220 216 160 Q 226 180 231 200 Q 236 220 241 240 Q 256 300 276 380 Z" fill="#81C784"/>
-
-    <!-- Right blade -->
-    <path d="M 332 380 Q 312 320 292 260 Q 282 220 292 180 Q 302 200 307 220 Q 312 240 317 260 Q 332 320 352 380 Z" fill="#66BB6A"/>
-
-    <!-- Additional decorative blades -->
-    <path d="M 120 380 Q 110 340 100 300 Q 95 280 100 260 Q 105 270 107 280 Q 110 290 112 300 Q 120 340 130 380 Z" fill="#4CAF50" opacity="0.7"/>
-
-    <path d="M 392 380 Q 382 340 372 300 Q 367 280 372 260 Q 377 270 379 280 Q 382 290 384 300 Q 392 340 402 380 Z" fill="#4CAF50" opacity="0.7"/>
-  </g>
-
-  <!-- Ground line -->
-  <rect x="80" y="380" width="352" height="8" rx="4" fill="#1B5E20"/>
-
-  <!-- App name badge -->
-  <rect x="106" y="100" width="300" height="60" rx="30" fill="rgba(255,255,255,0.2)"/>
-  <text x="256" y="140" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#FFFFFF" text-anchor="middle">de Gazon App</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#89b865"/>
+  <text x="256" y="340" font-family="Arial, sans-serif" font-size="280" font-weight="bold" text-anchor="middle" fill="white">G</text>
+  <path d="M120 400 Q140 360 160 400 Q180 360 200 400" stroke="#2E7D32" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M312 400 Q332 360 352 400 Q372 360 392 400" stroke="#2E7D32" stroke-width="8" fill="none" stroke-linecap="round"/>
 </svg>
