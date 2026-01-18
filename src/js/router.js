@@ -32,8 +32,9 @@ class Router {
         }
 
         try {
-            // Fetch the HTML content
-            const response = await fetch(route.path);
+            // Fetch the HTML content with cache-busting
+            const cacheBuster = `?v=${Date.now()}`;
+            const response = await fetch(route.path + cacheBuster);
             if (!response.ok) {
                 throw new Error(`Failed to load page: ${response.statusText}`);
             }
