@@ -42,11 +42,11 @@ class App {
      */
     setupRouter() {
         // Register routes
-        router.register('login', '/src/pages/login.html', () => this.onLoginPage());
-        router.register('home', '/src/pages/home.html', () => this.onHomePage());
-        router.register('photo-analysis', '/src/pages/photo-analysis.html', () => this.onPhotoAnalysisPage());
-        router.register('fertilizer-planner', '/src/pages/fertilizer-planner.html', () => this.onFertilizerPlannerPage());
-        router.register('loyalty', '/src/pages/loyalty.html', () => this.onLoyaltyPage());
+        router.register('login', './src/pages/login.html', () => this.onLoginPage());
+        router.register('home', './src/pages/home.html', () => this.onHomePage());
+        router.register('photo-analysis', './src/pages/photo-analysis.html', () => this.onPhotoAnalysisPage());
+        router.register('fertilizer-planner', './src/pages/fertilizer-planner.html', () => this.onFertilizerPlannerPage());
+        router.register('loyalty', './src/pages/loyalty.html', () => this.onLoyaltyPage());
 
         // Setup navigation
         router.setupNavigation();

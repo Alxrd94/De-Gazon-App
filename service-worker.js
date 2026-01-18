@@ -3,33 +3,33 @@
  * Handles caching and offline functionality
  */
 
-const CACHE_VERSION = 'v1.0.0';
+const CACHE_VERSION = 'v1.0.1';
 const CACHE_NAME = `gazon-app-${CACHE_VERSION}`;
 
 // Files to cache immediately on install
 const PRECACHE_URLS = [
-    '/',
-    '/index.html',
-    '/manifest.json',
-    '/src/css/variables.css',
-    '/src/css/reset.css',
-    '/src/css/main.css',
-    '/src/css/components.css',
-    '/src/js/app.js',
-    '/src/js/auth.js',
-    '/src/js/router.js',
-    '/src/js/storage.js',
-    '/src/js/utils.js',
-    '/src/js/photoAnalysis.js',
-    '/src/js/fertilizerPlanner.js',
-    '/src/js/loyalty.js',
-    '/src/pages/login.html',
-    '/src/pages/home.html',
-    '/src/pages/photo-analysis.html',
-    '/src/pages/fertilizer-planner.html',
-    '/src/pages/loyalty.html',
-    '/src/assets/icons/icon-192x192.png',
-    '/src/assets/icons/icon-512x512.png'
+    './',
+    './index.html',
+    './manifest.json',
+    './src/css/variables.css',
+    './src/css/reset.css',
+    './src/css/main.css',
+    './src/css/components.css',
+    './src/js/app.js',
+    './src/js/auth.js',
+    './src/js/router.js',
+    './src/js/storage.js',
+    './src/js/utils.js',
+    './src/js/photoAnalysis.js',
+    './src/js/fertilizerPlanner.js',
+    './src/js/loyalty.js',
+    './src/pages/login.html',
+    './src/pages/home.html',
+    './src/pages/photo-analysis.html',
+    './src/pages/fertilizer-planner.html',
+    './src/pages/loyalty.html',
+    './src/assets/icons/icon-192x192.png',
+    './src/assets/icons/icon-512x512.png'
 ];
 
 // Runtime cache name for dynamic content
@@ -197,7 +197,7 @@ async function getOfflineFallback(request) {
     // For HTML requests, return the cached index.html
     if (request.headers.get('accept')?.includes('text/html')) {
         const cache = await caches.open(CACHE_NAME);
-        const fallback = await cache.match('/index.html');
+        const fallback = await cache.match('./index.html');
         if (fallback) {
             return fallback;
         }
@@ -246,8 +246,8 @@ self.addEventListener('push', (event) => {
 
     const options = {
         body: event.data?.text() || 'Nieuwe update beschikbaar',
-        icon: '/src/assets/icons/icon-192x192.png',
-        badge: '/src/assets/icons/icon-72x72.png',
+        icon: './src/assets/icons/icon-192x192.png',
+        badge: './src/assets/icons/icon-72x72.png',
         vibrate: [200, 100, 200],
         data: {
             dateOfArrival: Date.now(),
@@ -269,7 +269,7 @@ self.addEventListener('notificationclick', (event) => {
     event.notification.close();
 
     event.waitUntil(
-        clients.openWindow('/')
+        clients.openWindow('./')
     );
 });
 
