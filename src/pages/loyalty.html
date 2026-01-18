@@ -1,0 +1,129 @@
+<div class="page" id="loyalty-page">
+    <header class="page-header">
+        <button class="back-btn" id="back-to-home-loyalty">
+            <span>←</span>
+        </button>
+        <h1>GazonPunten</h1>
+        <div class="header-spacer"></div>
+    </header>
+
+    <main class="page-content">
+        <section class="points-hero">
+            <div class="points-circle">
+                <div class="points-display">
+                    <span class="points-number" id="loyalty-points">0</span>
+                    <span class="points-label">punten</span>
+                </div>
+            </div>
+            <p class="points-subtitle">Jouw GazonPunten saldo</p>
+        </section>
+
+        <section class="points-info">
+            <h2>Hoe werkt het?</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">📸</div>
+                    <h3>Foto analyse</h3>
+                    <p class="points-earn">+10 punten</p>
+                    <p>Verdien punten bij elke gazon analyse</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📅</div>
+                    <h3>Schema maken</h3>
+                    <p class="points-earn">+15 punten</p>
+                    <p>Maak een bemestingsschema</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✅</div>
+                    <h3>Taken voltooien</h3>
+                    <p class="points-earn">+5 punten</p>
+                    <p>Per voltooide onderhouds taak</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎁</div>
+                    <h3>Producten kopen</h3>
+                    <p class="points-earn">+1 punt/€10</p>
+                    <p>Bij aankoop via de app</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="rewards-section">
+            <h2>Beschikbare Beloningen</h2>
+            <div class="rewards-list" id="rewards-list">
+                <div class="reward-card" data-points="50">
+                    <div class="reward-header">
+                        <span class="reward-icon">☕</span>
+                        <span class="reward-points">50 punten</span>
+                    </div>
+                    <h3>€5 Korting</h3>
+                    <p>Kortingscode voor je volgende aankoop</p>
+                    <button class="btn-reward" data-reward="discount-5">Inwisselen</button>
+                </div>
+
+                <div class="reward-card" data-points="100">
+                    <div class="reward-header">
+                        <span class="reward-icon">🎁</span>
+                        <span class="reward-points">100 punten</span>
+                    </div>
+                    <h3>Gratis Analyse</h3>
+                    <p>Professionele gazon analyse ter plaatse</p>
+                    <button class="btn-reward" data-reward="free-analysis">Inwisselen</button>
+                </div>
+
+                <div class="reward-card" data-points="200">
+                    <div class="reward-header">
+                        <span class="reward-icon">🌱</span>
+                        <span class="reward-points">200 punten</span>
+                    </div>
+                    <h3>Gratis Bemesting</h3>
+                    <p>25kg premium bemesting naar keuze</p>
+                    <button class="btn-reward" data-reward="free-fertilizer">Inwisselen</button>
+                </div>
+
+                <div class="reward-card" data-points="500">
+                    <div class="reward-header">
+                        <span class="reward-icon">⭐</span>
+                        <span class="reward-points">500 punten</span>
+                    </div>
+                    <h3>VIP Service</h3>
+                    <p>Complete gazon renovatie service</p>
+                    <button class="btn-reward" data-reward="vip-service">Inwisselen</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="activity-section">
+            <h2>Recente Activiteit</h2>
+            <div class="activity-list" id="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon">🎉</div>
+                    <div class="activity-details">
+                        <p class="activity-title">Welkomstbonus</p>
+                        <p class="activity-date">Vandaag</p>
+                    </div>
+                    <div class="activity-points">+25</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <button class="nav-item" data-page="home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" data-page="photo-analysis">
+            <span class="nav-icon">📸</span>
+            <span class="nav-label">Analyse</span>
+        </button>
+        <button class="nav-item" data-page="fertilizer-planner">
+            <span class="nav-icon">📅</span>
+            <span class="nav-label">Planner</span>
+        </button>
+        <button class="nav-item active" data-page="loyalty">
+            <span class="nav-icon">⭐</span>
+            <span class="nav-label">Punten</span>
+        </button>
+    </nav>
+</div>

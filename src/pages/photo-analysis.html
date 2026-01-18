@@ -1,0 +1,94 @@
+<div class="page" id="photo-analysis-page">
+    <header class="page-header">
+        <button class="back-btn" id="back-to-home">
+            <span>←</span>
+        </button>
+        <h1>Foto Analyse</h1>
+        <div class="header-spacer"></div>
+    </header>
+
+    <main class="page-content">
+        <section class="upload-section" id="upload-section">
+            <div class="upload-area" id="upload-area">
+                <div class="upload-icon">📸</div>
+                <h2>Upload een foto van je gazon</h2>
+                <p>Sleep een foto hierheen of klik om te selecteren</p>
+                <input type="file" id="photo-input" accept="image/*" capture="environment" hidden>
+                <button class="btn-primary" id="select-photo-btn">Selecteer foto</button>
+            </div>
+        </section>
+
+        <section class="preview-section hidden" id="preview-section">
+            <h2>Foto preview</h2>
+            <div class="photo-preview">
+                <img id="preview-image" alt="Gazon foto">
+                <button class="remove-photo-btn" id="remove-photo-btn">✕</button>
+            </div>
+            <button class="btn-primary btn-large" id="analyze-btn">Analyseer gazon</button>
+        </section>
+
+        <section class="analysis-section hidden" id="analysis-section">
+            <div class="analysis-loader" id="analysis-loader">
+                <div class="spinner"></div>
+                <p>Gazon wordt geanalyseerd...</p>
+            </div>
+
+            <div class="analysis-results hidden" id="analysis-results">
+                <h2>Analyse Resultaten</h2>
+
+                <div class="result-card">
+                    <h3>Algemene Conditie</h3>
+                    <div class="condition-rating" id="condition-rating">
+                        <div class="rating-stars"></div>
+                        <span class="rating-text"></span>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Gedetecteerde Problemen</h3>
+                    <ul class="problems-list" id="problems-list">
+                        <!-- Will be populated dynamically -->
+                    </ul>
+                </div>
+
+                <div class="result-card">
+                    <h3>Aanbevelingen</h3>
+                    <ul class="recommendations-list" id="recommendations-list">
+                        <!-- Will be populated dynamically -->
+                    </ul>
+                </div>
+
+                <div class="result-card">
+                    <h3>Aanbevolen Producten</h3>
+                    <div class="products-grid" id="products-grid">
+                        <!-- Will be populated dynamically -->
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-primary" id="save-analysis-btn">Opslaan</button>
+                    <button class="btn-secondary" id="new-analysis-btn">Nieuwe analyse</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <button class="nav-item" data-page="home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item active" data-page="photo-analysis">
+            <span class="nav-icon">📸</span>
+            <span class="nav-label">Analyse</span>
+        </button>
+        <button class="nav-item" data-page="fertilizer-planner">
+            <span class="nav-icon">📅</span>
+            <span class="nav-label">Planner</span>
+        </button>
+        <button class="nav-item" data-page="loyalty">
+            <span class="nav-icon">⭐</span>
+            <span class="nav-label">Punten</span>
+        </button>
+    </nav>
+</div>
