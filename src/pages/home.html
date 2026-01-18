@@ -1,79 +1,153 @@
-<div class="page" id="home-page">
-    <header class="app-header">
-        <div class="header-content">
-            <h1>de Gazon App</h1>
-            <div class="user-info">
-                <span id="user-name">Gebruiker</span>
-                <button class="logout-btn" id="logout-btn">Uitloggen</button>
-            </div>
+<style>
+.home-page, .home-page * { opacity: 1 !important; animation: none !important; visibility: visible !important; }
+.home-page { background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%) !important; color: white !important; }
+.home-page h1, .home-page h2, .home-page h3, .home-page p, .home-page span { color: white !important; }
+.home-page .nav-item.active { color: #f29f40 !important; }
+</style>
+<div class="page home-page" id="home-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 90px;">
+
+    <!-- Header -->
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <h1 style="font-size: 1.25rem; font-weight: 700; color: white; margin: 0;">de Gazon App</h1>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <span id="user-name" style="font-size: 0.875rem; color: rgba(255,255,255,0.8);">Gebruiker</span>
+            <button class="logout-btn" id="logout-btn" style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.75rem; cursor: pointer;">Uitloggen</button>
         </div>
     </header>
 
-    <main class="home-content">
-        <section class="welcome-section">
-            <h2>Welkom bij Graszoden Expert</h2>
-            <p>Jouw persoonlijke gazon specialist</p>
+    <main style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1.5rem;">
+
+        <!-- Profile Scorecard -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 20px rgba(137,184,101,0.1);">
+            <!-- Profile Header -->
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
+                <!-- Avatar -->
+                <div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, #89b865, #538731); display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 15px rgba(137,184,101,0.3);">
+                    👤
+                </div>
+                <!-- Name & Location -->
+                <div style="flex: 1;">
+                    <h2 style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0 0 0.25rem;">Jan de Tuinier</h2>
+                    <p style="font-size: 0.875rem; color: rgba(255,255,255,0.7); margin: 0; display: flex; align-items: center; gap: 0.25rem;">
+                        📍 Amsterdam, NL
+                    </p>
+                </div>
+            </div>
+
+            <!-- Points Display -->
+            <div style="display: flex; justify-content: center; align-items: center; gap: 0.75rem; padding: 1.25rem; background: rgba(137,184,101,0.15); border-radius: 1rem; margin-bottom: 1rem;">
+                <span style="font-size: 3rem; font-weight: 800; color: #89b865; text-shadow: 0 0 20px rgba(137,184,101,0.5);" id="total-points">25</span>
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 1.5rem;">⭐</span>
+                    <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.8);">Punten</span>
+                </div>
+            </div>
+
+            <!-- Rank Badge -->
+            <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: linear-gradient(135deg, rgba(137,184,101,0.3), rgba(83,135,49,0.3)); border-radius: 2rem; border: 1px solid rgba(137,184,101,0.3);">
+                    <span style="font-size: 1.25rem;">🌱</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #89b865;">Gazon Starter</span>
+                </div>
+            </div>
+
+            <!-- Badges Row -->
+            <div style="display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 1rem;">
+                <div style="width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;" title="Eerste Analyse">🔍</div>
+                <div style="width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;" title="Trouwe Klant">💚</div>
+                <div style="width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; opacity: 0.4;" title="Locked">🔒</div>
+                <div style="width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; opacity: 0.4;" title="Locked">🔒</div>
+                <div style="width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; opacity: 0.4;" title="Locked">🔒</div>
+            </div>
+
+            <!-- Member Since & Button -->
+            <p style="text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0 0 1rem;">Lid sinds januari 2024</p>
+            <button id="view-points-btn" style="width: 100%; padding: 0.875rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(137,184,101,0.3);">
+                Bekijk details →
+            </button>
         </section>
 
-        <section class="points-card">
-            <div class="points-header">
-                <h3>GazonPunten</h3>
-                <span class="points-icon">⭐</span>
-            </div>
-            <div class="points-value">
-                <span class="points-number" id="total-points">0</span>
-                <span class="points-label">punten</span>
-            </div>
-            <button class="btn-secondary" id="view-points-btn">Bekijk details</button>
-        </section>
-
-        <section class="features-grid">
-            <div class="feature-card" id="photo-analysis-card">
-                <div class="feature-icon">📸</div>
-                <h3>Foto Analyse</h3>
-                <p>Upload een foto en ontvang direct professioneel gazonadvies</p>
-                <button class="btn-primary">Start analyse</button>
-            </div>
-
-            <div class="feature-card" id="fertilizer-planner-card">
-                <div class="feature-icon">📅</div>
-                <h3>Bemestingsplanner</h3>
-                <p>Plan je bemestingsschema met producten en kalender export</p>
-                <button class="btn-primary">Open planner</button>
-            </div>
-
-            <div class="feature-card" id="lawn-tips-card">
-                <div class="feature-icon">💡</div>
-                <h3>Gazon Tips</h3>
-                <p>Seizoensgebonden tips voor optimaal gazononderhoud</p>
-                <button class="btn-primary">Bekijk tips</button>
-            </div>
-
-            <div class="feature-card" id="contact-card">
-                <div class="feature-icon">📞</div>
-                <h3>Contact</h3>
-                <p>Neem contact op met onze gazon specialisten</p>
-                <button class="btn-primary">Contact opnemen</button>
+        <!-- Quick Actions Grid -->
+        <section>
+            <h3 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Snelle Acties</h3>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.875rem;">
+                <!-- Foto Analyse -->
+                <button class="feature-card" id="photo-analysis-card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 1.25rem 1rem; background: rgba(242,159,64,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(242,159,64,0.3); border-radius: 1rem; cursor: pointer; transition: all 0.2s;">
+                    <span style="font-size: 2rem;">📸</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">Foto Analyse</span>
+                </button>
+                <!-- Barcode Scanner -->
+                <button style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 1.25rem 1rem; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; cursor: pointer;">
+                    <span style="font-size: 2rem;">📱</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">Barcode Scan</span>
+                </button>
+                <!-- Mijn Dagboek -->
+                <button style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 1.25rem 1rem; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; cursor: pointer;">
+                    <span style="font-size: 2rem;">📓</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">Mijn Dagboek</span>
+                </button>
+                <!-- Producten -->
+                <button style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 1.25rem 1rem; background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; cursor: pointer;">
+                    <span style="font-size: 2rem;">🛒</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">Producten</span>
+                </button>
             </div>
         </section>
+
+        <!-- Tips & Articles -->
+        <section>
+            <h3 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Tips & Artikelen</h3>
+            <div style="display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem; scroll-snap-type: x mandatory;">
+                <!-- Article 1 -->
+                <div style="min-width: 200px; height: 140px; border-radius: 1rem; background: linear-gradient(180deg, rgba(137,184,101,0.3) 0%, rgba(46,70,59,0.9) 100%); position: relative; overflow: hidden; scroll-snap-align: start; cursor: pointer;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+                        <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0;">Wanneer bemesten in het voorjaar?</p>
+                    </div>
+                </div>
+                <!-- Article 2 -->
+                <div style="min-width: 200px; height: 140px; border-radius: 1rem; background: linear-gradient(180deg, rgba(83,135,49,0.4) 0%, rgba(46,70,59,0.9) 100%); position: relative; overflow: hidden; scroll-snap-align: start; cursor: pointer;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+                        <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0;">5 tips voor een groener gazon</p>
+                    </div>
+                </div>
+                <!-- Article 3 -->
+                <div style="min-width: 200px; height: 140px; border-radius: 1rem; background: linear-gradient(180deg, rgba(106,160,74,0.3) 0%, rgba(46,70,59,0.9) 100%); position: relative; overflow: hidden; scroll-snap-align: start; cursor: pointer;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+                        <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0;">Hoe vaak moet je maaien?</p>
+                    </div>
+                </div>
+                <!-- Article 4 -->
+                <div style="min-width: 200px; height: 140px; border-radius: 1rem; background: linear-gradient(180deg, rgba(137,184,101,0.2) 0%, rgba(46,70,59,0.9) 100%); position: relative; overflow: hidden; scroll-snap-align: start; cursor: pointer;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+                        <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0;">Onkruid bestrijden zonder chemie</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <nav class="bottom-nav">
-        <button class="nav-item active" data-page="home">
-            <span class="nav-icon">🏠</span>
-            <span class="nav-label">Home</span>
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 0.75rem 0.5rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); background: rgba(26,43,35,0.95); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;">
+        <button class="nav-item active" data-page="home" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <span style="font-size: 1.5rem;">🏠</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: #f29f40;">Home</span>
         </button>
-        <button class="nav-item" data-page="photo-analysis">
-            <span class="nav-icon">📸</span>
-            <span class="nav-label">Analyse</span>
+        <button class="nav-item" data-page="fertilizer-planner" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <span style="font-size: 1.5rem;">📅</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Kalender</span>
         </button>
-        <button class="nav-item" data-page="fertilizer-planner">
-            <span class="nav-icon">📅</span>
-            <span class="nav-label">Planner</span>
+        <button class="nav-item" data-page="loyalty" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <span style="font-size: 1.5rem;">⭐</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Punten</span>
         </button>
-        <button class="nav-item" data-page="loyalty">
-            <span class="nav-icon">⭐</span>
-            <span class="nav-label">Punten</span>
+        <button class="nav-item" data-page="challenge" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <span style="font-size: 1.5rem;">🏆</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Challenge</span>
+        </button>
+        <button class="nav-item" data-page="settings" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <span style="font-size: 1.5rem;">⚙️</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Settings</span>
         </button>
     </nav>
 </div>
