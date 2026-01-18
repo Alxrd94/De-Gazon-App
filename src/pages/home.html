@@ -1,0 +1,79 @@
+<div class="page" id="home-page">
+    <header class="app-header">
+        <div class="header-content">
+            <h1>de Gazon App</h1>
+            <div class="user-info">
+                <span id="user-name">Gebruiker</span>
+                <button class="logout-btn" id="logout-btn">Uitloggen</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="home-content">
+        <section class="welcome-section">
+            <h2>Welkom bij Graszoden Expert</h2>
+            <p>Jouw persoonlijke gazon specialist</p>
+        </section>
+
+        <section class="points-card">
+            <div class="points-header">
+                <h3>GazonPunten</h3>
+                <span class="points-icon">⭐</span>
+            </div>
+            <div class="points-value">
+                <span class="points-number" id="total-points">0</span>
+                <span class="points-label">punten</span>
+            </div>
+            <button class="btn-secondary" id="view-points-btn">Bekijk details</button>
+        </section>
+
+        <section class="features-grid">
+            <div class="feature-card" id="photo-analysis-card">
+                <div class="feature-icon">📸</div>
+                <h3>Foto Analyse</h3>
+                <p>Upload een foto en ontvang direct professioneel gazonadvies</p>
+                <button class="btn-primary">Start analyse</button>
+            </div>
+
+            <div class="feature-card" id="fertilizer-planner-card">
+                <div class="feature-icon">📅</div>
+                <h3>Bemestingsplanner</h3>
+                <p>Plan je bemestingsschema met producten en kalender export</p>
+                <button class="btn-primary">Open planner</button>
+            </div>
+
+            <div class="feature-card" id="lawn-tips-card">
+                <div class="feature-icon">💡</div>
+                <h3>Gazon Tips</h3>
+                <p>Seizoensgebonden tips voor optimaal gazononderhoud</p>
+                <button class="btn-primary">Bekijk tips</button>
+            </div>
+
+            <div class="feature-card" id="contact-card">
+                <div class="feature-icon">📞</div>
+                <h3>Contact</h3>
+                <p>Neem contact op met onze gazon specialisten</p>
+                <button class="btn-primary">Contact opnemen</button>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-page="home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" data-page="photo-analysis">
+            <span class="nav-icon">📸</span>
+            <span class="nav-label">Analyse</span>
+        </button>
+        <button class="nav-item" data-page="fertilizer-planner">
+            <span class="nav-icon">📅</span>
+            <span class="nav-label">Planner</span>
+        </button>
+        <button class="nav-item" data-page="loyalty">
+            <span class="nav-icon">⭐</span>
+            <span class="nav-label">Punten</span>
+        </button>
+    </nav>
+</div>

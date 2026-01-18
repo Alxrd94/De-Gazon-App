@@ -1,0 +1,131 @@
+<div class="page" id="fertilizer-planner-page">
+    <header class="page-header">
+        <button class="back-btn" id="back-to-home-planner">
+            <span>←</span>
+        </button>
+        <h1>Bemestingsplanner</h1>
+        <div class="header-spacer"></div>
+    </header>
+
+    <main class="page-content">
+        <section class="planner-intro">
+            <h2>Plan je bemestingsschema</h2>
+            <p>Stel je persoonlijke bemestingsschema samen en exporteer naar je kalender</p>
+        </section>
+
+        <section class="lawn-config">
+            <h3>Gazon Configuratie</h3>
+            <div class="form-group">
+                <label for="lawn-size">Gazon oppervlakte (m²)</label>
+                <input type="number" id="lawn-size" min="1" max="10000" value="100" placeholder="bijv. 100">
+            </div>
+
+            <div class="form-group">
+                <label for="grass-type">Gazon type</label>
+                <select id="grass-type">
+                    <option value="ornamental">Siergazon</option>
+                    <option value="utility" selected>Gebruiksgazon</option>
+                    <option value="sports">Sportgazon</option>
+                    <option value="shade">Schaduwgazon</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="soil-type">Grondsoort</label>
+                <select id="soil-type">
+                    <option value="sand">Zandgrond</option>
+                    <option value="clay">Kleigrond</option>
+                    <option value="loam" selected>Leemgrond</option>
+                    <option value="peat">Veengrond</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="product-selection">
+            <h3>Kies je producten</h3>
+            <div class="products-list" id="products-list">
+                <div class="product-item">
+                    <input type="checkbox" id="product-spring" value="spring-fertilizer" checked>
+                    <label for="product-spring">
+                        <strong>Voorjaarsbemesting</strong>
+                        <span>NPK 15-5-8 met snelle werking</span>
+                    </label>
+                </div>
+                <div class="product-item">
+                    <input type="checkbox" id="product-summer" value="summer-fertilizer" checked>
+                    <label for="product-summer">
+                        <strong>Zomerbemesting</strong>
+                        <span>NPK 10-5-15 met langzame afgifte</span>
+                    </label>
+                </div>
+                <div class="product-item">
+                    <input type="checkbox" id="product-autumn" value="autumn-fertilizer" checked>
+                    <label for="product-autumn">
+                        <strong>Herfstbemesting</strong>
+                        <span>NPK 5-5-20 voor winterhardheid</span>
+                    </label>
+                </div>
+                <div class="product-item">
+                    <input type="checkbox" id="product-moss" value="moss-control">
+                    <label for="product-moss">
+                        <strong>Mosbestrijding</strong>
+                        <span>Ijzersulfaat gebaseerd</span>
+                    </label>
+                </div>
+                <div class="product-item">
+                    <input type="checkbox" id="product-scarify" value="scarification">
+                    <label for="product-scarify">
+                        <strong>Verticuteren</strong>
+                        <span>Verwijder vilt en mos</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section class="schedule-preview">
+            <h3>Je Bemestingsschema</h3>
+            <div id="schedule-timeline" class="schedule-timeline">
+                <!-- Will be populated dynamically -->
+            </div>
+        </section>
+
+        <section class="action-buttons-section">
+            <button class="btn-primary btn-large" id="generate-schedule-btn">
+                <span>📅</span>
+                Genereer schema
+            </button>
+            <button class="btn-secondary btn-large hidden" id="export-calendar-btn">
+                <span>📤</span>
+                Exporteer naar kalender
+            </button>
+        </section>
+
+        <section class="schedule-details hidden" id="schedule-details">
+            <h3>Schema Details</h3>
+            <div class="calculation-info">
+                <p><strong>Totale oppervlakte:</strong> <span id="calc-size">0</span> m²</p>
+                <p><strong>Aantal behandelingen:</strong> <span id="calc-treatments">0</span></p>
+                <p><strong>Geschatte kosten:</strong> €<span id="calc-cost">0</span></p>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <button class="nav-item" data-page="home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" data-page="photo-analysis">
+            <span class="nav-icon">📸</span>
+            <span class="nav-label">Analyse</span>
+        </button>
+        <button class="nav-item active" data-page="fertilizer-planner">
+            <span class="nav-icon">📅</span>
+            <span class="nav-label">Planner</span>
+        </button>
+        <button class="nav-item" data-page="loyalty">
+            <span class="nav-icon">⭐</span>
+            <span class="nav-label">Punten</span>
+        </button>
+    </nav>
+</div>
