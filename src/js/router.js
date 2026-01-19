@@ -1,11 +1,12 @@
 /**
  * Router Module
- * Handles client-side routing and page navigation
+ * Handles client-side routing and page navigation with caching
  */
 
 class Router {
     constructor() {
         this.routes = new Map();
+        this.pageCache = new Map(); // Cache for loaded pages
         this.currentPage = null;
         this.appContainer = document.getElementById('app');
     }
@@ -21,7 +22,7 @@ class Router {
     }
 
     /**
-     * Navigate to a page
+     * Navigate to a page with caching
      * @param {string} name - Route name
      */
     async navigate(name) {
@@ -32,20 +33,30 @@ class Router {
         }
 
         try {
-            // Fetch the HTML content with cache-busting
-            const cacheBuster = `?v=${Date.now()}`;
-            const response = await fetch(route.path + cacheBuster);
-            if (!response.ok) {
-                throw new Error(`Failed to load page: ${response.statusText}`);
+            let html;
+
+            // Check cache first
+            if (this.pageCache.has(name)) {
+                html = this.pageCache.get(name);
+            } else {
+                // Fetch page (with version for initial load)
+                const response = await fetch(route.path + '?v=3');
+                if (!response.ok) {
+                    throw new Error(`Failed to load page: ${response.statusText}`);
+                }
+                html = await response.text();
+                // Cache the page
+                this.pageCache.set(name, html);
             }
 
-            const html = await response.text();
-
-            // Update the app container
+            // Update the app container immediately
             this.appContainer.innerHTML = html;
 
             // Update current page
             this.currentPage = name;
+
+            // Update calendar date in navigation
+            this.updateCalendarDate();
 
             // Execute onLoad callback if provided
             if (route.onLoad && typeof route.onLoad === 'function') {
@@ -58,6 +69,24 @@ class Router {
             console.error('Error navigating to page:', error);
             this.showError('Fout bij het laden van de pagina');
         }
+    }
+
+    /**
+     * Update calendar date in navigation
+     */
+    updateCalendarDate() {
+        const calendarDates = document.querySelectorAll('.calendar-date');
+        const today = new Date().getDate();
+        calendarDates.forEach(el => {
+            el.textContent = today;
+        });
+    }
+
+    /**
+     * Clear page cache (useful for development or when content updates)
+     */
+    clearCache() {
+        this.pageCache.clear();
     }
 
     /**
@@ -74,10 +103,10 @@ class Router {
      */
     showError(message) {
         this.appContainer.innerHTML = `
-            <div class="error-page">
-                <h1>Oeps!</h1>
-                <p>${message}</p>
-                <button class="btn-primary" onclick="location.reload()">Opnieuw laden</button>
+            <div class="error-page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background: #2e463b; color: white; text-align: center; padding: 2rem;">
+                <h1 style="font-size: 2rem; margin-bottom: 1rem;">Oeps!</h1>
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem;">${message}</p>
+                <button style="padding: 0.875rem 2rem; background: #89b865; border: none; border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer;" onclick="location.reload()">Opnieuw laden</button>
             </div>
         `;
     }
@@ -117,6 +146,12 @@ class Router {
             if (backBtn) {
                 this.navigate('home');
             }
+
+            // Handle view points button
+            const viewPointsBtn = e.target.closest('#view-points-btn');
+            if (viewPointsBtn) {
+                this.navigate('loyalty');
+            }
         });
     }
 
@@ -128,12 +163,21 @@ class Router {
         // Remove active class from all nav items
         document.querySelectorAll('.nav-item').forEach(item => {
             item.classList.remove('active');
+            // Reset all icons and labels to inactive color
+            const svg = item.querySelector('svg');
+            const label = item.querySelector('span:last-child');
+            if (svg) svg.setAttribute('stroke', 'rgba(255,255,255,0.6)');
+            if (label) label.style.color = 'rgba(255,255,255,0.6)';
         });
 
-        // Add active class to current nav item
+        // Add active class and styling to current nav item
         const activeNav = document.querySelector(`.nav-item[data-page="${pageName}"]`);
         if (activeNav) {
             activeNav.classList.add('active');
+            const svg = activeNav.querySelector('svg');
+            const label = activeNav.querySelector('span:last-child');
+            if (svg) svg.setAttribute('stroke', '#f29f40');
+            if (label) label.style.color = '#f29f40';
         }
     }
 }

@@ -219,12 +219,162 @@ class App {
             console.log('App can be installed');
         });
 
-        // Handle visibility change (for PWA lifecycle)
+        // Handle visibility change (for PWA lifecycle and export points)
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') {
                 console.log('App became visible');
+                this.checkExportPoints();
             }
         });
+
+        // Also check on page load
+        this.checkExportPoints();
+    }
+
+    /**
+     * Check and award points after calendar export
+     */
+    checkExportPoints() {
+        const exportPending = localStorage.getItem('gazonExportPending');
+        const exportSeason = localStorage.getItem('gazonExportSeason');
+
+        if (exportPending === 'true' && exportSeason) {
+            // Clear the pending flag immediately
+            localStorage.removeItem('gazonExportPending');
+
+            // Check if this season already received points
+            const puntenData = JSON.parse(localStorage.getItem('gazonPuntenToekenningen') || '{}');
+
+            if (puntenData[exportSeason]?.toegekend) {
+                // Already received points for this season
+                this.showAlreadyReceivedToast();
+            } else {
+                // Award points for this season
+                this.awardSeasonPoints(exportSeason);
+            }
+        }
+    }
+
+    /**
+     * Award points for a season (one-time)
+     */
+    awardSeasonPoints(season) {
+        const pointsToAdd = 50;
+
+        // Update total points
+        let currentPoints = parseInt(localStorage.getItem('gazonPunten') || '0');
+        currentPoints += pointsToAdd;
+        localStorage.setItem('gazonPunten', currentPoints.toString());
+
+        // Mark season as awarded
+        const puntenData = JSON.parse(localStorage.getItem('gazonPuntenToekenningen') || '{}');
+        puntenData[season] = {
+            toegekend: true,
+            datum: new Date().toISOString().split('T')[0],
+            punten: pointsToAdd
+        };
+        localStorage.setItem('gazonPuntenToekenningen', JSON.stringify(puntenData));
+
+        // Show celebration overlay
+        this.showPointsCelebration(pointsToAdd);
+
+        // Update points display if on home page
+        this.updatePointsDisplay();
+    }
+
+    /**
+     * Show points celebration overlay
+     */
+    showPointsCelebration(points) {
+        const overlay = document.createElement('div');
+        overlay.id = 'points-celebration';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        `;
+
+        overlay.innerHTML = `
+            <div style="text-align: center;">
+                <div style="font-size: 5rem; margin-bottom: 1rem; color: #89b865; animation: bounceIn 0.6s ease-out;">
+                    +${points}
+                </div>
+                <div style="font-size: 1.75rem; font-weight: 700; color: white; margin-bottom: 0.5rem;">
+                    GazonPunten verdiend!
+                </div>
+                <div style="font-size: 1rem; color: rgba(255,255,255,0.7); margin-bottom: 2rem;">
+                    Je schema is geexporteerd
+                </div>
+                <div style="width: 120px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; margin: 0 auto;">
+                    <div style="width: 100%; height: 100%; background: #89b865; animation: shrinkBar 3s linear forwards;"></div>
+                </div>
+            </div>
+            <style>
+                @keyframes bounceIn {
+                    0% { transform: scale(0.3); opacity: 0; }
+                    50% { transform: scale(1.1); }
+                    100% { transform: scale(1); opacity: 1; }
+                }
+                @keyframes shrinkBar { from { width: 100%; } to { width: 0%; } }
+            </style>
+        `;
+
+        overlay.addEventListener('click', () => overlay.remove());
+        document.body.appendChild(overlay);
+
+        setTimeout(() => {
+            if (overlay.parentNode) {
+                overlay.remove();
+            }
+        }, 3000);
+    }
+
+    /**
+     * Show toast for already received points
+     */
+    showAlreadyReceivedToast() {
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(91,127,196,0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            z-index: 2000;
+            color: white;
+            font-weight: 600;
+        `;
+        toast.textContent = 'Je hebt dit seizoen al punten ontvangen';
+
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2500);
+    }
+
+    /**
+     * Update points display on current page
+     */
+    updatePointsDisplay() {
+        const points = parseInt(localStorage.getItem('gazonPunten') || '0');
+
+        // Update home page points
+        const homePoints = document.getElementById('total-points');
+        if (homePoints) homePoints.textContent = points;
+
+        // Update loyalty page points
+        const loyaltyPoints = document.getElementById('loyalty-points');
+        if (loyaltyPoints) loyaltyPoints.textContent = points;
     }
 
     /**
