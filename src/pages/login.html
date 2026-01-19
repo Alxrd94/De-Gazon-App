@@ -13,28 +13,27 @@
     </div>
 
     <!-- Content -->
-    <div class="login-container" style="position: relative; z-index: 10; width: 100%; max-width: 440px; padding: 1.5rem;">
+    <div class="login-container" style="position: relative; z-index: 10; width: 100%; max-width: 440px; padding: 1rem;">
         <!-- Logo and branding -->
-        <div class="login-header" style="text-align: center; padding: 2rem 0;">
+        <div class="login-header" style="text-align: center; padding: 1rem 0;">
             <div class="login-logo">
-                <img src="./src/assets/icons/logo-white.png" alt="de Gazon App Logo" class="logo-image" style="width: 100px; height: 100px;">
-                <div class="logo-glow"></div>
+                <img src="./src/assets/icons/logo-white.png" alt="de Gazon App Logo" class="logo-image" style="width: 72px; height: 72px;">
             </div>
-            <h1 class="login-title" style="color: white; font-size: 2.5rem; margin: 1rem 0 0.5rem;">de Gazon App</h1>
-            <p class="login-subtitle" style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">by Graszoden Expert</p>
+            <h1 class="login-title" style="color: white; font-size: 1.75rem; margin: 0.5rem 0 0.25rem;">de Gazon App</h1>
+            <p class="login-subtitle" style="color: rgba(255,255,255,0.9); font-size: 0.875rem;">by Graszoden Expert</p>
         </div>
 
         <!-- Login content card -->
-        <div class="login-content" style="padding: 0 1rem;">
-            <div class="login-card" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(12px); border-radius: 1rem; padding: 2rem; border: 1px solid rgba(255,255,255,0.2); opacity: 1 !important; animation: none !important;">
-                <h2 class="login-heading" style="color: white; font-size: 1.5rem; text-align: center; margin-bottom: 0.5rem;">Welkom terug!</h2>
-                <p class="login-description" style="color: rgba(255,255,255,0.9); text-align: center; margin-bottom: 1.5rem;">Log in om toegang te krijgen tot je persoonlijke gazon dashboard</p>
+        <div class="login-content">
+            <div class="login-card" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.2); opacity: 1 !important; animation: none !important;">
+                <h2 class="login-heading" style="color: white; font-size: 1.25rem; text-align: center; margin-bottom: 0.25rem;">Welkom terug!</h2>
+                <p class="login-description" style="color: rgba(255,255,255,0.9); text-align: center; margin-bottom: 1rem; font-size: 0.875rem;">Log in voor je persoonlijke gazon dashboard</p>
 
                 <!-- Login buttons -->
-                <div class="login-buttons" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div class="login-buttons" style="display: flex; flex-direction: column; gap: 0.5rem;">
                     <!-- Google Login -->
-                    <button class="login-btn login-btn-google" id="google-login-btn" data-provider="google" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background: white; color: #1a2b23; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 500; cursor: pointer; opacity: 1 !important; animation: none !important;">
-                        <svg class="btn-icon" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                    <button class="login-btn login-btn-google" id="google-login-btn" data-provider="google" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: white; color: #1a2b23; border: none; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; cursor: pointer; opacity: 1 !important; animation: none !important;">
+                        <svg class="btn-icon" viewBox="0 0 24 24" style="width: 20px; height: 20px;">
                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -44,39 +43,32 @@
                     </button>
 
                     <!-- Apple Login -->
-                    <button class="login-btn login-btn-apple" id="apple-login-btn" data-provider="apple" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background: black; color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 500; cursor: pointer; opacity: 1 !important; animation: none !important;">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                    <button class="login-btn login-btn-apple" id="apple-login-btn" data-provider="apple" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: black; color: white; border: none; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; cursor: pointer; opacity: 1 !important; animation: none !important;">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;">
                             <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
                         </svg>
                         <span>Doorgaan met Apple</span>
                     </button>
 
                     <!-- Email Login -->
-                    <button class="login-btn login-btn-email" id="email-login-btn" data-provider="email" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1rem; background: linear-gradient(135deg, #89b865 0%, #538731 100%); color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 500; cursor: pointer; opacity: 1 !important; animation: none !important;">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px;">
+                    <button class="login-btn login-btn-email" id="email-login-btn" data-provider="email" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: linear-gradient(135deg, #89b865 0%, #538731 100%); color: white; border: none; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; cursor: pointer; opacity: 1 !important; animation: none !important;">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
                             <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                         <span>Doorgaan met Email</span>
                     </button>
                 </div>
 
-                <!-- Divider -->
-                <div class="login-divider" style="display: flex; align-items: center; margin: 1.5rem 0;">
-                    <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.2);"></div>
-                    <span class="divider-text" style="color: rgba(255,255,255,0.7); padding: 0 1rem; font-size: 0.75rem; text-transform: uppercase;">Demo Modus</span>
-                    <div style="flex: 1; height: 1px; background: rgba(255,255,255,0.2);"></div>
-                </div>
-
                 <!-- Demo notice -->
-                <div class="demo-notice" style="display: flex; gap: 0.75rem; padding: 1rem; background: rgba(242, 159, 64, 0.15); border-radius: 0.5rem; border: 1px solid rgba(242, 159, 64, 0.3);">
-                    <svg class="info-icon" viewBox="0 0 24 24" fill="#f29f40" style="width: 24px; height: 24px; flex-shrink: 0;">
+                <div class="demo-notice" style="display: flex; gap: 0.5rem; padding: 0.75rem; background: rgba(242, 159, 64, 0.15); border-radius: 0.5rem; border: 1px solid rgba(242, 159, 64, 0.3); margin-top: 1rem;">
+                    <svg class="info-icon" viewBox="0 0 24 24" fill="#f29f40" style="width: 20px; height: 20px; flex-shrink: 0;">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
                     </svg>
-                    <p style="color: rgba(255,255,255,0.95); font-size: 0.875rem; margin: 0; line-height: 1.5;">Dit is een mock login scherm. Klik op een knop om de app te verkennen.</p>
+                    <p style="color: rgba(255,255,255,0.95); font-size: 0.75rem; margin: 0; line-height: 1.4;">Demo modus - klik op een knop om de app te verkennen.</p>
                 </div>
 
                 <!-- Register link -->
-                <div class="register-link" style="text-align: center; margin-top: 1.5rem; color: rgba(255,255,255,0.8); font-size: 0.875rem;">
+                <div class="register-link" style="text-align: center; margin-top: 1rem; color: rgba(255,255,255,0.8); font-size: 0.8rem;">
                     <span>Nog geen account?</span>
                     <a href="#" id="register-link" style="color: #f29f40; font-weight: 600; margin-left: 0.25rem;">Account aanmaken</a>
                 </div>
@@ -84,8 +76,8 @@
         </div>
 
         <!-- Footer -->
-        <div class="login-footer" style="text-align: center; padding: 2rem 0; color: rgba(255,255,255,0.6); font-size: 0.75rem;">
-            <p>&copy; 2026 Graszoden Expert. Alle rechten voorbehouden.</p>
+        <div class="login-footer" style="text-align: center; padding: 1rem 0; color: rgba(255,255,255,0.6); font-size: 0.7rem;">
+            <p style="margin: 0;">&copy; 2026 Graszoden Expert</p>
         </div>
     </div>
 </div>

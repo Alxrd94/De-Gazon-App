@@ -48,6 +48,7 @@ class App {
         router.register('photo-analysis', './src/pages/photo-analysis.html', () => this.onPhotoAnalysisPage());
         router.register('fertilizer-planner', './src/pages/fertilizer-planner.html', () => this.onFertilizerPlannerPage());
         router.register('loyalty', './src/pages/loyalty.html', () => this.onLoyaltyPage());
+        router.register('settings', './src/pages/settings.html', () => this.onSettingsPage());
 
         // Setup navigation
         router.setupNavigation();
@@ -125,29 +126,11 @@ class App {
     onHomePage() {
         console.log('Home page loaded');
 
-        // Update user info
-        const user = auth.getUser();
-        if (user) {
-            const userName = document.getElementById('user-name');
-            if (userName) {
-                userName.textContent = user.name || 'Gebruiker';
-            }
-        }
-
         // Update points display
         const totalPoints = getTotalPoints();
         const pointsElement = document.getElementById('total-points');
         if (pointsElement) {
             pointsElement.textContent = totalPoints;
-        }
-
-        // Setup logout
-        const logoutBtn = document.getElementById('logout-btn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => {
-                auth.logout();
-                router.navigate('login');
-            });
         }
 
         // Setup feature card navigation
@@ -190,6 +173,22 @@ class App {
     onLoyaltyPage() {
         console.log('Loyalty page loaded');
         loyaltyManager.init();
+    }
+
+    /**
+     * Settings page loaded callback
+     */
+    onSettingsPage() {
+        console.log('Settings page loaded');
+
+        // Setup logout button
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                auth.logout();
+                router.navigate('login');
+            });
+        }
     }
 
     /**
