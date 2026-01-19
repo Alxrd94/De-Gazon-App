@@ -3,6 +3,20 @@
 .loyalty-page { background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%) !important; color: white !important; }
 .loyalty-page h1, .loyalty-page h2, .loyalty-page h3, .loyalty-page p, .loyalty-page span { color: white !important; }
 .loyalty-page .nav-item.active span:last-child { color: #f29f40 !important; }
+
+/* Animaties */
+@keyframes glow-pulse {
+    0%, 100% { text-shadow: 0 0 20px rgba(137,184,101,0.5); }
+    50% { text-shadow: 0 0 35px rgba(137,184,101,0.8), 0 0 50px rgba(137,184,101,0.4); }
+}
+@keyframes badge-unlock {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+.points-glow {
+    animation: glow-pulse 2s ease-in-out infinite;
+}
 </style>
 <div class="page loyalty-page" id="loyalty-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 90px;">
 
@@ -14,100 +28,453 @@
 
     <main style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1.5rem;">
 
-        <!-- Points Hero -->
-        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 2rem 1.5rem; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+        <!-- SECTIE 1: Punten Saldo Card (prominent) -->
+        <section style="background: linear-gradient(135deg, rgba(137,184,101,0.2), rgba(137,184,101,0.05)); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 2rem 1.5rem; border: 2px solid rgba(137,184,101,0.3); text-align: center;">
             <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                <span style="font-size: 4rem; font-weight: 800; color: #89b865; text-shadow: 0 0 30px rgba(137,184,101,0.5);" id="loyalty-points">0</span>
+                <span class="points-glow" style="font-size: 4.5rem; font-weight: 800; color: #89b865;" id="loyalty-points">77</span>
                 <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="./src/assets/icons/logo-white.png" alt="GazonPunten" style="width: 40px; height: 40px; opacity: 0.9;">
-                    <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.7); margin-top: 0.125rem;">Punten</span>
+                    <img src="./src/assets/icons/logo-white.png" alt="GazonPunten" style="width: 44px; height: 44px; opacity: 0.9;">
+                    <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.8); margin-top: 0.125rem; font-weight: 600;">Punten</span>
                 </div>
             </div>
-            <p style="font-size: 0.875rem; color: rgba(255,255,255,0.6); margin: 0;">Jouw huidige saldo</p>
+            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.8); margin: 0; font-weight: 500;">Jouw huidige saldo</p>
         </section>
 
-        <!-- How It Works -->
+        <!-- SECTIE 2: Rang Voortgang Card -->
         <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Hoe verdien je punten?</h2>
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+                <span style="font-size: 1.25rem;">🏆</span>
+                <h2 style="font-size: 1rem; font-weight: 700; color: white; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Jouw Rang</h2>
+            </div>
 
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(137,184,101,0.2); display: flex; align-items: center; justify-content: center;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                    </div>
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600; color: white; margin: 0;">Schema exporteren</p>
-                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Eenmaal per seizoen</p>
-                    </div>
-                    <span style="font-weight: 700; color: #89b865;">+50</span>
-                </div>
+            <!-- Current Rank Display -->
+            <div style="text-align: center; margin-bottom: 1.25rem;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🌱</div>
+                <p style="font-size: 1.125rem; font-weight: 700; color: white; margin: 0;">Gazon Starter</p>
+                <p style="font-size: 0.875rem; color: rgba(255,255,255,0.6); margin: 0.25rem 0 0;">Niveau 2</p>
+            </div>
 
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(242,159,64,0.2); display: flex; align-items: center; justify-content: center;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="4"></circle>
-                        </svg>
-                    </div>
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600; color: white; margin: 0;">Foto analyse</p>
-                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Per analyse</p>
-                    </div>
-                    <span style="font-weight: 700; color: #f29f40;">+10</span>
+            <!-- Progress to Next Rank -->
+            <div style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.8rem; color: rgba(255,255,255,0.7);">Voortgang naar volgende rang</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #89b865;">77/100</span>
                 </div>
+                <div style="height: 10px; background: rgba(255,255,255,0.15); border-radius: 5px; overflow: hidden;">
+                    <div style="width: 77%; height: 100%; background: linear-gradient(90deg, #89b865, #f29f40); border-radius: 5px; transition: width 0.5s ease;"></div>
+                </div>
+            </div>
 
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(91,127,196,0.2); display: flex; align-items: center; justify-content: center;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5b7fc4" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                    </div>
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600; color: white; margin: 0;">Taken voltooien</p>
-                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Per taak</p>
-                    </div>
-                    <span style="font-weight: 700; color: #5b7fc4;">+5</span>
-                </div>
+            <!-- Next Rank Info -->
+            <div style="background: rgba(137,184,101,0.1); border-radius: 0.75rem; padding: 1rem; border: 1px solid rgba(137,184,101,0.2);">
+                <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0 0 0.75rem;">Volgende rang: 🌿 Groene Duim</p>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0 0 0.5rem;">Voordelen bij Groene Duim:</p>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.375rem;">
+                    <li style="font-size: 0.8rem; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: #89b865;">•</span> Exclusieve badge
+                    </li>
+                    <li style="font-size: 0.8rem; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: #89b865;">•</span> 5% kortingscode voor webshop
+                    </li>
+                </ul>
             </div>
         </section>
 
-        <!-- Rewards -->
+        <!-- SECTIE 3: Wekelijkse Missies Card -->
         <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Beloningen</h2>
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+                <span style="font-size: 1.25rem;">🎯</span>
+                <h2 style="font-size: 1rem; font-weight: 700; color: white; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Missies Deze Week</h2>
+            </div>
 
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem; border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem;">5 euro korting</p>
-                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Op je volgende bestelling</p>
-                    </div>
-                    <button style="padding: 0.5rem 1rem; background: rgba(137,184,101,0.2); border: 1px solid #89b865; border-radius: 0.5rem; color: #89b865; font-size: 0.75rem; font-weight: 600; cursor: pointer;">50 pts</button>
+            <!-- Mission 1: Beoordelingen -->
+            <div style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; margin-bottom: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">Beoordelingen geven</span>
+                    <span style="font-size: 0.75rem; color: #89b865; font-weight: 600;">2/3</span>
                 </div>
-
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem; border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem;">Gratis bezorging</p>
-                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Bij volgende bestelling</p>
-                    </div>
-                    <button style="padding: 0.5rem 1rem; background: rgba(137,184,101,0.2); border: 1px solid #89b865; border-radius: 0.5rem; color: #89b865; font-size: 0.75rem; font-weight: 600; cursor: pointer;">100 pts</button>
+                <div style="height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; overflow: hidden; margin-bottom: 0.5rem;">
+                    <div style="width: 66.67%; height: 100%; background: linear-gradient(90deg, #89b865, #6aa049); border-radius: 3px;"></div>
                 </div>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Beloning: <span style="color: #f29f40; font-weight: 600;">+10 bonus</span></p>
+            </div>
 
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem; border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem;">Gratis gazonmest 5kg</p>
-                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Premium kwaliteit</p>
+            <!-- Mission 2: Check-in (Completed) -->
+            <div style="background: rgba(137,184,101,0.15); border-radius: 0.75rem; padding: 1rem; margin-bottom: 0.75rem; border: 1px solid rgba(137,184,101,0.3);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">Wekelijkse check-in</span>
+                    <span style="font-size: 0.875rem; color: #89b865; font-weight: 700;">✓</span>
+                </div>
+                <div style="height: 6px; background: rgba(137,184,101,0.3); border-radius: 3px; overflow: hidden; margin-bottom: 0.5rem;">
+                    <div style="width: 100%; height: 100%; background: #89b865; border-radius: 3px;"></div>
+                </div>
+                <p style="font-size: 0.75rem; color: #89b865; margin: 0; font-weight: 600;">Voltooid! +5 ✓</p>
+            </div>
+
+            <!-- Mission 3: Foto delen -->
+            <div style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; margin-bottom: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">Foto delen</span>
+                    <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 600;">0/1</span>
+                </div>
+                <div style="height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; overflow: hidden; margin-bottom: 0.5rem;">
+                    <div style="width: 0%; height: 100%; background: linear-gradient(90deg, #89b865, #6aa049); border-radius: 3px;"></div>
+                </div>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Beloning: <span style="color: #f29f40; font-weight: 600;">+25</span></p>
+            </div>
+
+            <!-- Mission 4: Foto analyse -->
+            <div style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">Foto analyse doen</span>
+                    <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 600;">0/1</span>
+                </div>
+                <div style="height: 6px; background: rgba(255,255,255,0.15); border-radius: 3px; overflow: hidden; margin-bottom: 0.5rem;">
+                    <div style="width: 0%; height: 100%; background: linear-gradient(90deg, #89b865, #6aa049); border-radius: 3px;"></div>
+                </div>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Beloning: <span style="color: #f29f40; font-weight: 600;">+10</span></p>
+            </div>
+
+            <!-- All Missions Bonus -->
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0 0 0.5rem;">Voltooi alle missies: <span style="color: #f29f40;">+20 BONUS</span></p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.375rem;">
+                    <div style="height: 8px; flex: 1; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; margin-right: 0.75rem;">
+                        <div style="width: 25%; height: 100%; background: linear-gradient(90deg, #f29f40, #e08830); border-radius: 4px;"></div>
                     </div>
-                    <button style="padding: 0.5rem 1rem; background: rgba(137,184,101,0.2); border: 1px solid #89b865; border-radius: 0.5rem; color: #89b865; font-size: 0.75rem; font-weight: 600; cursor: pointer;">200 pts</button>
+                    <span style="font-size: 0.75rem; color: rgba(255,255,255,0.7); font-weight: 600;">1/4</span>
+                </div>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0.5rem 0 0; display: flex; align-items: center; gap: 0.375rem;">
+                    <span>⏰</span> Reset over 5 dagen
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTIE 4: Beloningen Shop Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+                <span style="font-size: 1.25rem;">🎁</span>
+                <h2 style="font-size: 1rem; font-weight: 700; color: white; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Beloningen</h2>
+            </div>
+
+            <!-- Reward 1: Profielbadge (Can Claim) -->
+            <div class="reward-item" data-reward-id="profile-badge" data-cost="50" style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; margin-bottom: 0.75rem; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                    <div style="font-size: 2rem;">🏅</div>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem; font-size: 0.9rem;">Exclusieve Profielbadge</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0 0 0.75rem;">Toon je status met een unieke badge</p>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-size: 0.875rem; font-weight: 600; color: #89b865;">50 punten</span>
+                            <button class="claim-reward-btn" style="padding: 0.5rem 1rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.5rem; color: white; font-size: 0.8rem; font-weight: 600; cursor: pointer;">CLAIM</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Reward 2: 5% Korting (Need More Points) -->
+            <div class="reward-item" data-reward-id="discount-5" data-cost="100" style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; margin-bottom: 0.75rem; border: 1px solid rgba(255,255,255,0.1); opacity: 0.7;">
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                    <div style="font-size: 2rem;">🏷️</div>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem; font-size: 0.9rem;">5% Kortingscode Webshop</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0 0 0.75rem;">Geldig op alle producten</p>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.5);">100 punten</span>
+                            <span style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.1); border-radius: 0.5rem; color: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 600;">NOG 23 PUNTEN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reward 3: Gratis Verzending -->
+            <div class="reward-item" data-reward-id="free-shipping" data-cost="250" style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; margin-bottom: 0.75rem; border: 1px solid rgba(255,255,255,0.1); opacity: 0.7;">
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                    <div style="font-size: 2rem;">🚚</div>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem; font-size: 0.9rem;">Gratis Verzending</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0 0 0.75rem;">Op je volgende bestelling</p>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.5);">250 punten</span>
+                            <span style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.1); border-radius: 0.5rem; color: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 600;">NOG 173 PUNTEN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reward 4: €5 Waardebon -->
+            <div class="reward-item" data-reward-id="voucher-5" data-cost="500" style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; margin-bottom: 0.75rem; border: 1px solid rgba(255,255,255,0.1); opacity: 0.7;">
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                    <div style="font-size: 2rem;">💰</div>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem; font-size: 0.9rem;">€5 Waardebon</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0 0 0.75rem;">Te besteden in onze webshop</p>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.5);">500 punten</span>
+                            <span style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.1); border-radius: 0.5rem; color: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 600;">NOG 423 PUNTEN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reward 5: Gratis Gazonmest Pakket -->
+            <div class="reward-item" data-reward-id="fertilizer-package" data-cost="1000" style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; border: 1px solid rgba(255,255,255,0.1); opacity: 0.7;">
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                    <div style="font-size: 2rem;">🌿</div>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem; font-size: 0.9rem;">Gratis Gazonmest Pakket</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0 0 0.75rem;">Complete set voor één seizoen</p>
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <span style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.5);">1000 punten</span>
+                            <span style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.1); border-radius: 0.5rem; color: rgba(255,255,255,0.5); font-size: 0.75rem; font-weight: 600;">NOG 923 PUNTEN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTIE 5: Badges Collectie Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+                <span style="font-size: 1.25rem;">🏅</span>
+                <h2 style="font-size: 1rem; font-weight: 700; color: white; margin: 0;">BADGES <span style="color: rgba(255,255,255,0.6); font-weight: 500;">(5/15 verzameld)</span></h2>
+            </div>
+
+            <!-- Badge Grid -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1rem;">
+                <!-- Unlocked Badges -->
+                <button class="badge-item" data-badge-id="first-analysis" data-unlocked="true" style="background: rgba(137,184,101,0.15); border: 2px solid rgba(137,184,101,0.4); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; transition: transform 0.2s;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔍</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: white; margin: 0; line-height: 1.2;">Eerste<br>Analyse</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="loyal-tuinier" data-unlocked="true" style="background: rgba(137,184,101,0.15); border: 2px solid rgba(137,184,101,0.4); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; transition: transform 0.2s;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">💚</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: white; margin: 0; line-height: 1.2;">Trouwe<br>Tuinier</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="schema-master" data-unlocked="true" style="background: rgba(137,184,101,0.15); border: 2px solid rgba(137,184,101,0.4); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; transition: transform 0.2s;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">📅</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: white; margin: 0; line-height: 1.2;">Schema<br>Meester</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="first-review" data-unlocked="true" style="background: rgba(137,184,101,0.15); border: 2px solid rgba(137,184,101,0.4); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; transition: transform 0.2s;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">⭐</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: white; margin: 0; line-height: 1.2;">Eerste<br>Review</p>
+                </button>
+
+                <!-- Locked Badges -->
+                <button class="badge-item" data-badge-id="photographer" data-unlocked="false" style="background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; opacity: 0.5;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔒</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.2;">???</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="streak-master" data-unlocked="false" style="background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; opacity: 0.5;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔒</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.2;">???</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="challenge-winner" data-unlocked="false" style="background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; opacity: 0.5;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔒</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.2;">???</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="popular" data-unlocked="false" style="background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; opacity: 0.5;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔒</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.2;">???</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="perfectionist" data-unlocked="false" style="background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; opacity: 0.5;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔒</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.2;">???</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="spring-starter" data-unlocked="false" style="background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; opacity: 0.5;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔒</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.2;">???</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="summer-star" data-unlocked="false" style="background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; opacity: 0.5;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔒</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.2;">???</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="autumn-hero" data-unlocked="false" style="background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; opacity: 0.5;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔒</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.2;">???</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="winter-warrior" data-unlocked="true" style="background: rgba(137,184,101,0.15); border: 2px solid rgba(137,184,101,0.4); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; transition: transform 0.2s;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">❄️</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: white; margin: 0; line-height: 1.2;">Winter<br>Warrior</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="mission-master" data-unlocked="false" style="background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; opacity: 0.5;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔒</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.2;">???</p>
+                </button>
+
+                <button class="badge-item" data-badge-id="legend" data-unlocked="false" style="background: rgba(255,255,255,0.03); border: 2px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem; text-align: center; cursor: pointer; opacity: 0.5;">
+                    <div style="font-size: 2rem; margin-bottom: 0.25rem;">🔒</div>
+                    <p style="font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.2;">???</p>
+                </button>
+            </div>
+
+            <p style="text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Tap op badge voor details</p>
+        </section>
+
+        <!-- SECTIE 6: Statistieken Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+                <span style="font-size: 1.25rem;">📊</span>
+                <h2 style="font-size: 1rem; font-weight: 700; color: white; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Jouw Statistieken</h2>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- Points Stats -->
+                <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">Totaal verdiend</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #89b865;">127 punten</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">Uitgegeven</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #f29f40;">50 punten</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">Huidig saldo</span>
+                    <span style="font-size: 0.875rem; font-weight: 700; color: white;">77 punten</span>
+                </div>
+
+                <!-- Activity Stats -->
+                <div style="height: 0.5rem;"></div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">Foto's gedeeld</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">3</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">Beoordelingen gegeven</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">12</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">Analyses gedaan</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">2</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">Langste streak</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">4 weken</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">Badges verzameld</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">5/15</span>
+                </div>
+
+                <!-- Member Since -->
+                <div style="height: 0.5rem;"></div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="font-size: 0.875rem; color: rgba(255,255,255,0.7);">Lid sinds</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: white;">januari 2024</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTIE 7: Punten Geschiedenis Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+                <span style="font-size: 1.25rem;">📜</span>
+                <h2 style="font-size: 1rem; font-weight: 700; color: white; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Recente Activiteit</h2>
+            </div>
+
+            <!-- Today -->
+            <div style="margin-bottom: 1rem;">
+                <p style="font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0 0 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Vandaag</p>
+                <div style="display: flex; align-items: center; padding: 0.5rem 0; border-left: 2px solid rgba(137,184,101,0.3); padding-left: 1rem; margin-bottom: 0.375rem;">
+                    <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8); flex: 1;">Check-in</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #89b865;">+5</span>
+                </div>
+                <div style="display: flex; align-items: center; padding: 0.5rem 0; border-left: 2px solid rgba(137,184,101,0.3); padding-left: 1rem;">
+                    <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8); flex: 1;">Beoordeling gegeven</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #89b865;">+2</span>
+                </div>
+            </div>
+
+            <!-- Yesterday -->
+            <div style="margin-bottom: 1rem;">
+                <p style="font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0 0 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Gisteren</p>
+                <div style="display: flex; align-items: center; padding: 0.5rem 0; border-left: 2px solid rgba(137,184,101,0.3); padding-left: 1rem;">
+                    <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8); flex: 1;">Foto gedeeld</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #89b865;">+25</span>
+                </div>
+            </div>
+
+            <!-- 18 januari -->
+            <div style="margin-bottom: 1rem;">
+                <p style="font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0 0 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">18 januari</p>
+                <div style="display: flex; align-items: center; padding: 0.5rem 0; border-left: 2px solid rgba(137,184,101,0.3); padding-left: 1rem;">
+                    <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8); flex: 1;">Schema geëxporteerd</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #89b865;">+50</span>
+                </div>
+            </div>
+
+            <!-- 17 januari -->
+            <div style="margin-bottom: 1rem;">
+                <p style="font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0 0 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">17 januari</p>
+                <div style="display: flex; align-items: center; padding: 0.5rem 0; border-left: 2px solid rgba(137,184,101,0.3); padding-left: 1rem; margin-bottom: 0.375rem;">
+                    <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8); flex: 1;">Streak milestone (4 wkn)</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #89b865;">+25</span>
+                </div>
+                <div style="display: flex; align-items: center; padding: 0.5rem 0; border-left: 2px solid rgba(242,159,64,0.3); padding-left: 1rem;">
+                    <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8); flex: 1;">Badge unlocked: Trouwe Tuinier 🏅</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #f29f40;"></span>
+                </div>
+            </div>
+
+            <!-- 15 januari -->
+            <div style="margin-bottom: 1rem;">
+                <p style="font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.5); margin: 0 0 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">15 januari</p>
+                <div style="display: flex; align-items: center; padding: 0.5rem 0; border-left: 2px solid rgba(244,67,54,0.3); padding-left: 1rem;">
+                    <span style="font-size: 0.8rem; color: rgba(255,255,255,0.8); flex: 1;">Beloning geclaimd: Badge</span>
+                    <span style="font-size: 0.875rem; font-weight: 600; color: #f44336;">-50</span>
+                </div>
+            </div>
+
+            <!-- View More Button -->
+            <button style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 0.5rem; color: rgba(255,255,255,0.8); font-size: 0.875rem; font-weight: 500; cursor: pointer; margin-top: 0.5rem;">
+                Bekijk meer...
+            </button>
         </section>
 
     </main>
+
+    <!-- Badge Detail Modal -->
+    <div id="badge-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem;">
+        <div style="background: #2e463b; border-radius: 1.25rem; padding: 2rem 1.5rem; max-width: 320px; width: 100%; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+            <div id="badge-modal-icon" style="font-size: 4rem; margin-bottom: 1rem;"></div>
+            <h3 id="badge-modal-title" style="font-size: 1.25rem; font-weight: 700; color: white; margin: 0 0 0.75rem;"></h3>
+            <p id="badge-modal-desc" style="font-size: 0.9rem; color: rgba(255,255,255,0.8); margin: 0 0 1rem; line-height: 1.5;"></p>
+            <div id="badge-modal-progress" style="display: none;">
+                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.7); margin: 0 0 0.5rem;">Voortgang: <span id="badge-progress-text">4/8 weken</span></p>
+                <div style="height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; margin-bottom: 1rem;">
+                    <div id="badge-progress-bar" style="width: 50%; height: 100%; background: linear-gradient(90deg, #89b865, #6aa049); border-radius: 4px;"></div>
+                </div>
+            </div>
+            <p id="badge-modal-date" style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0 0 1.5rem;"></p>
+            <button id="badge-modal-close" style="width: 100%; padding: 0.875rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.75rem; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer;">SLUITEN</button>
+        </div>
+    </div>
+
+    <!-- Reward Claim Modal -->
+    <div id="reward-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem;">
+        <div style="background: #2e463b; border-radius: 1.25rem; padding: 2rem 1.5rem; max-width: 320px; width: 100%; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin: 0 0 0.75rem;">Beloning Geclaimd!</h3>
+            <p id="reward-modal-desc" style="font-size: 0.9rem; color: rgba(255,255,255,0.8); margin: 0 0 1rem;"></p>
+            <div id="reward-code-container" style="display: none; background: rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1rem;">
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0 0 0.5rem;">Jouw kortingscode:</p>
+                <p id="reward-code" style="font-size: 1.25rem; font-weight: 700; color: #89b865; margin: 0; letter-spacing: 0.1em;"></p>
+            </div>
+            <button id="reward-modal-close" style="width: 100%; padding: 0.875rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer;">SLUITEN</button>
+        </div>
+    </div>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 0.75rem 0.5rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); background: rgba(26,43,35,0.95); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;">
