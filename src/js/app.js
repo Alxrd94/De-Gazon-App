@@ -133,6 +133,12 @@ class App {
             pointsElement.textContent = totalPoints;
         }
 
+        // Update progress bar based on points
+        this.updateProgressBar(totalPoints);
+
+        // Setup badge modal
+        this.setupBadgeModal();
+
         // Setup feature card navigation
         const photoCard = document.getElementById('photo-analysis-card');
         const plannerCard = document.getElementById('fertilizer-planner-card');
@@ -149,6 +155,98 @@ class App {
         if (pointsBtn) {
             pointsBtn.addEventListener('click', () => router.navigate('loyalty'));
         }
+    }
+
+    /**
+     * Update progress bar based on points
+     */
+    updateProgressBar(points) {
+        const progressBar = document.getElementById('progress-bar');
+        if (!progressBar) return;
+
+        // Calculate progress to next rank (0-100 = Starter, 100-250 = Groene Duim, etc.)
+        let progress = 0;
+        if (points < 100) {
+            progress = (points / 100) * 100;
+        } else {
+            progress = 100;
+        }
+
+        progressBar.style.width = `${progress}%`;
+    }
+
+    /**
+     * Setup badge modal interactions
+     */
+    setupBadgeModal() {
+        const badgeData = {
+            analyse: {
+                title: 'Eerste Analyse',
+                desc: 'Voltooi je eerste foto analyse van je gazon.',
+                earned: true,
+                icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>'
+            },
+            trouw: {
+                title: 'Trouwe Gebruiker',
+                desc: '7 dagen achter elkaar ingelogd in de app.',
+                earned: true,
+                icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="#89b865" stroke="none"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>'
+            },
+            kalender: {
+                title: 'Planner Pro',
+                desc: 'Exporteer je eerste bemestingsschema naar je kalender.',
+                earned: false,
+                icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>'
+            },
+            punten100: {
+                title: 'Punten Verzamelaar',
+                desc: 'Bereik 100 GazonPunten.',
+                earned: false,
+                icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>'
+            },
+            challenge: {
+                title: 'Challenge Deelnemer',
+                desc: 'Deel je gazon foto in de maandelijkse Challenge.',
+                earned: false,
+                icon: '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>'
+            }
+        };
+
+        const modal = document.getElementById('badge-modal');
+        const modalIcon = document.getElementById('badge-modal-icon');
+        const modalTitle = document.getElementById('badge-modal-title');
+        const modalDesc = document.getElementById('badge-modal-desc');
+        const modalClose = document.getElementById('badge-modal-close');
+
+        if (!modal) return;
+
+        // Badge button clicks
+        document.querySelectorAll('.badge-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const badgeKey = btn.dataset.badge;
+                const badge = badgeData[badgeKey];
+                if (badge) {
+                    modalIcon.innerHTML = badge.icon;
+                    modalTitle.textContent = badge.title;
+                    modalDesc.textContent = badge.earned ? badge.desc : `Nog niet verdiend - ${badge.desc}`;
+                    modal.style.display = 'flex';
+                }
+            });
+        });
+
+        // Close modal
+        if (modalClose) {
+            modalClose.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        }
+
+        // Close on backdrop click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
     }
 
     /**
