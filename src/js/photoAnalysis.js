@@ -113,8 +113,10 @@ class PhotoAnalysis {
             }
 
             // Show/hide sections
-            document.getElementById('upload-section')?.classList.add('hidden');
-            document.getElementById('preview-section')?.classList.remove('hidden');
+            const uploadSection = document.getElementById('upload-section');
+            const previewSection = document.getElementById('preview-section');
+            if (uploadSection) uploadSection.style.display = 'none';
+            if (previewSection) previewSection.style.display = 'block';
         } catch (error) {
             console.error('Error processing photo:', error);
             showToast('Fout bij het verwerken van de foto', 'error');
@@ -131,8 +133,12 @@ class PhotoAnalysis {
         this.currentPhoto = null;
 
         // Show/hide sections
-        document.getElementById('upload-section')?.classList.remove('hidden');
-        document.getElementById('preview-section')?.classList.add('hidden');
+        const uploadSection = document.getElementById('upload-section');
+        const previewSection = document.getElementById('preview-section');
+        const analysisSection = document.getElementById('analysis-section');
+        if (uploadSection) uploadSection.style.display = 'block';
+        if (previewSection) previewSection.style.display = 'none';
+        if (analysisSection) analysisSection.style.display = 'none';
 
         // Reset input
         const photoInput = document.getElementById('photo-input');
@@ -151,10 +157,12 @@ class PhotoAnalysis {
         const analysisSection = document.getElementById('analysis-section');
         const analysisLoader = document.getElementById('analysis-loader');
         const analysisResults = document.getElementById('analysis-results');
+        const previewSection = document.getElementById('preview-section');
 
-        analysisSection?.classList.remove('hidden');
-        analysisLoader?.classList.remove('hidden');
-        analysisResults?.classList.add('hidden');
+        if (previewSection) previewSection.style.display = 'none';
+        if (analysisSection) analysisSection.style.display = 'block';
+        if (analysisLoader) analysisLoader.style.display = 'block';
+        if (analysisResults) analysisResults.style.display = 'none';
 
         // Simulate analysis delay
         await this.delay(2500);
@@ -167,8 +175,8 @@ class PhotoAnalysis {
         this.displayResults(analysis);
 
         // Hide loader, show results
-        analysisLoader?.classList.add('hidden');
-        analysisResults?.classList.remove('hidden');
+        if (analysisLoader) analysisLoader.style.display = 'none';
+        if (analysisResults) analysisResults.style.display = 'flex';
 
         // Award points
         const points = calculatePoints('photo_analysis');
@@ -282,7 +290,8 @@ class PhotoAnalysis {
      */
     reset() {
         this.removePhoto();
-        document.getElementById('analysis-section')?.classList.add('hidden');
+        const analysisSection = document.getElementById('analysis-section');
+        if (analysisSection) analysisSection.style.display = 'none';
         this.currentAnalysis = null;
     }
 

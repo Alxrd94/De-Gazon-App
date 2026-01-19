@@ -49,20 +49,99 @@
                 <p style="color: rgba(255,255,255,0.8);">Gazon wordt geanalyseerd...</p>
             </div>
 
-            <div id="analysis-results" style="display: none; display: flex; flex-direction: column; gap: 1rem;">
+            <div id="analysis-results" style="display: none; flex-direction: column; gap: 1rem;">
+                <!-- Points Earned Banner -->
+                <div id="points-earned-banner" style="background: linear-gradient(135deg, rgba(137,184,101,0.3), rgba(83,135,49,0.3)); border-radius: 1rem; padding: 1rem; border: 1px solid rgba(137,184,101,0.4); text-align: center;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <span style="font-size: 1.5rem; font-weight: 700; color: #89b865;">+10</span>
+                        <img src="./src/assets/icons/logo-white.png" alt="Punten" style="width: 24px; height: 24px; opacity: 0.9;">
+                    </div>
+                    <p style="font-size: 0.75rem; color: rgba(255,255,255,0.8); margin: 0.25rem 0 0;">GazonPunten verdiend!</p>
+                </div>
+
+                <!-- Overall Health Score -->
                 <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem;">Algemene Conditie</h3>
-                    <div id="condition-rating" style="display: flex; align-items: center; gap: 0.5rem;">
-                        <div class="rating-stars" style="color: #f29f40; font-size: 1.25rem;"></div>
-                        <span class="rating-text" style="color: #89b865; font-weight: 600;"></span>
+                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem;">Algehele gezondheid</h3>
+                    <div id="condition-rating" style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div class="rating-stars" style="color: #f29f40; font-size: 1.5rem; letter-spacing: 2px;">★★★★☆</div>
+                        <span class="rating-text" style="color: #89b865; font-weight: 600; font-size: 1.125rem;">(4/5)</span>
                     </div>
                 </div>
 
+                <!-- Strong Points -->
                 <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem;">Aanbevelingen</h3>
-                    <ul id="recommendations-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;"></ul>
+                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: #89b865;">✓</span> Sterke punten
+                    </h3>
+                    <ul id="strong-points-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                            Goede graskleur
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                            Dichte grasmat
+                        </li>
+                    </ul>
                 </div>
 
+                <!-- Attention Points -->
+                <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: #f29f40;">⚠</span> Aandachtspunten
+                    </h3>
+                    <ul id="attention-points-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            Lichte tekenen van droogte
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            Enkele kale plekken gedetecteerd
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Advice -->
+                <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>📋</span> Advies
+                    </h3>
+                    <ul id="advice-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <li style="display: flex; align-items: flex-start; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
+                            <span style="color: #89b865;">•</span>
+                            Overweeg extra bewatering
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
+                            <span style="color: #89b865;">•</span>
+                            Bijzaaien van kale plekken met graszaad
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
+                            <span style="color: #89b865;">•</span>
+                            Volgende bemesting over 3 weken
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Recommended Products -->
+                <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span>🛒</span> Aanbevolen producten
+                    </h3>
+                    <ul style="list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
+                            <span style="color: #89b865;">→</span>
+                            Graszaad (voor kale plekken)
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
+                            <span style="color: #89b865;">→</span>
+                            Gazonmest (volgende behandeling)
+                        </li>
+                    </ul>
+                    <a href="https://graszoden.expert/" target="_blank" style="display: block; width: 100%; padding: 0.875rem; background: linear-gradient(135deg, #f29f40, #e08830); border: none; border-radius: 0.75rem; color: white; font-size: 0.9rem; font-weight: 600; text-align: center; text-decoration: none;">Bestel producten</a>
+                </div>
+
+                <!-- Action Buttons -->
                 <div style="display: flex; gap: 0.75rem;">
                     <button id="save-analysis-btn" style="flex: 1; padding: 1rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer;">Opslaan</button>
                     <button id="new-analysis-btn" style="flex: 1; padding: 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer;">Nieuwe analyse</button>
