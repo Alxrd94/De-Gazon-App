@@ -1,10 +1,18 @@
 # App Icons
 
-## Required Icons
+## Eigen Logo Uploaden
 
-Voor een complete PWA implementatie zijn de volgende iconen nodig:
+Om je eigen logo te gebruiken, vervang de volgende bestanden:
 
-### App Icons (PNG formaat)
+### Verplichte bestanden:
+| Bestand | Formaat | Gebruik |
+|---------|---------|---------|
+| `icon-192x192.png` | 192x192px | Android homescreen icon |
+| `icon-512x512.png` | 512x512px | Android splash screen, PWA install |
+| `apple-touch-icon.png` | 180x180px | iOS homescreen icon |
+| `logo-white.png` | Min. 200x200px | In-app branding (white/light version) |
+
+### Alle PWA Icons (PNG formaat)
 - `icon-72x72.png` - 72x72px
 - `icon-96x96.png` - 96x96px
 - `icon-128x128.png` - 128x128px
@@ -13,6 +21,7 @@ Voor een complete PWA implementatie zijn de volgende iconen nodig:
 - `icon-192x192.png` - 192x192px (standaard Android)
 - `icon-384x384.png` - 384x384px
 - `icon-512x512.png` - 512x512px (Android splash screen)
+- `apple-touch-icon.png` - 180x180px (iOS homescreen)
 
 ### Shortcut Icons
 - `shortcut-camera.png` - 96x96px (voor foto analyse shortcut)
