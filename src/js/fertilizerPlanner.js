@@ -83,7 +83,6 @@ class FertilizerPlanner {
         this.loadSavedSchema();
         this.setupEventListeners();
         this.updateCalendarIcon();
-        this.checkPendingPointsAward();
     }
 
     /**

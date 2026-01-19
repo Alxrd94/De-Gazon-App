@@ -1,129 +1,160 @@
-<div class="page" id="loyalty-page">
-    <header class="page-header">
-        <button class="back-btn" id="back-to-home-loyalty">
-            <span>←</span>
-        </button>
-        <h1>GazonPunten</h1>
-        <div class="header-spacer"></div>
+<style>
+.loyalty-page, .loyalty-page * { opacity: 1 !important; animation: none !important; visibility: visible !important; }
+.loyalty-page { background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%) !important; color: white !important; }
+.loyalty-page h1, .loyalty-page h2, .loyalty-page h3, .loyalty-page p, .loyalty-page span { color: white !important; }
+.loyalty-page .nav-item.active span:last-child { color: #f29f40 !important; }
+</style>
+<div class="page loyalty-page" id="loyalty-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 90px;">
+
+    <!-- Header -->
+    <header style="display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1.25rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <h1 style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0;">GazonPunten</h1>
+        <p style="font-size: 0.875rem; color: rgba(255,255,255,0.7); margin: 0.25rem 0 0;">Jouw beloningen</p>
     </header>
 
-    <main class="page-content">
-        <section class="points-hero">
-            <div class="points-circle">
-                <div class="points-display">
-                    <span class="points-number" id="loyalty-points">0</span>
-                    <span class="points-label">punten</span>
+    <main style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1.5rem;">
+
+        <!-- Points Hero -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 2rem 1.5rem; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                <span style="font-size: 4rem; font-weight: 800; color: #89b865; text-shadow: 0 0 30px rgba(137,184,101,0.5);" id="loyalty-points">0</span>
+                <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="#f29f40" stroke="#f29f40" stroke-width="1">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.7);">Punten</span>
                 </div>
             </div>
-            <p class="points-subtitle">Jouw GazonPunten saldo</p>
+            <p style="font-size: 0.875rem; color: rgba(255,255,255,0.6); margin: 0;">Jouw huidige saldo</p>
         </section>
 
-        <section class="points-info">
-            <h2>Hoe werkt het?</h2>
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="info-icon">📸</div>
-                    <h3>Foto analyse</h3>
-                    <p class="points-earn">+10 punten</p>
-                    <p>Verdien punten bij elke gazon analyse</p>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">📅</div>
-                    <h3>Schema maken</h3>
-                    <p class="points-earn">+15 punten</p>
-                    <p>Maak een bemestingsschema</p>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">✅</div>
-                    <h3>Taken voltooien</h3>
-                    <p class="points-earn">+5 punten</p>
-                    <p>Per voltooide onderhouds taak</p>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">🎁</div>
-                    <h3>Producten kopen</h3>
-                    <p class="points-earn">+1 punt/€10</p>
-                    <p>Bij aankoop via de app</p>
-                </div>
-            </div>
-        </section>
+        <!-- How It Works -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Hoe verdien je punten?</h2>
 
-        <section class="rewards-section">
-            <h2>Beschikbare Beloningen</h2>
-            <div class="rewards-list" id="rewards-list">
-                <div class="reward-card" data-points="50">
-                    <div class="reward-header">
-                        <span class="reward-icon">☕</span>
-                        <span class="reward-points">50 punten</span>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(137,184,101,0.2); display: flex; align-items: center; justify-content: center;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
                     </div>
-                    <h3>€5 Korting</h3>
-                    <p>Kortingscode voor je volgende aankoop</p>
-                    <button class="btn-reward" data-reward="discount-5">Inwisselen</button>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0;">Schema exporteren</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Eenmaal per seizoen</p>
+                    </div>
+                    <span style="font-weight: 700; color: #89b865;">+50</span>
                 </div>
 
-                <div class="reward-card" data-points="100">
-                    <div class="reward-header">
-                        <span class="reward-icon">🎁</span>
-                        <span class="reward-points">100 punten</span>
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(242,159,64,0.2); display: flex; align-items: center; justify-content: center;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
                     </div>
-                    <h3>Gratis Analyse</h3>
-                    <p>Professionele gazon analyse ter plaatse</p>
-                    <button class="btn-reward" data-reward="free-analysis">Inwisselen</button>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0;">Foto analyse</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Per analyse</p>
+                    </div>
+                    <span style="font-weight: 700; color: #f29f40;">+10</span>
                 </div>
 
-                <div class="reward-card" data-points="200">
-                    <div class="reward-header">
-                        <span class="reward-icon">🌱</span>
-                        <span class="reward-points">200 punten</span>
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(91,127,196,0.2); display: flex; align-items: center; justify-content: center;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5b7fc4" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
                     </div>
-                    <h3>Gratis Bemesting</h3>
-                    <p>25kg premium bemesting naar keuze</p>
-                    <button class="btn-reward" data-reward="free-fertilizer">Inwisselen</button>
-                </div>
-
-                <div class="reward-card" data-points="500">
-                    <div class="reward-header">
-                        <span class="reward-icon">⭐</span>
-                        <span class="reward-points">500 punten</span>
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0;">Taken voltooien</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Per taak</p>
                     </div>
-                    <h3>VIP Service</h3>
-                    <p>Complete gazon renovatie service</p>
-                    <button class="btn-reward" data-reward="vip-service">Inwisselen</button>
+                    <span style="font-weight: 700; color: #5b7fc4;">+5</span>
                 </div>
             </div>
         </section>
 
-        <section class="activity-section">
-            <h2>Recente Activiteit</h2>
-            <div class="activity-list" id="activity-list">
-                <div class="activity-item">
-                    <div class="activity-icon">🎉</div>
-                    <div class="activity-details">
-                        <p class="activity-title">Welkomstbonus</p>
-                        <p class="activity-date">Vandaag</p>
+        <!-- Rewards -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Beloningen</h2>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem;">5 euro korting</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Op je volgende bestelling</p>
                     </div>
-                    <div class="activity-points">+25</div>
+                    <button style="padding: 0.5rem 1rem; background: rgba(137,184,101,0.2); border: 1px solid #89b865; border-radius: 0.5rem; color: #89b865; font-size: 0.75rem; font-weight: 600; cursor: pointer;">50 pts</button>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem;">Gratis bezorging</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Bij volgende bestelling</p>
+                    </div>
+                    <button style="padding: 0.5rem 1rem; background: rgba(137,184,101,0.2); border: 1px solid #89b865; border-radius: 0.5rem; color: #89b865; font-size: 0.75rem; font-weight: 600; cursor: pointer;">100 pts</button>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="flex: 1;">
+                        <p style="font-weight: 600; color: white; margin: 0 0 0.25rem;">Gratis gazonmest 5kg</p>
+                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Premium kwaliteit</p>
+                    </div>
+                    <button style="padding: 0.5rem 1rem; background: rgba(137,184,101,0.2); border: 1px solid #89b865; border-radius: 0.5rem; color: #89b865; font-size: 0.75rem; font-weight: 600; cursor: pointer;">200 pts</button>
                 </div>
             </div>
         </section>
+
     </main>
 
-    <nav class="bottom-nav">
-        <button class="nav-item" data-page="home">
-            <span class="nav-icon">🏠</span>
-            <span class="nav-label">Home</span>
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 0.75rem 0.5rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); background: rgba(26,43,35,0.95); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;">
+        <button class="nav-item" data-page="home" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Home</span>
         </button>
-        <button class="nav-item" data-page="photo-analysis">
-            <span class="nav-icon">📸</span>
-            <span class="nav-label">Analyse</span>
+        <button class="nav-item" data-page="fertilizer-planner" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <div style="position: relative; width: 24px; height: 24px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span class="calendar-date" style="position: absolute; bottom: 1px; left: 50%; transform: translateX(-50%); font-size: 0.5rem; font-weight: 700; color: rgba(255,255,255,0.6);"></span>
+            </div>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Kalender</span>
         </button>
-        <button class="nav-item" data-page="fertilizer-planner">
-            <span class="nav-icon">📅</span>
-            <span class="nav-label">Planner</span>
+        <button class="nav-item active" data-page="loyalty" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span style="font-size: 0.625rem; font-weight: 500; color: #f29f40;">Punten</span>
         </button>
-        <button class="nav-item active" data-page="loyalty">
-            <span class="nav-icon">⭐</span>
-            <span class="nav-label">Punten</span>
+        <button class="nav-item" data-page="challenge" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                <path d="M4 22h16"></path>
+                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+            </svg>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Challenge</span>
+        </button>
+        <button class="nav-item" data-page="settings" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Settings</span>
         </button>
     </nav>
 </div>
