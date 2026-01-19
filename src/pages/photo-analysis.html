@@ -2,152 +2,262 @@
 .photo-page, .photo-page * { opacity: 1 !important; animation: none !important; visibility: visible !important; }
 .photo-page { background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%) !important; color: white !important; }
 .photo-page h1, .photo-page h2, .photo-page h3, .photo-page p, .photo-page span { color: white !important; }
+
+/* Chat/AI Message Styling */
+.ai-message {
+    background: rgba(46, 70, 59, 0.9);
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
+    padding: 16px;
+    margin: 12px 0;
+    max-width: 90%;
+    animation: fadeInUp 0.3s ease;
+    opacity: 0;
+}
+
+.ai-message.show {
+    opacity: 1;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ai-avatar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #89b865;
+    font-size: 0.875rem;
+}
+
+.ai-typing {
+    color: rgba(255,255,255,0.6);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    font-size: 0.875rem;
+}
+
+.typing-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.typing-dots span {
+    width: 8px;
+    height: 8px;
+    background: #89b865;
+    border-radius: 50%;
+    animation: bounce 1s infinite;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.7; }
+    30% { transform: translateY(-8px); opacity: 1; }
+}
+
+/* Analysis Steps */
+.analysis-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.3s ease;
+}
+
+.analysis-step.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.analysis-step.completed {
+    background: rgba(137,184,101,0.15);
+}
+
+.step-icon {
+    font-size: 1.25rem;
+}
+
+.step-checkmark {
+    color: #89b865;
+    font-weight: bold;
+    font-size: 1.25rem;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+}
+
+.step-checkmark.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Product Cards */
+.product-card {
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.product-card:last-child {
+    margin-bottom: 0;
+}
+
+/* Follow-up Input */
+.follow-up-input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.follow-up-input::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+.follow-up-input:focus {
+    outline: none;
+    border-color: #89b865;
+}
+
+/* Spin animation for loader */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 </style>
+
 <div class="page photo-page" id="photo-analysis-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 90px;">
 
     <!-- Header -->
-    <header style="display: flex; align-items: center; padding: 1rem 1.25rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <button class="back-btn" id="back-to-home" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 0.5rem; margin-right: 0.5rem;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-        </button>
-        <h1 style="font-size: 1.25rem; font-weight: 700; color: white; margin: 0; flex: 1; text-align: center;">Foto Analyse</h1>
-        <div style="width: 40px;"></div>
+    <header style="display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1.25rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #89b865, #538731); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;">
+                <span style="font-size: 1.5rem;">🌿</span>
+                <span style="position: absolute; bottom: -2px; right: -2px; background: #f29f40; color: white; font-size: 0.5rem; font-weight: 700; padding: 2px 4px; border-radius: 4px;">AI</span>
+            </div>
+            <div>
+                <h1 style="font-size: 1.25rem; font-weight: 700; color: white; margin: 0;">Gazon AI</h1>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Jouw persoonlijke gazon expert</p>
+            </div>
+        </div>
     </header>
 
     <main style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1.5rem;">
 
         <!-- Upload Section -->
         <section id="upload-section" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 2rem 1.5rem; border: 1px solid rgba(255,255,255,0.1); text-align: center;">
-            <div id="upload-area" style="border: 2px dashed rgba(255,255,255,0.3); border-radius: 1rem; padding: 2rem; cursor: pointer;">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" style="margin-bottom: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🌿</div>
+            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 0.5rem;">GAZON AI</h2>
+            <p style="font-size: 0.875rem; color: rgba(255,255,255,0.7); margin: 0 0 1.5rem;">Jouw persoonlijke gazon expert</p>
+
+            <div id="upload-area" style="border: 2px dashed rgba(255,255,255,0.3); border-radius: 1rem; padding: 2rem 1.5rem; cursor: pointer; transition: all 0.2s;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" style="margin: 0 auto 1rem; display: block;">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                     <circle cx="12" cy="13" r="4"></circle>
                 </svg>
-                <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 0.5rem;">Upload een foto van je gazon</h2>
-                <p style="font-size: 0.875rem; color: rgba(255,255,255,0.6); margin: 0 0 1.5rem;">Sleep een foto hierheen of klik om te selecteren</p>
+                <p style="font-size: 0.9rem; font-weight: 500; color: white; margin: 0 0 0.5rem;">Klik of sleep een foto</p>
+                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.6); margin: 0 0 1.25rem;">van je gazon hierheen</p>
                 <input type="file" id="photo-input" accept="image/*" capture="environment" hidden>
-                <button id="select-photo-btn" style="padding: 0.875rem 2rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer;">Selecteer foto</button>
+                <button id="select-photo-btn" style="padding: 0.875rem 2rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-size: 0.95rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(137,184,101,0.3);">Selecteer foto</button>
+            </div>
+
+            <div style="background: rgba(242,159,64,0.1); border-radius: 8px; padding: 12px; margin-top: 1.5rem; border: 1px solid rgba(242,159,64,0.2);">
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                    <span style="color: #f29f40;">💡</span>
+                    <span>Tip: Maak de foto bij daglicht voor de beste analyse</span>
+                </p>
             </div>
         </section>
 
         <!-- Preview Section -->
         <section id="preview-section" style="display: none; background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Foto preview</h2>
+            <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem;">Foto preview</h3>
             <div style="position: relative; border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem;">
                 <img id="preview-image" alt="Gazon foto" style="width: 100%; display: block;">
-                <button id="remove-photo-btn" style="position: absolute; top: 0.5rem; right: 0.5rem; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.6); border: none; color: white; cursor: pointer; font-size: 1rem;">X</button>
+                <button id="remove-photo-btn" style="position: absolute; top: 0.5rem; right: 0.5rem; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.7); border: none; color: white; cursor: pointer; font-size: 1rem; font-weight: bold;">×</button>
             </div>
-            <button id="analyze-btn" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #f29f40, #e08830); border: none; border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer;">Analyseer gazon</button>
+            <button id="analyze-btn" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #f29f40, #e08830); border: none; border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(242,159,64,0.3);">🔍 Analyseer mijn gazon</button>
         </section>
 
-        <!-- Analysis Section -->
-        <section id="analysis-section" style="display: none;">
-            <div id="analysis-loader" style="text-align: center; padding: 3rem;">
-                <div style="width: 48px; height: 48px; border: 3px solid rgba(255,255,255,0.2); border-top-color: #89b865; border-radius: 50%; margin: 0 auto 1rem; animation: spin 1s linear infinite;"></div>
-                <p style="color: rgba(255,255,255,0.8);">Gazon wordt geanalyseerd...</p>
+        <!-- Analysis Steps Section -->
+        <section id="analysis-steps-section" style="display: none; background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem;">Analyse bezig...</h3>
+
+            <div class="analysis-step" id="step-1">
+                <span class="step-icon">🔍</span>
+                <span style="flex: 1; font-size: 0.9rem; color: rgba(255,255,255,0.9);">Graskleur analyseren...</span>
+                <span class="step-checkmark">✓</span>
             </div>
 
-            <div id="analysis-results" style="display: none; flex-direction: column; gap: 1rem;">
-                <!-- Points Earned Banner -->
-                <div id="points-earned-banner" style="background: linear-gradient(135deg, rgba(137,184,101,0.3), rgba(83,135,49,0.3)); border-radius: 1rem; padding: 1rem; border: 1px solid rgba(137,184,101,0.4); text-align: center;">
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                        <span style="font-size: 1.5rem; font-weight: 700; color: #89b865;">+10</span>
-                        <img src="./src/assets/icons/logo-white.png" alt="Punten" style="width: 24px; height: 24px; opacity: 0.9;">
-                    </div>
-                    <p style="font-size: 0.75rem; color: rgba(255,255,255,0.8); margin: 0.25rem 0 0;">GazonPunten verdiend!</p>
-                </div>
+            <div class="analysis-step" id="step-2">
+                <span class="step-icon">📊</span>
+                <span style="flex: 1; font-size: 0.9rem; color: rgba(255,255,255,0.9);">Gazonstructuur bekijken...</span>
+                <span class="step-checkmark">✓</span>
+            </div>
 
-                <!-- Overall Health Score -->
-                <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem;">Algehele gezondheid</h3>
-                    <div id="condition-rating" style="display: flex; align-items: center; gap: 0.75rem;">
-                        <div class="rating-stars" style="color: #f29f40; font-size: 1.5rem; letter-spacing: 2px;">★★★★☆</div>
-                        <span class="rating-text" style="color: #89b865; font-weight: 600; font-size: 1.125rem;">(4/5)</span>
-                    </div>
-                </div>
+            <div class="analysis-step" id="step-3">
+                <span class="step-icon">🌱</span>
+                <span style="flex: 1; font-size: 0.9rem; color: rgba(255,255,255,0.9);">Gezondheid beoordelen...</span>
+                <span class="step-checkmark">✓</span>
+            </div>
 
-                <!-- Strong Points -->
-                <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="color: #89b865;">✓</span> Sterke punten
-                    </h3>
-                    <ul id="strong-points-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
-                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
-                            Goede graskleur
-                        </li>
-                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
-                            Dichte grasmat
-                        </li>
-                    </ul>
-                </div>
+            <div class="analysis-step" id="step-4">
+                <span class="step-icon">💡</span>
+                <span style="flex: 1; font-size: 0.9rem; color: rgba(255,255,255,0.9);">Advies genereren...</span>
+                <span class="step-checkmark">✓</span>
+            </div>
+        </section>
 
-                <!-- Attention Points -->
-                <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="color: #f29f40;">⚠</span> Aandachtspunten
-                    </h3>
-                    <ul id="attention-points-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
-                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                            Lichte tekenen van droogte
-                        </li>
-                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                            Enkele kale plekken gedetecteerd
-                        </li>
-                    </ul>
-                </div>
+        <!-- AI Chat Results Section -->
+        <section id="chat-results-section" style="display: none;">
+            <!-- Container for all AI messages -->
+            <div id="ai-messages-container"></div>
+        </section>
 
-                <!-- Advice -->
-                <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span>📋</span> Advies
-                    </h3>
-                    <ul id="advice-list" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
-                        <li style="display: flex; align-items: flex-start; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
-                            <span style="color: #89b865;">•</span>
-                            Overweeg extra bewatering
-                        </li>
-                        <li style="display: flex; align-items: flex-start; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
-                            <span style="color: #89b865;">•</span>
-                            Bijzaaien van kale plekken met graszaad
-                        </li>
-                        <li style="display: flex; align-items: flex-start; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
-                            <span style="color: #89b865;">•</span>
-                            Volgende bemesting over 3 weken
-                        </li>
-                    </ul>
-                </div>
+        <!-- Follow-up Question Section -->
+        <section id="follow-up-section" style="display: none; background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem; display: flex; align-items: center; gap: 8px;">
+                <span>💬</span>
+                Heb je een vraag over je gazon?
+            </h3>
 
-                <!-- Recommended Products -->
-                <div style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-                    <h3 style="font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span>🛒</span> Aanbevolen producten
-                    </h3>
-                    <ul style="list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
-                            <span style="color: #89b865;">→</span>
-                            Graszaad (voor kale plekken)
-                        </li>
-                        <li style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9); font-size: 0.875rem;">
-                            <span style="color: #89b865;">→</span>
-                            Gazonmest (volgende behandeling)
-                        </li>
-                    </ul>
-                    <a href="https://graszoden.expert/" target="_blank" style="display: block; width: 100%; padding: 0.875rem; background: linear-gradient(135deg, #f29f40, #e08830); border: none; border-radius: 0.75rem; color: white; font-size: 0.9rem; font-weight: 600; text-align: center; text-decoration: none;">Bestel producten</a>
-                </div>
+            <div style="display: flex; gap: 8px; margin-bottom: 1rem;">
+                <input type="text" id="follow-up-input" class="follow-up-input" placeholder="bijv. 'Wanneer moet ik maaien?'" />
+                <button id="ask-question-btn" style="padding: 0 1.5rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-size: 0.9rem; font-weight: 600; cursor: pointer; white-space: nowrap;">VRAAG</button>
+            </div>
 
-                <!-- Action Buttons -->
-                <div style="display: flex; gap: 0.75rem;">
-                    <button id="save-analysis-btn" style="flex: 1; padding: 1rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer;">Opslaan</button>
-                    <button id="new-analysis-btn" style="flex: 1; padding: 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer;">Nieuwe analyse</button>
+            <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 12px;">
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0 0 8px;">Voorbeeldvragen:</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                    <button class="example-question" data-question="Wanneer moet ik maaien?" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; color: rgba(255,255,255,0.8); font-size: 0.75rem; cursor: pointer;">Wanneer maaien?</button>
+                    <button class="example-question" data-question="Hoe vaak water geven?" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; color: rgba(255,255,255,0.8); font-size: 0.75rem; cursor: pointer;">Hoe vaak water?</button>
+                    <button class="example-question" data-question="Wanneer zaaien?" style="padding: 6px 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; color: rgba(255,255,255,0.8); font-size: 0.75rem; cursor: pointer;">Wanneer zaaien?</button>
                 </div>
             </div>
         </section>
+
+        <!-- New Analysis Button -->
+        <button id="new-analysis-btn" style="display: none; width: 100%; padding: 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer;">🔄 Nieuwe analyse starten</button>
 
     </main>
 
@@ -198,6 +308,103 @@
         </button>
     </nav>
 </div>
-<style>
-@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-</style>
+
+<script>
+// Gazon AI - Photo Analysis with Chat Interface
+// This script will be loaded and initialized by photoAnalysis.js
+
+window.GazonAI = {
+    // Mock analysis data
+    mockAnalyses: [
+        {
+            score: 4,
+            scoreText: "Goed",
+            positives: [
+                "Mooie donkergroene kleur, wijst op voldoende stikstof",
+                "Dichte en gelijkmatige grasmat",
+                "Geen zichtbaar onkruid"
+            ],
+            concerns: [
+                "Enkele lichtere plekken, mogelijk droogte",
+                "Wat dunner gras in de hoeken"
+            ],
+            advice: [
+                { title: "Bemesting", text: "Plan een voorjaarsbemesting rond half maart" },
+                { title: "Bewatering", text: "Geef bij droog weer 2x per week water" },
+                { title: "Bijzaaien", text: "Dunne plekken kun je in april bijzaaien" }
+            ],
+            products: ["gazonmest", "graszaad"]
+        },
+        {
+            score: 5,
+            scoreText: "Uitstekend",
+            positives: [
+                "Prachtige diepgroene kleur",
+                "Zeer dichte grasmat zonder kale plekken",
+                "Gazon ziet er gezond en goed onderhouden uit"
+            ],
+            concerns: [
+                "Nauwelijks verbeterpunten - blijf doen wat je doet!"
+            ],
+            advice: [
+                { title: "Onderhoud", text: "Blijf regelmatig maaien (2x per week)" },
+                { title: "Bemesting", text: "Houd je huidige schema aan" }
+            ],
+            products: ["gazonmest"]
+        },
+        {
+            score: 3,
+            scoreText: "Redelijk",
+            positives: [
+                "Basis grasstructuur is aanwezig",
+                "Gazon heeft potentie"
+            ],
+            concerns: [
+                "Geelverkleuring wijst op stikstoftekort",
+                "Meerdere kale plekken zichtbaar",
+                "Mos aanwezig tussen het gras"
+            ],
+            advice: [
+                { title: "Mosbehandeling", text: "Start met een mosbehandeling, wacht 2 weken" },
+                { title: "Verticuteren", text: "Na mosbehandeling verticuteren" },
+                { title: "Bijzaaien", text: "Zaai kale plekken bij" },
+                { title: "Bemesting", text: "Geef een goede gazonbemesting" }
+            ],
+            products: ["anti-mos", "graszaad", "gazonmest"]
+        }
+    ],
+
+    // Q&A knowledge base
+    mockQA: [
+        {
+            keywords: ["maaien", "maai"],
+            answer: "Voor een gezond gazon raad ik aan om in het groeiseizoen (april-oktober) 2x per week te maaien. Maai nooit meer dan 1/3 van de graslengte af. Ideale hoogte is 3-4 cm."
+        },
+        {
+            keywords: ["water", "bewatering", "sproeien"],
+            answer: "Geef je gazon bij droog weer 2x per week goed water, bij voorkeur 's ochtends vroeg. Liever 1x veel dan vaak weinig - zo stimuleer je diepere wortels."
+        },
+        {
+            keywords: ["zaaien", "bijzaaien", "graszaad"],
+            answer: "De beste tijd om te zaaien is maart-mei of september-oktober. Zorg voor goed grondcontact, houd vochtig, en loop niet over pas gezaaid gras."
+        },
+        {
+            keywords: ["bemesten", "mest"],
+            answer: "Bemest 2-4x per jaar: voorjaarsmest in maart/april, eventueel zomermest in juni, en najaarsmest in september/oktober."
+        },
+        {
+            keywords: ["mos"],
+            answer: "Mos wijst op schaduw, vocht of zure bodem. Start met mosbehandeling, wacht 2 weken, verticuteer, en zaai bij. Bekalken helpt ook."
+        }
+    ],
+
+    fallbackAnswer: "Goede vraag! Voor specifiek advies raad ik aan contact op te nemen via WhatsApp. Onze gazonexperts helpen je graag!",
+
+    // Product information
+    products: {
+        "gazonmest": { name: "Gazonmest", icon: "🌿", description: "Voor een sterke groei" },
+        "graszaad": { name: "Graszaad", icon: "🌱", description: "Voor de kale plekken" },
+        "anti-mos": { name: "Anti-Mos", icon: "🍄", description: "Bestrijdt mos effectief" }
+    }
+};
+</script>
