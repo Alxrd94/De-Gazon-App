@@ -307,6 +307,35 @@ class App {
         console.log('Loyalty page loaded');
         this.checkAndApplyTheme();
         loyaltyManager.init();
+
+        // Load gamification system for new loyalty page
+        this.loadGamificationSystem();
+    }
+
+    /**
+     * Load loyalty gamification system
+     */
+    loadGamificationSystem() {
+        // Check if script already loaded
+        if (document.querySelector('script[src*="loyalty-gamification.js"]')) {
+            // Already loaded, just reinitialize if needed
+            if (window.loyaltyGame) {
+                window.loyaltyGame.updateUI();
+            }
+            return;
+        }
+
+        // Dynamically load the gamification script
+        const script = document.createElement('script');
+        script.src = './src/js/loyalty-gamification.js?v=' + Date.now();
+        script.type = 'module';
+        script.onload = () => {
+            console.log('✅ Loyalty gamification system loaded');
+        };
+        script.onerror = () => {
+            console.error('❌ Failed to load loyalty gamification system');
+        };
+        document.body.appendChild(script);
     }
 
     /**
