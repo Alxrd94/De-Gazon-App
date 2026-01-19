@@ -395,13 +395,82 @@ class App {
         document.getElementById('profile-name').textContent = name;
         document.getElementById('profile-email').textContent = email;
         document.getElementById('profile-location').textContent = city + ', ' + country;
-        document.getElementById('profile-avatar').textContent = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+
+        // Load profile photo or show initials
+        const avatarEl = document.getElementById('profile-avatar');
+        const savedPhoto = localStorage.getItem('profilePhoto');
+        if (savedPhoto) {
+            avatarEl.innerHTML = `<img src="${savedPhoto}" style="width: 100%; height: 100%; object-fit: cover;">`;
+        } else {
+            avatarEl.textContent = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+        }
 
         // Load gazon data
         const gazon = JSON.parse(localStorage.getItem('gazonData') || '{}');
         document.getElementById('gazon-area').textContent = (gazon.area || 150) + ' m2';
         document.getElementById('gazon-type').textContent = gazon.type || 'Siergazon';
         document.getElementById('gazon-soil').textContent = gazon.soil || 'Aarde';
+
+        // Setup profile photo upload
+        this.setupProfilePhotoUpload();
+    }
+
+    /**
+     * Setup profile photo upload functionality
+     */
+    setupProfilePhotoUpload() {
+        const avatarContainer = document.getElementById('profile-avatar-container');
+        const fileInput = document.getElementById('profile-photo-input');
+
+        if (!avatarContainer || !fileInput) return;
+
+        avatarContainer.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Check file size (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                this.showSettingsToast('Foto is te groot (max 2MB)');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                // Create image to resize
+                const img = new Image();
+                img.onload = () => {
+                    // Resize to max 200x200
+                    const canvas = document.createElement('canvas');
+                    const size = 200;
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+
+                    // Calculate crop dimensions (center crop to square)
+                    const minDim = Math.min(img.width, img.height);
+                    const sx = (img.width - minDim) / 2;
+                    const sy = (img.height - minDim) / 2;
+
+                    ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, size, size);
+
+                    // Convert to base64 with compression
+                    const base64 = canvas.toDataURL('image/jpeg', 0.8);
+                    localStorage.setItem('profilePhoto', base64);
+
+                    // Update avatar display
+                    const avatarEl = document.getElementById('profile-avatar');
+                    avatarEl.innerHTML = `<img src="${base64}" style="width: 100%; height: 100%; object-fit: cover;">`;
+
+                    this.showSettingsToast('Profielfoto opgeslagen');
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
     }
 
     /**
@@ -513,63 +582,75 @@ class App {
             }
             styleEl.textContent = `
                 body, .page {
-                    background: #f5f5f5 !important;
+                    background: #f8f9fa !important;
                 }
                 .page {
-                    background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%) !important;
+                    background: linear-gradient(180deg, #f8f9fa 0%, #eef2eb 100%) !important;
                 }
                 .page h1, .page h2, .page h3, .page p, .page span, .page label {
                     color: #2e463b !important;
                 }
                 .page header {
-                    background: rgba(255,255,255,0.9) !important;
-                    border-bottom-color: rgba(46,70,59,0.1) !important;
+                    background: #d4e6c8 !important;
+                    border-bottom-color: rgba(46,70,59,0.15) !important;
                 }
                 .page header h1, .page header p {
                     color: #2e463b !important;
                 }
                 .page section, .page .login-card {
-                    background: rgba(255,255,255,0.95) !important;
-                    border-color: rgba(46,70,59,0.1) !important;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+                    background: #e8f5e0 !important;
+                    border-color: rgba(46,70,59,0.15) !important;
+                    box-shadow: 0 2px 8px rgba(46,70,59,0.1) !important;
+                }
+                .page .modal-overlay {
+                    background: rgba(46,70,59,0.5) !important;
                 }
                 .page .modal-content {
-                    background: #ffffff !important;
+                    background: #e8f5e0 !important;
                     border-color: rgba(46,70,59,0.2) !important;
                 }
+                .page .modal-content h3 {
+                    color: #2e463b !important;
+                }
                 .page .modal-input, .page .modal-select {
-                    background: #f5f5f5 !important;
-                    border-color: rgba(46,70,59,0.2) !important;
+                    background: #ffffff !important;
+                    border-color: rgba(46,70,59,0.25) !important;
                     color: #2e463b !important;
                 }
                 .page .modal-label {
-                    color: #5a7a5a !important;
+                    color: #3a5a47 !important;
                 }
                 .bottom-nav {
-                    background: rgba(255,255,255,0.95) !important;
-                    border-top-color: rgba(46,70,59,0.1) !important;
+                    background: #d4e6c8 !important;
+                    border-top-color: rgba(46,70,59,0.15) !important;
                 }
                 .bottom-nav .nav-item span {
-                    color: #5a7a5a !important;
+                    color: #3a5a47 !important;
                 }
                 .bottom-nav .nav-item.active span {
-                    color: #89b865 !important;
+                    color: #538731 !important;
                 }
                 .bottom-nav .nav-item svg {
-                    stroke: #5a7a5a !important;
+                    stroke: #3a5a47 !important;
                 }
                 .bottom-nav .nav-item.active svg {
-                    stroke: #89b865 !important;
+                    stroke: #538731 !important;
                 }
                 .page button:not(.login-btn):not(.nav-item):not(.badge-btn) {
                     background: #89b865 !important;
                     color: white !important;
                 }
                 .page .toggle-switch {
-                    background: #ccc !important;
+                    background: #b8d4a8 !important;
                 }
                 .page .toggle-switch.active {
                     background: #89b865 !important;
+                }
+                .page a {
+                    color: #538731 !important;
+                }
+                .page .toast {
+                    background: #538731 !important;
                 }
             `;
             document.body.classList.add('light-mode');
