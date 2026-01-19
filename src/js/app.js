@@ -592,76 +592,100 @@ class App {
                 document.head.appendChild(styleEl);
             }
             styleEl.textContent = `
+                /* Light mode: lichte achtergrond, donkere cards */
                 body, .page {
-                    background: #f8f9fa !important;
+                    background: #f0f5ed !important;
                 }
                 .page {
-                    background: linear-gradient(180deg, #f8f9fa 0%, #eef2eb 100%) !important;
+                    background: linear-gradient(180deg, #f0f5ed 0%, #e8f0e0 100%) !important;
                 }
-                .page h1, .page h2, .page h3, .page p, .page span, .page label {
+
+                /* Page headers (buiten cards) - donkere tekst op lichte bg */
+                .page > header > h1, .page > header > p {
                     color: #2e463b !important;
                 }
                 .page header {
-                    background: #d4e6c8 !important;
+                    background: rgba(255,255,255,0.3) !important;
                     border-bottom-color: rgba(46,70,59,0.15) !important;
                 }
-                .page header h1, .page header p {
-                    color: #2e463b !important;
+
+                /* Cards blijven DONKERGROEN met witte tekst */
+                .page section:not(header), .page .login-card, .page [style*="background: rgba(255,255,255"], .page [style*="background: rgba(46, 70, 59"] {
+                    background: rgba(46, 70, 59, 0.9) !important;
+                    border-color: rgba(46,70,59,0.3) !important;
+                    box-shadow: 0 4px 12px rgba(46,70,59,0.15) !important;
                 }
-                .page section, .page .login-card {
-                    background: #e8f5e0 !important;
-                    border-color: rgba(46,70,59,0.15) !important;
-                    box-shadow: 0 2px 8px rgba(46,70,59,0.1) !important;
+
+                /* Tekst IN cards blijft WIT */
+                .page section h1, .page section h2, .page section h3,
+                .page section p, .page section span, .page section label,
+                .page .login-card h1, .page .login-card h2, .page .login-card p {
+                    color: white !important;
                 }
+
+                /* Modals - donkere cards */
                 .page .modal-overlay {
-                    background: rgba(46,70,59,0.5) !important;
+                    background: rgba(0,0,0,0.7) !important;
                 }
-                .page .modal-content {
-                    background: #e8f5e0 !important;
-                    border-color: rgba(46,70,59,0.2) !important;
+                .page .modal-content, .page [id$="-modal"] > div {
+                    background: rgba(46, 70, 59, 0.95) !important;
+                    border-color: rgba(255,255,255,0.2) !important;
                 }
-                .page .modal-content h3 {
-                    color: #2e463b !important;
+                .page .modal-content h3, .page .modal-content p {
+                    color: white !important;
                 }
-                .page .modal-input, .page .modal-select {
-                    background: #ffffff !important;
-                    border-color: rgba(46,70,59,0.25) !important;
-                    color: #2e463b !important;
+                .page .modal-input, .page .modal-select, .page input, .page select, .page textarea {
+                    background: rgba(255,255,255,0.15) !important;
+                    border-color: rgba(255,255,255,0.3) !important;
+                    color: white !important;
                 }
                 .page .modal-label {
-                    color: #3a5a47 !important;
+                    color: rgba(255,255,255,0.9) !important;
                 }
+
+                /* Bottom nav - licht */
                 .bottom-nav {
-                    background: #d4e6c8 !important;
+                    background: rgba(240, 245, 237, 0.95) !important;
                     border-top-color: rgba(46,70,59,0.15) !important;
                 }
                 .bottom-nav .nav-item span {
                     color: #3a5a47 !important;
                 }
                 .bottom-nav .nav-item.active span {
-                    color: #538731 !important;
+                    color: #f29f40 !important;
                 }
                 .bottom-nav .nav-item svg {
                     stroke: #3a5a47 !important;
                 }
                 .bottom-nav .nav-item.active svg {
-                    stroke: #538731 !important;
+                    stroke: #f29f40 !important;
                 }
-                .page button:not(.login-btn):not(.nav-item):not(.badge-btn) {
+
+                /* Buttons blijven groen/oranje */
+                .page button:not(.nav-item):not(.badge-btn):not([style*="background: rgba"]) {
                     background: #89b865 !important;
                     color: white !important;
                 }
                 .page .toggle-switch {
-                    background: #b8d4a8 !important;
+                    background: rgba(137,184,101,0.3) !important;
                 }
                 .page .toggle-switch.active {
                     background: #89b865 !important;
                 }
                 .page a {
-                    color: #538731 !important;
+                    color: #89b865 !important;
                 }
                 .page .toast {
                     background: #538731 !important;
+                }
+
+                /* Challenge page specifics */
+                .challenge-page section {
+                    background: rgba(46, 70, 59, 0.9) !important;
+                }
+                .challenge-page section h1, .challenge-page section h2,
+                .challenge-page section p, .challenge-page section span {
+                    color: white !important;
                 }
             `;
             document.body.classList.add('light-mode');
