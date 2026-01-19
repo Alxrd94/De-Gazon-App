@@ -51,6 +51,9 @@ class App {
 
         // Setup navigation
         router.setupNavigation();
+
+        // Preload all pages in background for instant navigation
+        router.preloadAll();
     }
 
     /**
