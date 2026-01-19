@@ -3,7 +3,6 @@
 .planner-page { background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%) !important; color: white !important; }
 .planner-page h1, .planner-page h2, .planner-page h3, .planner-page p, .planner-page span, .planner-page label { color: white !important; }
 .planner-page .nav-item.active span:last-child { color: #f29f40 !important; }
-.planner-page input[type="checkbox"]:checked + label::before { background: #f29f40 !important; border-color: #f29f40 !important; }
 </style>
 <div class="page planner-page" id="fertilizer-planner-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 90px;">
 
@@ -46,28 +45,26 @@
 
         <!-- Action Buttons -->
         <section style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <button id="generate-btn" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(137,184,101,0.3); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                <span style="font-size: 1.25rem;">📅</span>
+            <!-- Generate Button (shown initially) -->
+            <button id="generate-btn" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(137,184,101,0.3); display: flex; align-items: center; justify-content: center;">
                 Genereer Schema
             </button>
 
-            <div id="export-buttons" style="display: none; flex-direction: column; gap: 0.75rem;">
-                <button id="export-btn" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #f29f40, #e08830); border: none; border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(242,159,64,0.3); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                    <span style="font-size: 1.25rem;">📤</span>
+            <!-- Export Section (shown after generate) -->
+            <div id="export-section" style="display: none; flex-direction: column; gap: 0.75rem; align-items: center;">
+                <button id="export-btn" style="width: 100%; padding: 1.25rem; background: linear-gradient(135deg, #f29f40, #e08830); border: none; border-radius: 0.75rem; color: white; font-size: 1.125rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(242,159,64,0.3);">
                     Exporteer naar Kalender
                 </button>
 
-                <button id="save-btn" style="width: 100%; padding: 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                    <span style="font-size: 1.25rem;">💾</span>
-                    Schema Opslaan
-                </button>
+                <a href="#" id="edit-schema-link" style="font-size: 0.875rem; color: rgba(255,255,255,0.6); text-decoration: underline; margin-top: 0.5rem;">
+                    Schema aanpassen
+                </a>
             </div>
         </section>
 
-        <!-- Points Animation (hidden by default) -->
+        <!-- Points Toast (for already received message) -->
         <div id="points-toast" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(137,184,101,0.95); backdrop-filter: blur(10px); padding: 2rem 3rem; border-radius: 1.5rem; text-align: center; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.4);">
-            <p style="font-size: 2.5rem; margin: 0;">🎉</p>
-            <p style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0.5rem 0;" id="points-text">+50 GazonPunten!</p>
+            <p style="font-size: 1.25rem; font-weight: 700; color: white; margin: 0;" id="points-text">+50 GazonPunten!</p>
         </div>
 
     </main>
@@ -75,26 +72,48 @@
     <!-- Bottom Navigation -->
     <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 0.75rem 0.5rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); background: rgba(26,43,35,0.95); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;">
         <button class="nav-item" data-page="home" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
-            <span style="font-size: 1.5rem;">🏠</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
             <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Home</span>
         </button>
         <button class="nav-item active" data-page="fertilizer-planner" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
-            <span style="font-size: 1.5rem;">📅</span>
+            <!-- Calendar icon with dynamic date -->
+            <div style="position: relative; width: 24px; height: 24px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span id="calendar-date" style="position: absolute; bottom: 1px; left: 50%; transform: translateX(-50%); font-size: 0.5rem; font-weight: 700; color: #f29f40;"></span>
+            </div>
             <span style="font-size: 0.625rem; font-weight: 500; color: #f29f40;">Kalender</span>
         </button>
         <button class="nav-item" data-page="loyalty" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
-            <span style="font-size: 1.5rem;">⭐</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
             <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Punten</span>
         </button>
         <button class="nav-item" data-page="challenge" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
-            <span style="font-size: 1.5rem;">🏆</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                <path d="M4 22h16"></path>
+                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+            </svg>
             <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Challenge</span>
         </button>
         <button class="nav-item" data-page="settings" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
-            <span style="font-size: 1.5rem;">⚙️</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
             <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Settings</span>
         </button>
     </nav>
 </div>
-
-
