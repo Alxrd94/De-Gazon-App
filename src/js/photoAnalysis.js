@@ -37,7 +37,6 @@ class PhotoAnalysis {
      */
     setupEventListeners() {
         const selectPhotoBtn = document.getElementById('select-photo-btn');
-        const photoInput = document.getElementById('photo-input');
         const uploadArea = document.getElementById('upload-area');
         const removePhotoBtn = document.getElementById('remove-photo-btn');
         const analyzeBtn = document.getElementById('analyze-btn');
@@ -45,33 +44,33 @@ class PhotoAnalysis {
         const askQuestionBtn = document.getElementById('ask-question-btn');
         const followUpInput = document.getElementById('follow-up-input');
 
+        // Photo selection - gebruik dynamische input voor betere mobiele compatibiliteit
         if (selectPhotoBtn) {
-            selectPhotoBtn.addEventListener('click', () => photoInput.click());
-        }
-
-        if (photoInput) {
-            photoInput.addEventListener('change', (e) => this.handlePhotoSelect(e));
+            selectPhotoBtn.addEventListener('click', () => this.openCamera());
         }
 
         if (uploadArea) {
-            uploadArea.addEventListener('click', () => photoInput.click());
+            uploadArea.addEventListener('click', () => this.openCamera());
 
             // Drag and drop support
             uploadArea.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 uploadArea.style.borderColor = '#89b865';
+                uploadArea.classList.add('dragover');
             });
 
             uploadArea.addEventListener('dragleave', () => {
                 uploadArea.style.borderColor = 'rgba(255,255,255,0.3)';
+                uploadArea.classList.remove('dragover');
             });
 
             uploadArea.addEventListener('drop', (e) => {
                 e.preventDefault();
                 uploadArea.style.borderColor = 'rgba(255,255,255,0.3)';
+                uploadArea.classList.remove('dragover');
                 const file = e.dataTransfer.files[0];
                 if (file && file.type.startsWith('image/')) {
-                    this.processPhoto(file);
+                    this.handlePhotoSelected(file);
                 }
             });
         }
@@ -112,70 +111,163 @@ class PhotoAnalysis {
     }
 
     /**
-     * Handle photo selection from input
+     * Open camera/file picker with dynamic input element
+     * This approach works better on mobile devices and prevents camera hang
+     * NOTE: No capture attribute - lets user choose camera or gallery
      */
-    async handlePhotoSelect(e) {
-        const file = e.target.files[0];
-        if (file) {
-            try {
-                await this.processPhoto(file);
-                // Reset input value to allow selecting the same file again
-                e.target.value = '';
-            } catch (error) {
-                console.error('Error handling photo selection:', error);
-                showToast('Fout bij het selecteren van de foto', 'error');
-                // Reset input on error
-                e.target.value = '';
+    openCamera() {
+        console.log('Opening camera/file picker');
+
+        // Create fresh input element
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        // GEEN capture attribuut - dit veroorzaakt hang op Android devices
+        // Zonder capture krijgt gebruiker keuzemenu: Camera of Bestanden
+
+        let handled = false;
+
+        // Handler function
+        const handleInputChange = (event) => {
+            if (handled) return;
+            handled = true;
+
+            const file = event.target?.files?.[0];
+            if (file) {
+                console.log('File selected:', file.name, file.type, file.size);
+                this.handlePhotoSelected(file);
+            } else {
+                console.log('No file selected');
             }
+
+            // Clean up
+            input.remove();
+        };
+
+        // Beide event handlers voor maximale compatibiliteit
+        input.onchange = handleInputChange;
+        input.addEventListener('change', handleInputChange);
+
+        // Cancel handler
+        input.addEventListener('cancel', () => {
+            console.log('Camera/upload geannuleerd');
+            input.remove();
+        });
+
+        // Voeg toe aan DOM voor betere compatibiliteit
+        input.style.display = 'none';
+        document.body.appendChild(input);
+
+        // Kleine delay voor sommige browsers
+        setTimeout(() => {
+            input.click();
+        }, 100);
+    }
+
+    /**
+     * Handle photo selected from camera/file picker
+     */
+    handlePhotoSelected(file) {
+        console.log('Processing photo:', file.name, file.type, file.size);
+
+        // Valideer bestandstype
+        if (!file.type.startsWith('image/')) {
+            showToast('Selecteer een geldige afbeelding', 'error');
+            console.error('Invalid file type:', file.type);
+            return;
+        }
+
+        // Toon loading state
+        this.showLoadingState();
+
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            try {
+                const imageData = e.target.result;
+                console.log('Photo loaded, size:', imageData.length);
+
+                this.currentPhoto = {
+                    data: imageData,
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    uploadedAt: new Date().toISOString()
+                };
+
+                this.displayPhoto(imageData);
+                this.hideLoadingState();
+
+            } catch (error) {
+                console.error('Error in reader.onload:', error);
+                showToast('Fout bij het verwerken van de foto', 'error');
+                this.hideLoadingState();
+            }
+        };
+
+        reader.onerror = (error) => {
+            console.error('FileReader error:', error);
+            showToast('Er ging iets mis bij het laden van de foto. Probeer opnieuw.', 'error');
+            this.hideLoadingState();
+        };
+
+        // Start reading the file
+        reader.readAsDataURL(file);
+    }
+
+    /**
+     * Display photo in preview section
+     */
+    displayPhoto(imageData) {
+        console.log('Displaying photo');
+
+        // Display preview image
+        const previewImage = document.getElementById('preview-image');
+        if (previewImage) {
+            previewImage.src = imageData;
+            previewImage.onload = () => {
+                console.log('Preview image rendered successfully');
+            };
+            previewImage.onerror = () => {
+                console.error('Error rendering preview image');
+                showToast('Fout bij het tonen van de foto', 'error');
+            };
+        }
+
+        // Show/hide sections
+        const uploadSection = document.getElementById('upload-section');
+        const previewSection = document.getElementById('preview-section');
+
+        if (uploadSection) {
+            uploadSection.style.display = 'none';
+        }
+
+        if (previewSection) {
+            previewSection.style.display = 'block';
+        }
+
+        showToast('Foto geladen! Klik op "Start Analyse"', 'success');
+    }
+
+    /**
+     * Show loading state while processing photo
+     */
+    showLoadingState() {
+        const uploadArea = document.getElementById('upload-area');
+        if (uploadArea) {
+            uploadArea.style.opacity = '0.5';
+            uploadArea.style.pointerEvents = 'none';
         }
     }
 
     /**
-     * Process and display photo
+     * Hide loading state
      */
-    async processPhoto(file) {
-        // Validate file type
-        if (!file.type.startsWith('image/')) {
-            showToast('Selecteer een geldige afbeelding', 'error');
-            return;
-        }
-
-        try {
-            const compressed = await compressImage(file);
-            const url = URL.createObjectURL(compressed);
-
-            this.currentPhoto = {
-                file: compressed,
-                url: url,
-                name: file.name,
-                uploadedAt: new Date().toISOString()
-            };
-
-            // Display preview
-            const previewImage = document.getElementById('preview-image');
-            if (previewImage) {
-                previewImage.src = url;
-                // Ensure image loads properly
-                previewImage.onload = () => {
-                    console.log('Photo loaded successfully');
-                };
-                previewImage.onerror = () => {
-                    console.error('Error loading photo preview');
-                    showToast('Fout bij het laden van de foto', 'error');
-                };
-            }
-
-            // Show/hide sections
-            const uploadSection = document.getElementById('upload-section');
-            const previewSection = document.getElementById('preview-section');
-
-            if (uploadSection) uploadSection.style.display = 'none';
-            if (previewSection) previewSection.style.display = 'block';
-
-        } catch (error) {
-            console.error('Error processing photo:', error);
-            showToast('Fout bij het verwerken van de foto', 'error');
-            throw error; // Re-throw to be caught by handlePhotoSelect
+    hideLoadingState() {
+        const uploadArea = document.getElementById('upload-area');
+        if (uploadArea) {
+            uploadArea.style.opacity = '1';
+            uploadArea.style.pointerEvents = 'auto';
         }
     }
 
@@ -183,16 +275,18 @@ class PhotoAnalysis {
      * Remove current photo
      */
     removePhoto() {
-        if (this.currentPhoto?.url) {
-            URL.revokeObjectURL(this.currentPhoto.url);
-        }
+        console.log('Removing photo');
         this.currentPhoto = null;
 
-        document.getElementById('upload-section').style.display = 'block';
-        document.getElementById('preview-section').style.display = 'none';
+        const uploadSection = document.getElementById('upload-section');
+        const previewSection = document.getElementById('preview-section');
 
-        const photoInput = document.getElementById('photo-input');
-        if (photoInput) photoInput.value = '';
+        if (uploadSection) uploadSection.style.display = 'block';
+        if (previewSection) previewSection.style.display = 'none';
+
+        // Clear preview image
+        const previewImage = document.getElementById('preview-image');
+        if (previewImage) previewImage.src = '';
     }
 
     /**
