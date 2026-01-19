@@ -14,8 +14,80 @@
 
     <main style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1.5rem;">
 
-        <!-- Product Selection Card -->
+        <!-- Order Options Section -->
         <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem; text-align: center;">Hoe wil je bestellen?</h2>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- Option 1: Already have products -->
+                <div id="option-have-products" style="padding: 1rem; background: rgba(137,184,101,0.15); border: 1px solid rgba(137,184,101,0.3); border-radius: 0.75rem; cursor: pointer; transition: all 0.2s;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(137,184,101,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2">
+                                <path d="M20 6L9 17l-5-5"></path>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 0.9rem; font-weight: 600; color: white; margin: 0 0 0.25rem;">Ik heb al producten</h3>
+                            <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Selecteer hieronder welke producten je al hebt</p>
+                        </div>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Option 2: Standard package -->
+                <a href="https://graszoden.expert/" target="_blank" style="text-decoration: none;">
+                    <div style="padding: 1rem; background: rgba(242,159,64,0.15); border: 1px solid rgba(242,159,64,0.3); border-radius: 0.75rem; cursor: pointer; transition: all 0.2s;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(242,159,64,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2">
+                                    <circle cx="9" cy="21" r="1"></circle>
+                                    <circle cx="20" cy="21" r="1"></circle>
+                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                </svg>
+                            </div>
+                            <div style="flex: 1;">
+                                <h3 style="font-size: 0.9rem; font-weight: 600; color: white; margin: 0 0 0.25rem;">Standaard pakket bestellen</h3>
+                                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Bestel een kant-en-klaar pakket in onze webshop</p>
+                            </div>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Option 3: Custom package -->
+                <a href="https://www.graszoden.expert/gazon-analyse/" target="_blank" style="text-decoration: none;">
+                    <div style="padding: 1rem; background: rgba(137,184,101,0.1); border: 1px solid rgba(137,184,101,0.2); border-radius: 0.75rem; cursor: pointer; transition: all 0.2s;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(137,184,101,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.35-4.35"></path>
+                                </svg>
+                            </div>
+                            <div style="flex: 1;">
+                                <h3 style="font-size: 0.9rem; font-weight: 600; color: white; margin: 0 0 0.25rem;">Pakket op maat</h3>
+                                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Beantwoord een paar vragen en krijg direct het juiste pakket</p>
+                            </div>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Product Selection Card -->
+        <section id="product-selection-section" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
             <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Welke producten heb je?</h2>
 
             <div id="products-container" style="display: flex; flex-direction: column; gap: 0.75rem;">

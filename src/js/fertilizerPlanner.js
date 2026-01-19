@@ -109,6 +109,17 @@ class FertilizerPlanner {
                 this.resetToEditMode();
             });
         }
+
+        // "Ik heb al producten" option - scroll to product selection
+        const haveProductsOption = document.getElementById('option-have-products');
+        if (haveProductsOption) {
+            haveProductsOption.addEventListener('click', () => {
+                const productSection = document.getElementById('product-selection-section');
+                if (productSection) {
+                    productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
     }
 
     /**
