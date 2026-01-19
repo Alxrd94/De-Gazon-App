@@ -395,13 +395,82 @@ class App {
         document.getElementById('profile-name').textContent = name;
         document.getElementById('profile-email').textContent = email;
         document.getElementById('profile-location').textContent = city + ', ' + country;
-        document.getElementById('profile-avatar').textContent = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+
+        // Load profile photo or show initials
+        const avatarEl = document.getElementById('profile-avatar');
+        const savedPhoto = localStorage.getItem('profilePhoto');
+        if (savedPhoto) {
+            avatarEl.innerHTML = `<img src="${savedPhoto}" style="width: 100%; height: 100%; object-fit: cover;">`;
+        } else {
+            avatarEl.textContent = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+        }
 
         // Load gazon data
         const gazon = JSON.parse(localStorage.getItem('gazonData') || '{}');
         document.getElementById('gazon-area').textContent = (gazon.area || 150) + ' m2';
         document.getElementById('gazon-type').textContent = gazon.type || 'Siergazon';
         document.getElementById('gazon-soil').textContent = gazon.soil || 'Aarde';
+
+        // Setup profile photo upload
+        this.setupProfilePhotoUpload();
+    }
+
+    /**
+     * Setup profile photo upload functionality
+     */
+    setupProfilePhotoUpload() {
+        const avatarContainer = document.getElementById('profile-avatar-container');
+        const fileInput = document.getElementById('profile-photo-input');
+
+        if (!avatarContainer || !fileInput) return;
+
+        avatarContainer.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Check file size (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                this.showSettingsToast('Foto is te groot (max 2MB)');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                // Create image to resize
+                const img = new Image();
+                img.onload = () => {
+                    // Resize to max 200x200
+                    const canvas = document.createElement('canvas');
+                    const size = 200;
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+
+                    // Calculate crop dimensions (center crop to square)
+                    const minDim = Math.min(img.width, img.height);
+                    const sx = (img.width - minDim) / 2;
+                    const sy = (img.height - minDim) / 2;
+
+                    ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, size, size);
+
+                    // Convert to base64 with compression
+                    const base64 = canvas.toDataURL('image/jpeg', 0.8);
+                    localStorage.setItem('profilePhoto', base64);
+
+                    // Update avatar display
+                    const avatarEl = document.getElementById('profile-avatar');
+                    avatarEl.innerHTML = `<img src="${base64}" style="width: 100%; height: 100%; object-fit: cover;">`;
+
+                    this.showSettingsToast('Profielfoto opgeslagen');
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
     }
 
     /**
