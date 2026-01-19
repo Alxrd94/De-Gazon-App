@@ -7,6 +7,15 @@
 .settings-page .toggle-switch.active { background: #89b865; }
 .settings-page .toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.2s; }
 .settings-page .toggle-switch.active::after { transform: translateX(22px); }
+.settings-page .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 300; align-items: center; justify-content: center; padding: 1rem; }
+.settings-page .modal-overlay.active { display: flex; }
+.settings-page .modal-content { background: #2e463b; border-radius: 1rem; padding: 1.5rem; max-width: 340px; width: 100%; border: 1px solid rgba(255,255,255,0.15); }
+.settings-page .modal-input { width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.9rem; margin-bottom: 0.75rem; }
+.settings-page .modal-input:focus { outline: none; border-color: #89b865; }
+.settings-page .modal-select { width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.9rem; margin-bottom: 0.75rem; }
+.settings-page .modal-label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.375rem; }
+.settings-page .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: rgba(137,184,101,0.95); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-size: 0.875rem; z-index: 400; display: none; }
+.settings-page .toast.active { display: block; }
 </style>
 <div class="page settings-page" id="settings-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 100px;">
 
@@ -21,11 +30,11 @@
         <!-- Profiel Card -->
         <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #89b865, #538731); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: white;">JT</div>
+                <div id="profile-avatar" style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #89b865, #538731); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: white;">JT</div>
                 <div style="flex: 1;">
-                    <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0;">Jan de Tuinier</h2>
-                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.6); margin: 0.25rem 0 0;">jan@voorbeeld.nl</p>
-                    <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0.125rem 0 0;">Amsterdam, NL</p>
+                    <h2 id="profile-name" style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0;">Jan de Tuinier</h2>
+                    <p id="profile-email" style="font-size: 0.8rem; color: rgba(255,255,255,0.6); margin: 0.25rem 0 0;">jan@voorbeeld.nl</p>
+                    <p id="profile-location" style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0.125rem 0 0;">Amsterdam, NL</p>
                 </div>
             </div>
             <button id="edit-profile-btn" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.875rem; font-weight: 500; cursor: pointer;">Profiel bewerken</button>
@@ -33,19 +42,22 @@
 
         <!-- Gazon Gegevens Card -->
         <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
-            <h3 style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">Gazon Gegevens</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <h3 style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">Gazon Gegevens</h3>
+                <button id="edit-gazon-btn" style="padding: 0.375rem 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.375rem; color: white; font-size: 0.75rem; cursor: pointer;">Bewerken</button>
+            </div>
             <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Oppervlakte</span>
-                    <span style="color: white; font-weight: 600; font-size: 0.875rem;">150 m2</span>
+                    <span id="gazon-area" style="color: white; font-weight: 600; font-size: 0.875rem;">150 m2</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Type gras</span>
-                    <span style="color: white; font-weight: 600; font-size: 0.875rem;">Siergazon</span>
+                    <span id="gazon-type" style="color: white; font-weight: 600; font-size: 0.875rem;">Siergazon</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Grondsoort</span>
-                    <span style="color: white; font-weight: 600; font-size: 0.875rem;">Klei</span>
+                    <span id="gazon-soil" style="color: white; font-weight: 600; font-size: 0.875rem;">Klei</span>
                 </div>
             </div>
         </section>
@@ -109,6 +121,53 @@
         </section>
 
     </main>
+
+    <!-- Profile Edit Modal -->
+    <div class="modal-overlay" id="profile-modal">
+        <div class="modal-content">
+            <h3 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Profiel bewerken</h3>
+            <label class="modal-label">Naam</label>
+            <input type="text" class="modal-input" id="input-name" placeholder="Je naam">
+            <label class="modal-label">Email</label>
+            <input type="email" class="modal-input" id="input-email" placeholder="je@email.nl">
+            <label class="modal-label">Locatie</label>
+            <input type="text" class="modal-input" id="input-location" placeholder="Stad, Land">
+            <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
+                <button id="cancel-profile" style="flex: 1; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.875rem; cursor: pointer;">Annuleren</button>
+                <button id="save-profile" style="flex: 1; padding: 0.75rem; background: #89b865; border: none; border-radius: 0.5rem; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer;">Opslaan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gazon Edit Modal -->
+    <div class="modal-overlay" id="gazon-modal">
+        <div class="modal-content">
+            <h3 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Gazon gegevens</h3>
+            <label class="modal-label">Oppervlakte (m2)</label>
+            <input type="number" class="modal-input" id="input-area" placeholder="150">
+            <label class="modal-label">Type gras</label>
+            <select class="modal-select" id="input-type">
+                <option value="Siergazon">Siergazon</option>
+                <option value="Speelgazon">Speelgazon</option>
+                <option value="Schaduwgazon">Schaduwgazon</option>
+                <option value="Sportgazon">Sportgazon</option>
+            </select>
+            <label class="modal-label">Grondsoort</label>
+            <select class="modal-select" id="input-soil">
+                <option value="Zand">Zand</option>
+                <option value="Klei">Klei</option>
+                <option value="Leem">Leem</option>
+                <option value="Veen">Veen</option>
+            </select>
+            <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
+                <button id="cancel-gazon" style="flex: 1; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.875rem; cursor: pointer;">Annuleren</button>
+                <button id="save-gazon" style="flex: 1; padding: 0.75rem; background: #89b865; border: none; border-radius: 0.5rem; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer;">Opslaan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="settings-toast"></div>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 0.75rem 0.5rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); background: rgba(26,43,35,0.95); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;">

@@ -279,6 +279,9 @@ class App {
     onSettingsPage() {
         console.log('Settings page loaded');
 
+        // Load saved data
+        this.loadSettingsData();
+
         // Setup logout button
         const logoutBtn = document.getElementById('logout-btn');
         if (logoutBtn) {
@@ -291,7 +294,6 @@ class App {
         // Setup dark mode toggle
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         if (darkModeToggle) {
-            // Load saved preference (default to true/dark mode)
             const isDarkMode = localStorage.getItem('darkMode') !== 'false';
             if (isDarkMode) {
                 darkModeToggle.classList.add('active');
@@ -303,10 +305,11 @@ class App {
                 darkModeToggle.classList.toggle('active');
                 const newValue = darkModeToggle.classList.contains('active');
                 localStorage.setItem('darkMode', newValue.toString());
+                this.showSettingsToast(newValue ? 'Donkere modus aan' : 'Donkere modus uit');
             });
         }
 
-        // Setup push notifications toggle (placeholder)
+        // Setup push notifications toggle with permission
         const pushToggle = document.getElementById('push-toggle');
         if (pushToggle) {
             const pushEnabled = localStorage.getItem('pushEnabled') === 'true';
@@ -314,11 +317,150 @@ class App {
                 pushToggle.classList.add('active');
             }
 
-            pushToggle.addEventListener('click', () => {
-                pushToggle.classList.toggle('active');
-                const newValue = pushToggle.classList.contains('active');
-                localStorage.setItem('pushEnabled', newValue.toString());
+            pushToggle.addEventListener('click', async () => {
+                const isCurrentlyActive = pushToggle.classList.contains('active');
+
+                if (!isCurrentlyActive) {
+                    // Trying to enable notifications
+                    if ('Notification' in window) {
+                        const permission = await Notification.requestPermission();
+                        if (permission === 'granted') {
+                            pushToggle.classList.add('active');
+                            localStorage.setItem('pushEnabled', 'true');
+                            this.showSettingsToast('Notificaties ingeschakeld');
+                        } else {
+                            this.showSettingsToast('Notificaties geweigerd door browser');
+                        }
+                    } else {
+                        this.showSettingsToast('Notificaties niet ondersteund');
+                    }
+                } else {
+                    // Disabling notifications
+                    pushToggle.classList.remove('active');
+                    localStorage.setItem('pushEnabled', 'false');
+                    this.showSettingsToast('Notificaties uitgeschakeld');
+                }
             });
+        }
+
+        // Setup profile edit modal
+        this.setupProfileModal();
+
+        // Setup gazon edit modal
+        this.setupGazonModal();
+    }
+
+    /**
+     * Load saved settings data
+     */
+    loadSettingsData() {
+        // Load profile data
+        const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+        const name = profile.name || 'Jan de Tuinier';
+        const email = profile.email || 'jan@voorbeeld.nl';
+        const location = profile.location || 'Amsterdam, NL';
+
+        document.getElementById('profile-name').textContent = name;
+        document.getElementById('profile-email').textContent = email;
+        document.getElementById('profile-location').textContent = location;
+        document.getElementById('profile-avatar').textContent = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+
+        // Load gazon data
+        const gazon = JSON.parse(localStorage.getItem('gazonData') || '{}');
+        document.getElementById('gazon-area').textContent = (gazon.area || 150) + ' m2';
+        document.getElementById('gazon-type').textContent = gazon.type || 'Siergazon';
+        document.getElementById('gazon-soil').textContent = gazon.soil || 'Klei';
+    }
+
+    /**
+     * Setup profile edit modal
+     */
+    setupProfileModal() {
+        const modal = document.getElementById('profile-modal');
+        const editBtn = document.getElementById('edit-profile-btn');
+        const cancelBtn = document.getElementById('cancel-profile');
+        const saveBtn = document.getElementById('save-profile');
+
+        if (!modal || !editBtn) return;
+
+        editBtn.addEventListener('click', () => {
+            // Pre-fill inputs with current values
+            const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            document.getElementById('input-name').value = profile.name || 'Jan de Tuinier';
+            document.getElementById('input-email').value = profile.email || 'jan@voorbeeld.nl';
+            document.getElementById('input-location').value = profile.location || 'Amsterdam, NL';
+            modal.classList.add('active');
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        saveBtn.addEventListener('click', () => {
+            const name = document.getElementById('input-name').value;
+            const email = document.getElementById('input-email').value;
+            const location = document.getElementById('input-location').value;
+
+            localStorage.setItem('userProfile', JSON.stringify({ name, email, location }));
+            this.loadSettingsData();
+            modal.classList.remove('active');
+            this.showSettingsToast('Profiel opgeslagen');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+    }
+
+    /**
+     * Setup gazon edit modal
+     */
+    setupGazonModal() {
+        const modal = document.getElementById('gazon-modal');
+        const editBtn = document.getElementById('edit-gazon-btn');
+        const cancelBtn = document.getElementById('cancel-gazon');
+        const saveBtn = document.getElementById('save-gazon');
+
+        if (!modal || !editBtn) return;
+
+        editBtn.addEventListener('click', () => {
+            // Pre-fill inputs with current values
+            const gazon = JSON.parse(localStorage.getItem('gazonData') || '{}');
+            document.getElementById('input-area').value = gazon.area || 150;
+            document.getElementById('input-type').value = gazon.type || 'Siergazon';
+            document.getElementById('input-soil').value = gazon.soil || 'Klei';
+            modal.classList.add('active');
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        saveBtn.addEventListener('click', () => {
+            const area = document.getElementById('input-area').value;
+            const type = document.getElementById('input-type').value;
+            const soil = document.getElementById('input-soil').value;
+
+            localStorage.setItem('gazonData', JSON.stringify({ area, type, soil }));
+            this.loadSettingsData();
+            modal.classList.remove('active');
+            this.showSettingsToast('Gazon gegevens opgeslagen');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+    }
+
+    /**
+     * Show toast notification on settings page
+     */
+    showSettingsToast(message) {
+        const toast = document.getElementById('settings-toast');
+        if (toast) {
+            toast.textContent = message;
+            toast.classList.add('active');
+            setTimeout(() => toast.classList.remove('active'), 2500);
         }
     }
 
