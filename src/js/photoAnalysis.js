@@ -117,7 +117,16 @@ class PhotoAnalysis {
     async handlePhotoSelect(e) {
         const file = e.target.files[0];
         if (file) {
-            await this.processPhoto(file);
+            try {
+                await this.processPhoto(file);
+                // Reset input value to allow selecting the same file again
+                e.target.value = '';
+            } catch (error) {
+                console.error('Error handling photo selection:', error);
+                showToast('Fout bij het selecteren van de foto', 'error');
+                // Reset input on error
+                e.target.value = '';
+            }
         }
     }
 
@@ -125,6 +134,12 @@ class PhotoAnalysis {
      * Process and display photo
      */
     async processPhoto(file) {
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            showToast('Selecteer een geldige afbeelding', 'error');
+            return;
+        }
+
         try {
             const compressed = await compressImage(file);
             const url = URL.createObjectURL(compressed);
@@ -140,14 +155,27 @@ class PhotoAnalysis {
             const previewImage = document.getElementById('preview-image');
             if (previewImage) {
                 previewImage.src = url;
+                // Ensure image loads properly
+                previewImage.onload = () => {
+                    console.log('Photo loaded successfully');
+                };
+                previewImage.onerror = () => {
+                    console.error('Error loading photo preview');
+                    showToast('Fout bij het laden van de foto', 'error');
+                };
             }
 
             // Show/hide sections
-            document.getElementById('upload-section').style.display = 'none';
-            document.getElementById('preview-section').style.display = 'block';
+            const uploadSection = document.getElementById('upload-section');
+            const previewSection = document.getElementById('preview-section');
+
+            if (uploadSection) uploadSection.style.display = 'none';
+            if (previewSection) previewSection.style.display = 'block';
+
         } catch (error) {
             console.error('Error processing photo:', error);
             showToast('Fout bij het verwerken van de foto', 'error');
+            throw error; // Re-throw to be caught by handlePhotoSelect
         }
     }
 
