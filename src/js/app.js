@@ -126,6 +126,9 @@ class App {
     onHomePage() {
         console.log('Home page loaded');
 
+        // Load and display user profile
+        this.loadHomeProfile();
+
         // Update points display
         const totalPoints = getTotalPoints();
         const pointsElement = document.getElementById('total-points');
@@ -155,6 +158,22 @@ class App {
         if (pointsBtn) {
             pointsBtn.addEventListener('click', () => router.navigate('loyalty'));
         }
+    }
+
+    /**
+     * Load user profile data for home page
+     */
+    loadHomeProfile() {
+        const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+        const name = profile.name || 'Jan de Tuinier';
+        const city = profile.city || 'Amsterdam';
+        const country = profile.country || 'Nederland';
+
+        const nameEl = document.getElementById('home-user-name');
+        const locationEl = document.getElementById('home-user-location');
+
+        if (nameEl) nameEl.textContent = name;
+        if (locationEl) locationEl.textContent = city + ', ' + country;
     }
 
     /**
