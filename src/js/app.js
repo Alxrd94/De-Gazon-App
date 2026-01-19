@@ -513,63 +513,75 @@ class App {
             }
             styleEl.textContent = `
                 body, .page {
-                    background: #f5f5f5 !important;
+                    background: #f8f9fa !important;
                 }
                 .page {
-                    background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%) !important;
+                    background: linear-gradient(180deg, #f8f9fa 0%, #eef2eb 100%) !important;
                 }
                 .page h1, .page h2, .page h3, .page p, .page span, .page label {
                     color: #2e463b !important;
                 }
                 .page header {
-                    background: rgba(255,255,255,0.9) !important;
-                    border-bottom-color: rgba(46,70,59,0.1) !important;
+                    background: #d4e6c8 !important;
+                    border-bottom-color: rgba(46,70,59,0.15) !important;
                 }
                 .page header h1, .page header p {
                     color: #2e463b !important;
                 }
                 .page section, .page .login-card {
-                    background: rgba(255,255,255,0.95) !important;
-                    border-color: rgba(46,70,59,0.1) !important;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+                    background: #e8f5e0 !important;
+                    border-color: rgba(46,70,59,0.15) !important;
+                    box-shadow: 0 2px 8px rgba(46,70,59,0.1) !important;
+                }
+                .page .modal-overlay {
+                    background: rgba(46,70,59,0.5) !important;
                 }
                 .page .modal-content {
-                    background: #ffffff !important;
+                    background: #e8f5e0 !important;
                     border-color: rgba(46,70,59,0.2) !important;
                 }
+                .page .modal-content h3 {
+                    color: #2e463b !important;
+                }
                 .page .modal-input, .page .modal-select {
-                    background: #f5f5f5 !important;
-                    border-color: rgba(46,70,59,0.2) !important;
+                    background: #ffffff !important;
+                    border-color: rgba(46,70,59,0.25) !important;
                     color: #2e463b !important;
                 }
                 .page .modal-label {
-                    color: #5a7a5a !important;
+                    color: #3a5a47 !important;
                 }
                 .bottom-nav {
-                    background: rgba(255,255,255,0.95) !important;
-                    border-top-color: rgba(46,70,59,0.1) !important;
+                    background: #d4e6c8 !important;
+                    border-top-color: rgba(46,70,59,0.15) !important;
                 }
                 .bottom-nav .nav-item span {
-                    color: #5a7a5a !important;
+                    color: #3a5a47 !important;
                 }
                 .bottom-nav .nav-item.active span {
-                    color: #89b865 !important;
+                    color: #538731 !important;
                 }
                 .bottom-nav .nav-item svg {
-                    stroke: #5a7a5a !important;
+                    stroke: #3a5a47 !important;
                 }
                 .bottom-nav .nav-item.active svg {
-                    stroke: #89b865 !important;
+                    stroke: #538731 !important;
                 }
                 .page button:not(.login-btn):not(.nav-item):not(.badge-btn) {
                     background: #89b865 !important;
                     color: white !important;
                 }
                 .page .toggle-switch {
-                    background: #ccc !important;
+                    background: #b8d4a8 !important;
                 }
                 .page .toggle-switch.active {
                     background: #89b865 !important;
+                }
+                .page a {
+                    color: #538731 !important;
+                }
+                .page .toast {
+                    background: #538731 !important;
                 }
             `;
             document.body.classList.add('light-mode');
