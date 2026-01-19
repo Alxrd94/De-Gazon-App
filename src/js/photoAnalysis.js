@@ -113,6 +113,7 @@ class PhotoAnalysis {
     /**
      * Open camera/file picker with dynamic input element
      * This approach works better on mobile devices and prevents camera hang
+     * NOTE: No capture attribute - lets user choose camera or gallery
      */
     openCamera() {
         console.log('Opening camera/file picker');
@@ -121,7 +122,8 @@ class PhotoAnalysis {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
-        input.capture = 'environment'; // Gebruik back camera op mobiel
+        // GEEN capture attribuut - dit veroorzaakt hang op Android devices
+        // Zonder capture krijgt gebruiker keuzemenu: Camera of Bestanden
 
         let handled = false;
 
@@ -132,7 +134,7 @@ class PhotoAnalysis {
 
             const file = event.target?.files?.[0];
             if (file) {
-                console.log('File selected:', file.name, file.type);
+                console.log('File selected:', file.name, file.type, file.size);
                 this.handlePhotoSelected(file);
             } else {
                 console.log('No file selected');
@@ -152,8 +154,14 @@ class PhotoAnalysis {
             input.remove();
         });
 
-        // Trigger file picker/camera
-        input.click();
+        // Voeg toe aan DOM voor betere compatibiliteit
+        input.style.display = 'none';
+        document.body.appendChild(input);
+
+        // Kleine delay voor sommige browsers
+        setTimeout(() => {
+            input.click();
+        }, 100);
     }
 
     /**
