@@ -1,131 +1,603 @@
-<div class="page" id="fertilizer-planner-page">
-    <header class="page-header">
-        <button class="back-btn" id="back-to-home-planner">
-            <span>←</span>
-        </button>
-        <h1>Bemestingsplanner</h1>
-        <div class="header-spacer"></div>
+<style>
+.planner-page, .planner-page * { opacity: 1 !important; animation: none !important; visibility: visible !important; }
+.planner-page { background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%) !important; color: white !important; }
+.planner-page h1, .planner-page h2, .planner-page h3, .planner-page p, .planner-page span, .planner-page label { color: white !important; }
+.planner-page .nav-item.active span:last-child { color: #f29f40 !important; }
+.planner-page input[type="checkbox"]:checked + label::before { background: #f29f40 !important; border-color: #f29f40 !important; }
+</style>
+<div class="page planner-page" id="fertilizer-planner-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 90px;">
+
+    <!-- Header -->
+    <header style="display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1.25rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <h1 style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0;">Bemestingskalender</h1>
+        <p style="font-size: 0.875rem; color: rgba(255,255,255,0.7); margin: 0.25rem 0 0;">Plan jouw gazonverzorging</p>
     </header>
 
-    <main class="page-content">
-        <section class="planner-intro">
-            <h2>Plan je bemestingsschema</h2>
-            <p>Stel je persoonlijke bemestingsschema samen en exporteer naar je kalender</p>
-        </section>
+    <main style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1.5rem;">
 
-        <section class="lawn-config">
-            <h3>Gazon Configuratie</h3>
-            <div class="form-group">
-                <label for="lawn-size">Gazon oppervlakte (m²)</label>
-                <input type="number" id="lawn-size" min="1" max="10000" value="100" placeholder="bijv. 100">
-            </div>
+        <!-- Product Selection Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Welke producten heb je?</h2>
 
-            <div class="form-group">
-                <label for="grass-type">Gazon type</label>
-                <select id="grass-type">
-                    <option value="ornamental">Siergazon</option>
-                    <option value="utility" selected>Gebruiksgazon</option>
-                    <option value="sports">Sportgazon</option>
-                    <option value="shade">Schaduwgazon</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="soil-type">Grondsoort</label>
-                <select id="soil-type">
-                    <option value="sand">Zandgrond</option>
-                    <option value="clay">Kleigrond</option>
-                    <option value="loam" selected>Leemgrond</option>
-                    <option value="peat">Veengrond</option>
-                </select>
+            <div id="products-container" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- Products will be rendered by JavaScript -->
             </div>
         </section>
 
-        <section class="product-selection">
-            <h3>Kies je producten</h3>
-            <div class="products-list" id="products-list">
-                <div class="product-item">
-                    <input type="checkbox" id="product-spring" value="spring-fertilizer" checked>
-                    <label for="product-spring">
-                        <strong>Voorjaarsbemesting</strong>
-                        <span>NPK 15-5-8 met snelle werking</span>
-                    </label>
-                </div>
-                <div class="product-item">
-                    <input type="checkbox" id="product-summer" value="summer-fertilizer" checked>
-                    <label for="product-summer">
-                        <strong>Zomerbemesting</strong>
-                        <span>NPK 10-5-15 met langzame afgifte</span>
-                    </label>
-                </div>
-                <div class="product-item">
-                    <input type="checkbox" id="product-autumn" value="autumn-fertilizer" checked>
-                    <label for="product-autumn">
-                        <strong>Herfstbemesting</strong>
-                        <span>NPK 5-5-20 voor winterhardheid</span>
-                    </label>
-                </div>
-                <div class="product-item">
-                    <input type="checkbox" id="product-moss" value="moss-control">
-                    <label for="product-moss">
-                        <strong>Mosbestrijding</strong>
-                        <span>Ijzersulfaat gebaseerd</span>
-                    </label>
-                </div>
-                <div class="product-item">
-                    <input type="checkbox" id="product-scarify" value="scarification">
-                    <label for="product-scarify">
-                        <strong>Verticuteren</strong>
-                        <span>Verwijder vilt en mos</span>
-                    </label>
-                </div>
+        <!-- Start Date Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Wanneer start je?</h2>
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <label style="font-size: 0.875rem; color: rgba(255,255,255,0.8);">Pakket ontvangen op:</label>
+                <input type="date" id="start-date" style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.75rem; color: white; font-size: 1rem; outline: none;">
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0.25rem 0 0;">We berekenen het ideale schema vanaf deze datum</p>
             </div>
         </section>
 
-        <section class="schedule-preview">
-            <h3>Je Bemestingsschema</h3>
-            <div id="schedule-timeline" class="schedule-timeline">
-                <!-- Will be populated dynamically -->
+        <!-- Schema Preview Card -->
+        <section id="schema-section" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1); display: none;">
+            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Jouw Persoonlijke Schema</h2>
+
+            <div id="schema-timeline" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- Timeline will be rendered by JavaScript -->
             </div>
         </section>
 
-        <section class="action-buttons-section">
-            <button class="btn-primary btn-large" id="generate-schedule-btn">
-                <span>📅</span>
-                Genereer schema
+        <!-- Action Buttons -->
+        <section style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <button id="generate-btn" onclick="generateSchema()" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(137,184,101,0.3); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <span style="font-size: 1.25rem;">📅</span>
+                Genereer Schema
             </button>
-            <button class="btn-secondary btn-large hidden" id="export-calendar-btn">
-                <span>📤</span>
-                Exporteer naar kalender
-            </button>
-        </section>
 
-        <section class="schedule-details hidden" id="schedule-details">
-            <h3>Schema Details</h3>
-            <div class="calculation-info">
-                <p><strong>Totale oppervlakte:</strong> <span id="calc-size">0</span> m²</p>
-                <p><strong>Aantal behandelingen:</strong> <span id="calc-treatments">0</span></p>
-                <p><strong>Geschatte kosten:</strong> €<span id="calc-cost">0</span></p>
+            <div id="export-buttons" style="display: none; flex-direction: column; gap: 0.75rem;">
+                <button id="export-btn" onclick="exportToCalendar()" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #f29f40, #e08830); border: none; border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(242,159,64,0.3); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <span style="font-size: 1.25rem;">📤</span>
+                    Exporteer naar Kalender
+                </button>
+
+                <button id="save-btn" onclick="saveSchema()" style="width: 100%; padding: 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <span style="font-size: 1.25rem;">💾</span>
+                    Schema Opslaan
+                </button>
             </div>
         </section>
+
+        <!-- Points Animation (hidden by default) -->
+        <div id="points-toast" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(137,184,101,0.95); backdrop-filter: blur(10px); padding: 2rem 3rem; border-radius: 1.5rem; text-align: center; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.4);">
+            <p style="font-size: 2.5rem; margin: 0;">🎉</p>
+            <p style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0.5rem 0;" id="points-text">+50 GazonPunten!</p>
+        </div>
+
     </main>
 
-    <nav class="bottom-nav">
-        <button class="nav-item" data-page="home">
-            <span class="nav-icon">🏠</span>
-            <span class="nav-label">Home</span>
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 0.75rem 0.5rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); background: rgba(26,43,35,0.95); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;">
+        <button class="nav-item" data-page="home" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <span style="font-size: 1.5rem;">🏠</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Home</span>
         </button>
-        <button class="nav-item" data-page="photo-analysis">
-            <span class="nav-icon">📸</span>
-            <span class="nav-label">Analyse</span>
+        <button class="nav-item active" data-page="fertilizer-planner" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <span style="font-size: 1.5rem;">📅</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: #f29f40;">Kalender</span>
         </button>
-        <button class="nav-item active" data-page="fertilizer-planner">
-            <span class="nav-icon">📅</span>
-            <span class="nav-label">Planner</span>
+        <button class="nav-item" data-page="loyalty" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <span style="font-size: 1.5rem;">⭐</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Punten</span>
         </button>
-        <button class="nav-item" data-page="loyalty">
-            <span class="nav-icon">⭐</span>
-            <span class="nav-label">Punten</span>
+        <button class="nav-item" data-page="challenge" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <span style="font-size: 1.5rem;">🏆</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Challenge</span>
+        </button>
+        <button class="nav-item" data-page="settings" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <span style="font-size: 1.5rem;">⚙️</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Settings</span>
         </button>
     </nav>
 </div>
+
+<script>
+// Product rules and data
+const productRules = {
+    gazonkalk: {
+        id: 'gazonkalk',
+        naam: "Gazonkalk",
+        beschrijving: "Optimale bodemstructuur",
+        kleur: "#5BA4A4",
+        maanden: [1, 2, 12],
+        frequentie: 1,
+        regel: "MIN_4_WEKEN_VOOR_MESTSTOF",
+        emoji: "⚪"
+    },
+    magnesiumPlus: {
+        id: 'magnesiumPlus',
+        naam: "Magnesium+",
+        beschrijving: "Intense groene kleur",
+        kleur: "#F29F40",
+        maanden: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+        frequentie: 1,
+        regel: "2_WEKEN_VOOR_EERSTE_MESTSTOF_OF_TEGELIJK",
+        emoji: "✨"
+    },
+    antiMos: {
+        id: 'antiMos',
+        naam: "Anti-Mos",
+        beschrijving: "Mosbestrijding",
+        kleur: "#5B7FC4",
+        maanden: [2, 3, 4, 5, 6, 9, 10, 11],
+        frequentie: 1,
+        regel: "2_WEKEN_VOOR_GRASZAAD",
+        emoji: "🧹"
+    },
+    graszaad: {
+        id: 'graszaad',
+        naam: "Graszaad",
+        beschrijving: "Herstel kale plekken",
+        kleur: "#9B59B6",
+        maanden: [3, 4, 5, 6, 9, 10],
+        frequentie: 1,
+        regel: "2_WEKEN_NA_MOSBEHANDELING",
+        emoji: "🌱"
+    },
+    gazonmest: {
+        id: 'gazonmest',
+        naam: "Gazonmest",
+        beschrijving: "Sterke groei voorjaar/zomer (2x per jaar)",
+        kleur: "#89b865",
+        maanden: [3, 4, 5, 6, 7, 8],
+        frequentie: 2,
+        werkingsduur: 100,
+        regel: "NA_KALK_EN_MAGNESIUM",
+        emoji: "🌿"
+    },
+    najaarsmest: {
+        id: 'najaarsmest',
+        naam: "Najaarsmest",
+        beschrijving: "Winterweerstand (1x per jaar)",
+        kleur: "#89b865",
+        maanden: [9, 10, 11, 12],
+        frequentie: 1,
+        werkingsduur: 100,
+        emoji: "🍂"
+    },
+    bodemactivator: {
+        id: 'bodemactivator',
+        naam: "Bodemactivator",
+        beschrijving: "Bodemverbetering (zandgrond)",
+        kleur: "#C45B7F",
+        maanden: [2, 3, 4, 5, 8, 9, 10, 11],
+        frequentie: 1,
+        regel: null,
+        emoji: "🪱"
+    },
+    startmest: {
+        id: 'startmest',
+        naam: "Startmest",
+        beschrijving: "Bij nieuw gazon",
+        kleur: "#89b865",
+        maanden: [3, 4, 5, 6, 7, 8, 9, 10, 11],
+        frequentie: 1,
+        emoji: "🌾"
+    }
+};
+
+let currentSchema = [];
+let selectedProducts = [];
+
+// Initialize page
+function initPlanner() {
+    renderProducts();
+    setDefaultDate();
+    loadSavedSchema();
+}
+
+// Render product checkboxes
+function renderProducts() {
+    const container = document.getElementById('products-container');
+    container.innerHTML = '';
+
+    Object.values(productRules).forEach(product => {
+        const isChecked = selectedProducts.includes(product.id);
+        const productDiv = document.createElement('div');
+        productDiv.style.cssText = 'display: flex; align-items: center; gap: 0.75rem; padding: 0.875rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem; cursor: pointer; border: 1px solid transparent; transition: all 0.2s;';
+        productDiv.onclick = () => toggleProduct(product.id);
+
+        productDiv.innerHTML = `
+            <div id="check-${product.id}" style="width: 24px; height: 24px; border-radius: 6px; border: 2px solid ${isChecked ? product.kleur : 'rgba(255,255,255,0.3)'}; background: ${isChecked ? product.kleur : 'transparent'}; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                ${isChecked ? '<span style="color: white; font-size: 14px;">✓</span>' : ''}
+            </div>
+            <div style="flex: 1;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="font-size: 1rem;">${product.emoji}</span>
+                    <span style="font-weight: 600; color: white;">${product.naam}</span>
+                </div>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0.25rem 0 0;">${product.beschrijving}</p>
+            </div>
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: ${product.kleur};"></div>
+        `;
+
+        container.appendChild(productDiv);
+    });
+}
+
+// Toggle product selection
+function toggleProduct(productId) {
+    const index = selectedProducts.indexOf(productId);
+    if (index > -1) {
+        selectedProducts.splice(index, 1);
+    } else {
+        selectedProducts.push(productId);
+    }
+    renderProducts();
+
+    // Hide schema if products changed
+    document.getElementById('schema-section').style.display = 'none';
+    document.getElementById('export-buttons').style.display = 'none';
+}
+
+// Set default date to today
+function setDefaultDate() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('start-date').value = today;
+}
+
+// Load saved schema from localStorage
+function loadSavedSchema() {
+    const saved = localStorage.getItem('gazonPakket');
+    if (saved) {
+        const pakket = JSON.parse(saved);
+        selectedProducts = pakket.producten || [];
+        if (pakket.startDatum) {
+            document.getElementById('start-date').value = pakket.startDatum;
+        }
+        renderProducts();
+    }
+}
+
+// Generate schedule based on selected products and date
+function generateSchema() {
+    if (selectedProducts.length === 0) {
+        alert('Selecteer minimaal één product');
+        return;
+    }
+
+    const startDate = new Date(document.getElementById('start-date').value);
+    if (isNaN(startDate.getTime())) {
+        alert('Selecteer een geldige startdatum');
+        return;
+    }
+
+    currentSchema = calculateSchema(selectedProducts, startDate);
+    renderSchema();
+
+    document.getElementById('schema-section').style.display = 'block';
+    document.getElementById('export-buttons').style.display = 'flex';
+
+    // Scroll to schema
+    document.getElementById('schema-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Calculate schema based on product dependencies
+function calculateSchema(products, startDate) {
+    const schema = [];
+    const startMonth = startDate.getMonth() + 1;
+    const startYear = startDate.getFullYear();
+
+    // Helper to find next valid month for a product
+    function findNextValidMonth(product, afterDate) {
+        let checkDate = new Date(afterDate);
+        for (let i = 0; i < 12; i++) {
+            const month = checkDate.getMonth() + 1;
+            if (product.maanden.includes(month)) {
+                return new Date(checkDate);
+            }
+            checkDate.setMonth(checkDate.getMonth() + 1);
+        }
+        return null;
+    }
+
+    // Helper to add days to date
+    function addDays(date, days) {
+        const result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+
+    let currentDate = new Date(startDate);
+    let mestDatum = null;
+    let mosbehandelingDatum = null;
+
+    // 1. Gazonkalk first (4 weeks before fertilizer)
+    if (products.includes('gazonkalk')) {
+        const product = productRules.gazonkalk;
+        const validDate = findNextValidMonth(product, currentDate);
+        if (validDate) {
+            schema.push({
+                datum: validDate,
+                product: product,
+                actie: 'Gazonkalk strooien',
+                instructie: 'Strooi de gazonkalk gelijkmatig over je gazon. Wacht minimaal 4 weken voor je gaat bemesten.'
+            });
+            mestDatum = addDays(validDate, 28); // 4 weeks later
+        }
+    }
+
+    // 2. Magnesium+ (2 weeks before first fertilizer or together)
+    if (products.includes('magnesiumPlus')) {
+        const product = productRules.magnesiumPlus;
+        let magDate;
+        if (mestDatum) {
+            magDate = addDays(mestDatum, -14); // 2 weeks before fertilizer
+        } else {
+            magDate = findNextValidMonth(product, currentDate);
+        }
+        if (magDate && magDate >= currentDate) {
+            schema.push({
+                datum: magDate,
+                product: product,
+                actie: 'Magnesium+ strooien',
+                instructie: 'Strooi Magnesium+ voor een intense groene kleur. Kan ook samen met meststof worden toegepast.'
+            });
+        }
+    }
+
+    // 3. Anti-Mos
+    if (products.includes('antiMos')) {
+        const product = productRules.antiMos;
+        let mosDate = findNextValidMonth(product, currentDate);
+        if (mosDate) {
+            schema.push({
+                datum: mosDate,
+                product: product,
+                actie: 'Anti-Mos behandeling',
+                instructie: 'Behandel mosplekken met Anti-Mos. Verticuteer na 2 weken voor beste resultaat.'
+            });
+            mosbehandelingDatum = mosDate;
+
+            // Add verticuteren reminder
+            schema.push({
+                datum: addDays(mosDate, 14),
+                product: { ...product, naam: 'Verticuteren', emoji: '🪥' },
+                actie: 'Verticuteren na mosbehandeling',
+                instructie: 'Verticuteer het gazon om dode mos te verwijderen. Ideaal moment voor doorzaaien.'
+            });
+        }
+    }
+
+    // 4. Graszaad (2 weeks after moss treatment if both selected)
+    if (products.includes('graszaad')) {
+        const product = productRules.graszaad;
+        let zaadDate;
+        if (mosbehandelingDatum) {
+            zaadDate = addDays(mosbehandelingDatum, 14); // 2 weeks after moss
+        } else {
+            zaadDate = findNextValidMonth(product, currentDate);
+        }
+        if (zaadDate) {
+            schema.push({
+                datum: zaadDate,
+                product: product,
+                actie: 'Graszaad zaaien',
+                instructie: 'Zaai graszaad op kale plekken. Houd de grond vochtig tot kieming (ca. 10-14 dagen).'
+            });
+        }
+    }
+
+    // 5. Bodemactivator (flexible, no dependencies)
+    if (products.includes('bodemactivator')) {
+        const product = productRules.bodemactivator;
+        const validDate = findNextValidMonth(product, currentDate);
+        if (validDate) {
+            schema.push({
+                datum: validDate,
+                product: product,
+                actie: 'Bodemactivator strooien',
+                instructie: 'Strooi bodemactivator voor betere bodemstructuur. Vooral effectief op zandgrond.'
+            });
+        }
+    }
+
+    // 6. Startmest (for new lawns)
+    if (products.includes('startmest')) {
+        const product = productRules.startmest;
+        const validDate = findNextValidMonth(product, currentDate);
+        if (validDate) {
+            schema.push({
+                datum: validDate,
+                product: product,
+                actie: 'Startmest strooien',
+                instructie: 'Strooi startmest bij nieuw aangelegde gazons voor snelle ontwikkeling.'
+            });
+        }
+    }
+
+    // 7. Gazonmest (after kalk and magnesium, 2x per year)
+    if (products.includes('gazonmest')) {
+        const product = productRules.gazonmest;
+        let firstMestDate = mestDatum || findNextValidMonth(product, currentDate);
+
+        if (firstMestDate) {
+            // First application
+            schema.push({
+                datum: firstMestDate,
+                product: product,
+                actie: 'Gazonmest - 1e bemesting',
+                instructie: 'Eerste bemesting van het seizoen. Strooi gelijkmatig over het gazon.'
+            });
+
+            // Second application after 100 days
+            const secondMestDate = addDays(firstMestDate, 100);
+            if (product.maanden.includes(secondMestDate.getMonth() + 1)) {
+                schema.push({
+                    datum: secondMestDate,
+                    product: product,
+                    actie: 'Gazonmest - 2e bemesting',
+                    instructie: 'Tweede bemesting van het seizoen voor aanhoudende groei.'
+                });
+            }
+        }
+    }
+
+    // 8. Najaarsmest
+    if (products.includes('najaarsmest')) {
+        const product = productRules.najaarsmest;
+        // Find autumn month
+        let najaarsDate = new Date(startYear, 8, 15); // September
+        if (najaarsDate < currentDate) {
+            najaarsDate = new Date(startYear + 1, 8, 15);
+        }
+
+        schema.push({
+            datum: najaarsDate,
+            product: product,
+            actie: 'Najaarsmest strooien',
+            instructie: 'Strooi najaarsmest voor winterhardheid en een sterke start in het voorjaar.'
+        });
+    }
+
+    // Sort by date
+    schema.sort((a, b) => a.datum - b.datum);
+
+    return schema;
+}
+
+// Render schema timeline
+function renderSchema() {
+    const container = document.getElementById('schema-timeline');
+    container.innerHTML = '';
+
+    if (currentSchema.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.6);">Geen schema gegenereerd</p>';
+        return;
+    }
+
+    const months = ['Jan', 'Feb', 'Mrt', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'];
+
+    currentSchema.forEach((item, index) => {
+        const date = item.datum;
+        const dateStr = `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.style.cssText = 'display: flex; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem; border-left: 4px solid ' + item.product.kleur + ';';
+
+        itemDiv.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; min-width: 50px;">
+                <span style="font-size: 1.5rem;">${item.product.emoji}</span>
+                <span style="font-size: 0.625rem; color: rgba(255,255,255,0.5); margin-top: 0.25rem;">${dateStr}</span>
+            </div>
+            <div style="flex: 1;">
+                <p style="font-weight: 600; color: white; margin: 0 0 0.25rem;">${item.actie}</p>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">${item.instructie}</p>
+            </div>
+        `;
+
+        container.appendChild(itemDiv);
+    });
+}
+
+// Export to calendar (ICS format)
+function exportToCalendar() {
+    if (currentSchema.length === 0) {
+        alert('Genereer eerst een schema');
+        return;
+    }
+
+    let icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//De Gazon App//Bemestingskalender//NL
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Gazon Bemestingsschema
+`;
+
+    currentSchema.forEach((item, index) => {
+        const date = item.datum;
+        const dateStr = date.toISOString().split('T')[0].replace(/-/g, '');
+        const uid = `gazon-${Date.now()}-${index}@degazonapp`;
+
+        // Escape special characters for ICS
+        const summary = item.actie.replace(/,/g, '\\,');
+        const description = item.instructie.replace(/,/g, '\\,').replace(/\n/g, '\\n');
+
+        icsContent += `BEGIN:VEVENT
+UID:${uid}
+DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z
+DTSTART;VALUE=DATE:${dateStr}
+SUMMARY:${item.product.emoji} ${summary}
+DESCRIPTION:${description}
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Morgen: ${summary}
+END:VALARM
+END:VEVENT
+`;
+    });
+
+    icsContent += 'END:VCALENDAR';
+
+    // Download file
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'gazon-bemestingsschema.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Save schema to localStorage
+function saveSchema() {
+    const startDate = document.getElementById('start-date').value;
+    const startDateObj = new Date(startDate);
+    const expireDate = new Date(startDateObj);
+    expireDate.setMonth(expireDate.getMonth() + 11);
+
+    const pakket = {
+        producten: selectedProducts,
+        startDatum: startDate,
+        verlooptOp: expireDate.toISOString().split('T')[0],
+        aangemaaktOp: new Date().toISOString().split('T')[0],
+        schema: currentSchema.map(item => ({
+            datum: item.datum.toISOString().split('T')[0],
+            product: item.product.id,
+            actie: item.actie
+        }))
+    };
+
+    // Check if updating or creating new
+    const existing = localStorage.getItem('gazonPakket');
+    const isUpdate = existing !== null;
+
+    localStorage.setItem('gazonPakket', JSON.stringify(pakket));
+
+    // Award points
+    const pointsToAdd = isUpdate ? 25 : 50;
+    let currentPoints = parseInt(localStorage.getItem('gazonPunten') || '0');
+    currentPoints += pointsToAdd;
+    localStorage.setItem('gazonPunten', currentPoints.toString());
+
+    // Show points animation
+    showPointsToast(pointsToAdd);
+}
+
+// Show points toast animation
+function showPointsToast(points) {
+    const toast = document.getElementById('points-toast');
+    const text = document.getElementById('points-text');
+    text.textContent = `+${points} GazonPunten!`;
+    toast.style.display = 'block';
+
+    setTimeout(() => {
+        toast.style.display = 'none';
+    }, 2500);
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPlanner);
+} else {
+    initPlanner();
+}
+</script>
