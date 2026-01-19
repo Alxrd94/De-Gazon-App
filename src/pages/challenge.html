@@ -1,0 +1,399 @@
+<div class="page challenge-page" style="background: #2e463b; min-height: 100vh; padding-bottom: 5rem;">
+    <header style="display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1.25rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <h1 style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0;">Challenge</h1>
+        <p style="font-size: 0.875rem; color: rgba(255,255,255,0.7); margin: 0.25rem 0 0;">De mooiste gazons van de Benelux</p>
+    </header>
+
+    <main style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem;">
+
+        <!-- SECTIE 1: Wekelijkse Challenge -->
+        <section id="weekly-challenge-section" style="background: linear-gradient(135deg, rgba(242,159,64,0.2), rgba(242,159,64,0.05)); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(242,159,64,0.3);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                <span style="font-size: 1.25rem;">🏆</span>
+                <h2 style="font-size: 1rem; font-weight: 700; color: #f29f40; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Challenge van de Week</h2>
+            </div>
+
+            <!-- Previous Winner -->
+            <div id="previous-winner" style="display: none; background: rgba(255,255,255,0.08); border-radius: 0.75rem; padding: 0.75rem; margin-bottom: 1rem;">
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>👑</span>
+                    <span>Winnaar vorige week: <strong id="winner-name" style="color: white;">Pieter K.</strong> uit <span id="winner-city">Amsterdam</span> (<span id="winner-score">4.9</span>⭐)</span>
+                </p>
+            </div>
+
+            <!-- Current Theme -->
+            <div style="text-align: center; margin-bottom: 1.25rem;">
+                <span id="challenge-icon" style="font-size: 2rem; display: block; margin-bottom: 0.5rem;">✂️</span>
+                <p id="challenge-theme" style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0;">"Laat je gazon zien na het maaien!"</p>
+            </div>
+
+            <!-- Stats Row -->
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.25rem;">
+                <div style="display: flex; align-items: center; gap: 0.375rem;">
+                    <span style="color: rgba(255,255,255,0.6);">⏰</span>
+                    <span id="challenge-timer" style="font-size: 0.875rem; color: rgba(255,255,255,0.9);">Nog 3 dagen</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.375rem;">
+                    <span style="color: rgba(255,255,255,0.6);">👥</span>
+                    <span id="challenge-participants" style="font-size: 0.875rem; color: rgba(255,255,255,0.9);">47 deelnemers</span>
+                </div>
+            </div>
+
+            <!-- Prizes -->
+            <div style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1.25rem;">
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0 0 0.5rem; display: flex; align-items: center; gap: 0.375rem;">
+                    <span>🎁</span> Winnaar krijgt:
+                </p>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.375rem;">
+                    <li style="font-size: 0.8rem; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: #89b865;">•</span> 100 GazonPunten
+                    </li>
+                    <li style="font-size: 0.8rem; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: #89b865;">•</span> "Gazon van de Week" badge
+                    </li>
+                    <li style="font-size: 0.8rem; color: rgba(255,255,255,0.9); display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: #89b865;">•</span> Uitgelicht op de homepage
+                    </li>
+                </ul>
+            </div>
+
+            <!-- CTA Button -->
+            <button id="join-challenge-btn" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #f29f40, #e08830); border: none; border-radius: 0.75rem; color: white; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(242,159,64,0.3);">
+                DOE MEE
+            </button>
+        </section>
+
+        <!-- SECTIE 2: Streak & Check-in -->
+        <section id="streak-section" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                <span style="font-size: 1.25rem;">🔥</span>
+                <h2 style="font-size: 1rem; font-weight: 700; color: white; margin: 0;">JOUW STREAK</h2>
+            </div>
+
+            <!-- Current Streak Display -->
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <div id="streak-flames" style="font-size: 1.5rem; letter-spacing: 4px; margin-bottom: 0.25rem;">🔥🔥🔥🔥</div>
+                <p style="margin: 0; color: white; font-size: 1.25rem; font-weight: 700;"><span id="streak-count">4</span> weken</p>
+            </div>
+
+            <p style="text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin: 0 0 1rem;">Check elke week in om je streak te behouden!</p>
+
+            <!-- Next Milestone -->
+            <div style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1rem;">
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0 0 0.5rem;">Volgende milestone: <span id="next-milestone-weeks">8</span> weken = <span id="next-milestone-points">50</span> pts</p>
+                <div style="height: 8px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden;">
+                    <div id="streak-progress-bar" style="width: 50%; height: 100%; background: linear-gradient(90deg, #f29f40, #e08830); border-radius: 4px; transition: width 0.5s ease;"></div>
+                </div>
+                <p style="text-align: center; font-size: 0.7rem; color: rgba(255,255,255,0.6); margin: 0.375rem 0 0;"><span id="streak-progress-text">4/8</span> weken</p>
+            </div>
+
+            <!-- Check-in Button -->
+            <button id="checkin-btn" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <span>✓</span> CHECK IN DEZE WEEK
+            </button>
+        </section>
+
+        <!-- SECTIE 3: Community Milestone -->
+        <section id="community-section" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                <span style="font-size: 1.25rem;">🌍</span>
+                <h2 style="font-size: 1rem; font-weight: 700; color: white; margin: 0;">COMMUNITY GOAL</h2>
+            </div>
+
+            <p style="text-align: center; font-size: 1rem; font-weight: 600; color: white; margin: 0 0 1rem;">Samen <span id="community-goal">1.000</span> gazons delen!</p>
+
+            <div style="height: 12px; background: rgba(255,255,255,0.15); border-radius: 6px; overflow: hidden; margin-bottom: 0.5rem;">
+                <div id="community-progress-bar" style="width: 84.7%; height: 100%; background: linear-gradient(90deg, #89b865, #538731); border-radius: 6px; transition: width 0.5s ease;"></div>
+            </div>
+            <p style="text-align: center; font-size: 0.875rem; color: rgba(255,255,255,0.9); margin: 0 0 1rem;"><span id="community-current">847</span>/<span id="community-target">1000</span></p>
+
+            <div style="background: rgba(137,184,101,0.15); border-radius: 0.5rem; padding: 0.75rem; margin-bottom: 0.75rem;">
+                <p style="font-size: 0.8rem; color: #89b865; margin: 0; text-align: center;">Bij 1000: Iedereen krijgt 25 bonus punten!</p>
+            </div>
+
+            <p style="text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Jouw bijdrage: <span id="user-contribution">3</span> foto's gedeeld</p>
+        </section>
+
+        <!-- SECTIE 4: Seizoensbadges -->
+        <section id="seasonal-section" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                <span style="font-size: 1.25rem;">🏅</span>
+                <h2 style="font-size: 1rem; font-weight: 700; color: white; margin: 0;">SEIZOENSBADGES 2025</h2>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+                <!-- Lente Starter -->
+                <div id="badge-lente" class="seasonal-badge" style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; text-align: center; border: 1px solid rgba(255,255,255,0.1); opacity: 0.5;">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">🌱</div>
+                    <p style="font-size: 0.75rem; font-weight: 600; color: white; margin: 0 0 0.25rem;">Lente Starter</p>
+                    <p style="font-size: 0.65rem; color: rgba(255,255,255,0.6); margin: 0;">Deel foto in maart/april</p>
+                </div>
+                <!-- Zomer Ster -->
+                <div id="badge-zomer" class="seasonal-badge" style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; text-align: center; border: 1px solid rgba(255,255,255,0.1); opacity: 0.5;">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">☀️</div>
+                    <p style="font-size: 0.75rem; font-weight: 600; color: white; margin: 0 0 0.25rem;">Zomer Ster</p>
+                    <p style="font-size: 0.65rem; color: rgba(255,255,255,0.6); margin: 0;">5 sterren in juni-aug</p>
+                </div>
+                <!-- Herfst Held -->
+                <div id="badge-herfst" class="seasonal-badge" style="background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; text-align: center; border: 1px solid rgba(255,255,255,0.1); opacity: 0.5;">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">🍂</div>
+                    <p style="font-size: 0.75rem; font-weight: 600; color: white; margin: 0 0 0.25rem;">Herfst Held</p>
+                    <p style="font-size: 0.65rem; color: rgba(255,255,255,0.6); margin: 0;">Export schema sep/okt</p>
+                </div>
+                <!-- Winter Warrior -->
+                <div id="badge-winter" class="seasonal-badge earned" style="background: rgba(137,184,101,0.15); border-radius: 0.75rem; padding: 1rem; text-align: center; border: 1px solid rgba(137,184,101,0.3);">
+                    <div style="font-size: 1.5rem; margin-bottom: 0.25rem;">❄️</div>
+                    <p style="font-size: 0.75rem; font-weight: 600; color: white; margin: 0 0 0.25rem;">Winter Warrior</p>
+                    <p style="font-size: 0.65rem; color: #89b865; margin: 0;">✓ Verdiend!</p>
+                </div>
+            </div>
+
+            <!-- FOMO Timer -->
+            <div id="seasonal-timer" style="background: rgba(242,159,64,0.15); border-radius: 0.5rem; padding: 0.75rem; border: 1px solid rgba(242,159,64,0.2);">
+                <p style="font-size: 0.8rem; color: #f29f40; margin: 0; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.375rem;">
+                    <span>⏰</span>
+                    <span>"Lente Starter" nog <span id="seasonal-days-left">71</span> dagen!</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTIE 5: Tab Navigatie -->
+        <section id="feed-section">
+            <div style="display: flex; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem;">
+                <button class="feed-tab active" data-tab="nieuwste" style="flex: 1; padding: 0.75rem; background: none; border: none; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer; border-bottom: 2px solid #f29f40;">Nieuwste</button>
+                <button class="feed-tab" data-tab="populair" style="flex: 1; padding: 0.75rem; background: none; border: none; color: rgba(255,255,255,0.6); font-size: 0.875rem; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent;">Populair</button>
+                <button class="feed-tab" data-tab="regio" style="flex: 1; padding: 0.75rem; background: none; border: none; color: rgba(255,255,255,0.6); font-size: 0.875rem; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent;">Mijn Regio</button>
+            </div>
+
+            <!-- Feed Container -->
+            <div id="feed-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Posts will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- SECTIE 7: Leaderboard -->
+        <section id="leaderboard-section" style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="font-size: 1.25rem;">🏆</span>
+                    <h2 style="font-size: 1rem; font-weight: 700; color: white; margin: 0;">TOP GAZONS</h2>
+                </div>
+                <select id="leaderboard-filter" style="padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.75rem; cursor: pointer;">
+                    <option value="nl">Nederland</option>
+                    <option value="be">België</option>
+                    <option value="de">Duitsland</option>
+                    <option value="lu">Luxemburg</option>
+                    <option value="all">Alle landen</option>
+                </select>
+            </div>
+
+            <div id="leaderboard-list" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <!-- Leaderboard entries will be dynamically inserted here -->
+            </div>
+
+            <!-- User's position -->
+            <div id="user-position" style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; background: rgba(137,184,101,0.15); border-radius: 0.5rem;">
+                    <span style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); width: 24px;">23.</span>
+                    <span style="font-size: 0.875rem; color: white; flex: 1;">Jij - <span id="user-leaderboard-city">De Rijp</span></span>
+                    <span style="font-size: 0.875rem; color: #f29f40; font-weight: 600;"><span id="user-leaderboard-score">3.8</span> ⭐</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Action Button -->
+    <button id="fab-upload" style="position: fixed; bottom: 6rem; right: 1.25rem; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #89b865, #538731); border: none; box-shadow: 0 4px 20px rgba(137,184,101,0.4); cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+        </svg>
+    </button>
+
+    <!-- Upload Modal -->
+    <div id="upload-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: flex-start; justify-content: center; padding: 1rem; overflow-y: auto;">
+        <div style="background: #2e463b; border-radius: 1.25rem; padding: 1.5rem; max-width: 400px; width: 100%; margin: 2rem 0; border: 1px solid rgba(255,255,255,0.1);">
+            <!-- Modal Header -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+                <h3 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0;">Deel jouw gazon</h3>
+                <button id="close-upload-modal" style="background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; padding: 0.25rem;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <!-- Photo Upload Area -->
+            <div id="modal-upload-area" style="border: 2px dashed rgba(255,255,255,0.2); border-radius: 1rem; padding: 2rem; text-align: center; margin-bottom: 1.25rem; cursor: pointer;">
+                <div id="modal-upload-placeholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" style="margin: 0 auto 0.75rem;">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                    <p style="font-size: 0.875rem; color: rgba(255,255,255,0.6); margin: 0;">Klik om foto te uploaden</p>
+                </div>
+                <img id="modal-preview-image" style="display: none; max-width: 100%; border-radius: 0.5rem;">
+            </div>
+            <input type="file" id="modal-photo-input" accept="image/*" style="display: none;">
+
+            <!-- Challenge Checkbox -->
+            <div style="background: rgba(242,159,64,0.1); border-radius: 0.75rem; padding: 1rem; margin-bottom: 1.25rem; border: 1px solid rgba(242,159,64,0.2);">
+                <label style="display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer;">
+                    <input type="checkbox" id="join-weekly-challenge" style="width: 20px; height: 20px; margin-top: 2px; accent-color: #f29f40;">
+                    <div>
+                        <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0 0 0.25rem;">Doe mee aan de wekelijkse challenge</p>
+                        <p id="modal-challenge-theme" style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0;">"Laat je gazon zien na het maaien!"</p>
+                    </div>
+                </label>
+            </div>
+
+            <!-- Products Used -->
+            <div style="margin-bottom: 1.25rem;">
+                <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0 0 0.75rem;">Welke producten gebruik je?</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <label class="product-checkbox" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="checkbox" name="product" value="gazonmest" style="accent-color: #89b865;">
+                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.9);">Gazonmest</span>
+                    </label>
+                    <label class="product-checkbox" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="checkbox" name="product" value="najaarsmest" style="accent-color: #89b865;">
+                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.9);">Najaarsmest</span>
+                    </label>
+                    <label class="product-checkbox" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="checkbox" name="product" value="gazonkalk" style="accent-color: #89b865;">
+                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.9);">Gazonkalk</span>
+                    </label>
+                    <label class="product-checkbox" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="checkbox" name="product" value="graszaad" style="accent-color: #89b865;">
+                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.9);">Graszaad</span>
+                    </label>
+                    <label class="product-checkbox" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="checkbox" name="product" value="magnesium" style="accent-color: #89b865;">
+                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.9);">Magnesium+</span>
+                    </label>
+                    <label class="product-checkbox" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="checkbox" name="product" value="antimos" style="accent-color: #89b865;">
+                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.9);">Anti-Mos</span>
+                    </label>
+                    <label class="product-checkbox" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.5rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="checkbox" name="product" value="bodemactivator" style="accent-color: #89b865;">
+                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.9);">Bodemactivator</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Mowing Frequency -->
+            <div style="margin-bottom: 1.25rem;">
+                <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0 0 0.75rem;">Hoe vaak maai je?</p>
+                <select id="mow-frequency" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.875rem;">
+                    <option value="">Selecteer...</option>
+                    <option value="1x per 2 weken">1x per 2 weken</option>
+                    <option value="1x per week">1x per week</option>
+                    <option value="2x per week">2x per week</option>
+                    <option value="3x per week of meer">3x per week of meer</option>
+                </select>
+            </div>
+
+            <!-- Verticutated -->
+            <div style="margin-bottom: 1.5rem;">
+                <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0 0 0.75rem;">Heb je dit jaar geverticuteerd?</p>
+                <div style="display: flex; gap: 1rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="radio" name="verticulated" value="yes" style="accent-color: #89b865;">
+                        <span style="font-size: 0.875rem; color: rgba(255,255,255,0.9);">Ja</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="radio" name="verticulated" value="no" style="accent-color: #89b865;">
+                        <span style="font-size: 0.875rem; color: rgba(255,255,255,0.9);">Nee</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Garden Size -->
+            <div style="margin-bottom: 1.5rem;">
+                <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0 0 0.75rem;">Gazon oppervlakte (m²)</p>
+                <input type="number" id="garden-size" placeholder="bijv. 150" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.875rem;">
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 0.75rem;">
+                <button id="submit-post-btn" style="flex: 1; padding: 1rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer;">Plaatsen</button>
+                <button id="cancel-upload-btn" style="flex: 1; padding: 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer;">Annuleren</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div id="rating-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem;">
+        <div style="background: #2e463b; border-radius: 1rem; padding: 1.5rem; max-width: 320px; width: 100%; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 0.5rem;">Beoordeel dit gazon</h3>
+            <p style="font-size: 0.8rem; color: rgba(255,255,255,0.7); margin: 0 0 1.25rem;">Hoe mooi vind je dit gazon?</p>
+
+            <div id="rating-stars-input" style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+                <button class="star-btn" data-rating="1" style="background: none; border: none; font-size: 2rem; color: rgba(255,255,255,0.3); cursor: pointer; transition: color 0.2s, transform 0.2s;">★</button>
+                <button class="star-btn" data-rating="2" style="background: none; border: none; font-size: 2rem; color: rgba(255,255,255,0.3); cursor: pointer; transition: color 0.2s, transform 0.2s;">★</button>
+                <button class="star-btn" data-rating="3" style="background: none; border: none; font-size: 2rem; color: rgba(255,255,255,0.3); cursor: pointer; transition: color 0.2s, transform 0.2s;">★</button>
+                <button class="star-btn" data-rating="4" style="background: none; border: none; font-size: 2rem; color: rgba(255,255,255,0.3); cursor: pointer; transition: color 0.2s, transform 0.2s;">★</button>
+                <button class="star-btn" data-rating="5" style="background: none; border: none; font-size: 2rem; color: rgba(255,255,255,0.3); cursor: pointer; transition: color 0.2s, transform 0.2s;">★</button>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem;">
+                <button id="submit-rating-btn" style="flex: 1; padding: 0.875rem; background: linear-gradient(135deg, #89b865, #538731); border: none; border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer; opacity: 0.5;" disabled>Beoordeel</button>
+                <button id="cancel-rating-btn" style="flex: 1; padding: 0.875rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.75rem; color: white; font-weight: 600; cursor: pointer;">Annuleren</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Points Animation Overlay -->
+    <div id="points-animation" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 300; align-items: center; justify-content: center;">
+        <div style="text-align: center;">
+            <div id="points-amount" style="font-size: 4rem; font-weight: 800; color: #89b865; text-shadow: 0 0 30px rgba(137,184,101,0.5);">+25</div>
+            <p style="font-size: 1.25rem; color: white; margin: 0.5rem 0 0;">GazonPunten!</p>
+        </div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div id="confetti-container" style="position: fixed; inset: 0; pointer-events: none; z-index: 250; overflow: hidden;"></div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 0; right: 0; background: rgba(46, 70, 59, 0.98); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom)); display: flex; justify-content: space-around; align-items: center; z-index: 50;">
+        <button class="nav-item" data-page="home" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Home</span>
+        </button>
+        <button class="nav-item" data-page="fertilizer-planner" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Kalender</span>
+        </button>
+        <button class="nav-item active" data-page="challenge" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                <path d="M4 22h16"></path>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+            </svg>
+            <span style="font-size: 0.625rem; font-weight: 500; color: #f29f40;">Challenge</span>
+        </button>
+        <button class="nav-item" data-page="photo-analysis" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Analyse</span>
+        </button>
+        <button class="nav-item" data-page="settings" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Settings</span>
+        </button>
+    </nav>
+</div>
