@@ -8,6 +8,7 @@ import auth from './auth.js';
 import photoAnalysis from './photoAnalysis.js';
 import fertilizerPlanner from './fertilizerPlanner.js';
 import loyaltyManager, { getTotalPoints } from './loyalty.js';
+import challenge from './challenge.js';
 
 class App {
     constructor() {
@@ -47,6 +48,7 @@ class App {
         router.register('home', './src/pages/home.html', () => this.onHomePage());
         router.register('photo-analysis', './src/pages/photo-analysis.html', () => this.onPhotoAnalysisPage());
         router.register('fertilizer-planner', './src/pages/fertilizer-planner.html', () => this.onFertilizerPlannerPage());
+        router.register('challenge', './src/pages/challenge.html', () => this.onChallengePage());
         router.register('loyalty', './src/pages/loyalty.html', () => this.onLoyaltyPage());
         router.register('settings', './src/pages/settings.html', () => this.onSettingsPage());
 
@@ -287,6 +289,15 @@ class App {
         console.log('Fertilizer planner page loaded');
         this.checkAndApplyTheme();
         fertilizerPlanner.init();
+    }
+
+    /**
+     * Challenge page loaded callback
+     */
+    onChallengePage() {
+        console.log('Challenge page loaded');
+        this.checkAndApplyTheme();
+        challenge.init();
     }
 
     /**
