@@ -130,8 +130,15 @@
             <input type="text" class="modal-input" id="input-name" placeholder="Je naam">
             <label class="modal-label">Email</label>
             <input type="email" class="modal-input" id="input-email" placeholder="je@email.nl">
-            <label class="modal-label">Locatie</label>
-            <input type="text" class="modal-input" id="input-location" placeholder="Stad, Land">
+            <label class="modal-label">Stad</label>
+            <input type="text" class="modal-input" id="input-city" placeholder="Amsterdam">
+            <label class="modal-label">Land</label>
+            <select class="modal-select" id="input-country">
+                <option value="Nederland">Nederland</option>
+                <option value="België">België</option>
+                <option value="Duitsland">Duitsland</option>
+                <option value="Luxemburg">Luxemburg</option>
+            </select>
             <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
                 <button id="cancel-profile" style="flex: 1; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.875rem; cursor: pointer;">Annuleren</button>
                 <button id="save-profile" style="flex: 1; padding: 0.75rem; background: #89b865; border: none; border-radius: 0.5rem; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer;">Opslaan</button>
@@ -154,9 +161,9 @@
             </select>
             <label class="modal-label">Grondsoort</label>
             <select class="modal-select" id="input-soil">
-                <option value="Zand">Zand</option>
+                <option value="Aarde">Aarde</option>
                 <option value="Klei">Klei</option>
-                <option value="Leem">Leem</option>
+                <option value="Zand">Zand</option>
                 <option value="Veen">Veen</option>
             </select>
             <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">

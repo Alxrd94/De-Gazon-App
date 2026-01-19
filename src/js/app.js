@@ -358,18 +358,19 @@ class App {
         const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
         const name = profile.name || 'Jan de Tuinier';
         const email = profile.email || 'jan@voorbeeld.nl';
-        const location = profile.location || 'Amsterdam, NL';
+        const city = profile.city || 'Amsterdam';
+        const country = profile.country || 'Nederland';
 
         document.getElementById('profile-name').textContent = name;
         document.getElementById('profile-email').textContent = email;
-        document.getElementById('profile-location').textContent = location;
+        document.getElementById('profile-location').textContent = city + ', ' + country;
         document.getElementById('profile-avatar').textContent = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 
         // Load gazon data
         const gazon = JSON.parse(localStorage.getItem('gazonData') || '{}');
         document.getElementById('gazon-area').textContent = (gazon.area || 150) + ' m2';
         document.getElementById('gazon-type').textContent = gazon.type || 'Siergazon';
-        document.getElementById('gazon-soil').textContent = gazon.soil || 'Klei';
+        document.getElementById('gazon-soil').textContent = gazon.soil || 'Aarde';
     }
 
     /**
@@ -388,7 +389,8 @@ class App {
             const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
             document.getElementById('input-name').value = profile.name || 'Jan de Tuinier';
             document.getElementById('input-email').value = profile.email || 'jan@voorbeeld.nl';
-            document.getElementById('input-location').value = profile.location || 'Amsterdam, NL';
+            document.getElementById('input-city').value = profile.city || 'Amsterdam';
+            document.getElementById('input-country').value = profile.country || 'Nederland';
             modal.classList.add('active');
         });
 
@@ -399,9 +401,10 @@ class App {
         saveBtn.addEventListener('click', () => {
             const name = document.getElementById('input-name').value;
             const email = document.getElementById('input-email').value;
-            const location = document.getElementById('input-location').value;
+            const city = document.getElementById('input-city').value;
+            const country = document.getElementById('input-country').value;
 
-            localStorage.setItem('userProfile', JSON.stringify({ name, email, location }));
+            localStorage.setItem('userProfile', JSON.stringify({ name, email, city, country }));
             this.loadSettingsData();
             modal.classList.remove('active');
             this.showSettingsToast('Profiel opgeslagen');
@@ -428,7 +431,7 @@ class App {
             const gazon = JSON.parse(localStorage.getItem('gazonData') || '{}');
             document.getElementById('input-area').value = gazon.area || 150;
             document.getElementById('input-type').value = gazon.type || 'Siergazon';
-            document.getElementById('input-soil').value = gazon.soil || 'Klei';
+            document.getElementById('input-soil').value = gazon.soil || 'Aarde';
             modal.classList.add('active');
         });
 
