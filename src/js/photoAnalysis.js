@@ -293,36 +293,78 @@ class PhotoAnalysis {
      * Start the analysis process
      */
     async startAnalysis() {
-        if (!this.currentPhoto) return;
+        console.log('=== START ANALYSIS ===');
 
-        // Hide preview, show analysis steps
-        document.getElementById('preview-section').style.display = 'none';
-        document.getElementById('analysis-steps-section').style.display = 'block';
+        if (!this.currentPhoto) {
+            console.error('No photo to analyze!');
+            showToast('Geen foto geselecteerd', 'error');
+            return;
+        }
 
-        // Run analysis steps animation
-        await this.animateAnalysisSteps();
+        console.log('Current photo:', this.currentPhoto);
 
-        // Hide steps, show chat results
-        document.getElementById('analysis-steps-section').style.display = 'none';
+        try {
+            // Hide preview, show analysis steps
+            const previewSection = document.getElementById('preview-section');
+            const analysisStepsSection = document.getElementById('analysis-steps-section');
 
-        // Generate analysis
-        this.currentAnalysis = this.pickRandomAnalysis();
+            if (!analysisStepsSection) {
+                console.error('analysis-steps-section not found!');
+                showToast('Er is een probleem met de pagina. Herlaad de app.', 'error');
+                return;
+            }
 
-        // Show AI chat messages
-        await this.displayChatResults(this.currentAnalysis);
+            if (previewSection) previewSection.style.display = 'none';
+            analysisStepsSection.style.display = 'block';
 
-        // Award points (max 1x per day)
-        this.awardPoints();
+            console.log('Starting animation steps...');
+            // Run analysis steps animation
+            await this.animateAnalysisSteps();
+            console.log('Animation steps completed!');
 
-        // Show follow-up section and new analysis button
-        document.getElementById('follow-up-section').style.display = 'block';
-        document.getElementById('new-analysis-btn').style.display = 'block';
+            // Hide steps, show chat results
+            analysisStepsSection.style.display = 'none';
+
+            // Generate analysis
+            console.log('Picking random analysis...');
+            this.currentAnalysis = this.pickRandomAnalysis();
+            console.log('Selected analysis:', this.currentAnalysis);
+
+            if (!this.currentAnalysis) {
+                console.error('No analysis data!');
+                showToast('Kon geen analyse genereren', 'error');
+                return;
+            }
+
+            // Show AI chat messages
+            console.log('Displaying chat results...');
+            await this.displayChatResults(this.currentAnalysis);
+            console.log('Chat results displayed!');
+
+            // Award points (max 1x per day)
+            this.awardPoints();
+
+            // Show follow-up section and new analysis button
+            const followUpSection = document.getElementById('follow-up-section');
+            const newAnalysisBtn = document.getElementById('new-analysis-btn');
+
+            if (followUpSection) followUpSection.style.display = 'block';
+            if (newAnalysisBtn) newAnalysisBtn.style.display = 'block';
+
+            console.log('=== ANALYSIS COMPLETE ===');
+
+        } catch (error) {
+            console.error('Error in startAnalysis:', error);
+            showToast('Er ging iets mis tijdens de analyse', 'error');
+        }
     }
 
     /**
      * Animate analysis steps
      */
     async animateAnalysisSteps() {
+        console.log('Animating analysis steps...');
+
         const steps = [
             { id: 'step-1', duration: 1000 },
             { id: 'step-2', duration: 1200 },
@@ -331,8 +373,18 @@ class PhotoAnalysis {
         ];
 
         for (const step of steps) {
+            console.log(`Animating step: ${step.id}`);
+
             const stepEl = document.getElementById(step.id);
+            if (!stepEl) {
+                console.error(`Step element not found: ${step.id}`);
+                continue;
+            }
+
             const checkmark = stepEl.querySelector('.step-checkmark');
+            if (!checkmark) {
+                console.warn(`Checkmark not found in ${step.id}`);
+            }
 
             // Show step
             stepEl.classList.add('show');
@@ -342,7 +394,9 @@ class PhotoAnalysis {
 
             // Show checkmark and mark completed
             stepEl.classList.add('completed');
-            checkmark.classList.add('show');
+            if (checkmark) {
+                checkmark.classList.add('show');
+            }
 
             // Small delay before next step
             await this.delay(300);
@@ -350,22 +404,56 @@ class PhotoAnalysis {
 
         // Extra delay before showing results
         await this.delay(500);
+        console.log('All steps animated!');
     }
 
     /**
      * Pick random analysis from mock data
      */
     pickRandomAnalysis() {
+        console.log('Picking random analysis...');
+
+        if (!window.GazonAI) {
+            console.error('window.GazonAI not found!');
+            return null;
+        }
+
         const analyses = window.GazonAI.mockAnalyses;
-        return analyses[Math.floor(Math.random() * analyses.length)];
+
+        if (!analyses || analyses.length === 0) {
+            console.error('No mock analyses found!');
+            return null;
+        }
+
+        const randomIndex = Math.floor(Math.random() * analyses.length);
+        const selected = analyses[randomIndex];
+
+        console.log(`Selected analysis ${randomIndex}:`, selected);
+        return selected;
     }
 
     /**
      * Display chat results with typewriter effect
      */
     async displayChatResults(analysis) {
+        console.log('displayChatResults called with:', analysis);
+
         const container = document.getElementById('ai-messages-container');
         const section = document.getElementById('chat-results-section');
+
+        if (!container) {
+            console.error('ai-messages-container not found!');
+            showToast('Container element ontbreekt', 'error');
+            return;
+        }
+
+        if (!section) {
+            console.error('chat-results-section not found!');
+            showToast('Results section ontbreekt', 'error');
+            return;
+        }
+
+        console.log('Container and section found, showing results...');
 
         // Clear previous messages
         container.innerHTML = '';
@@ -520,7 +608,14 @@ class PhotoAnalysis {
      * Typewriter effect
      */
     async typeText(element, text, speed = 15) {
+        console.log(`Typing text (${text.length} chars)...`);
+
         const content = element.querySelector('.ai-content');
+        if (!content) {
+            console.error('ai-content element not found!');
+            return;
+        }
+
         content.textContent = '';
 
         for (let i = 0; i < text.length; i++) {
@@ -536,6 +631,7 @@ class PhotoAnalysis {
 
         // Final scroll
         element.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        console.log('Typing complete!');
     }
 
     /**
