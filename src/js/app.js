@@ -126,6 +126,9 @@ class App {
     onHomePage() {
         console.log('Home page loaded');
 
+        // Apply theme
+        this.checkAndApplyTheme();
+
         // Load and display user profile
         this.loadHomeProfile();
 
@@ -273,6 +276,7 @@ class App {
      */
     onPhotoAnalysisPage() {
         console.log('Photo analysis page loaded');
+        this.checkAndApplyTheme();
         photoAnalysis.init();
     }
 
@@ -281,6 +285,7 @@ class App {
      */
     onFertilizerPlannerPage() {
         console.log('Fertilizer planner page loaded');
+        this.checkAndApplyTheme();
         fertilizerPlanner.init();
     }
 
@@ -289,6 +294,7 @@ class App {
      */
     onLoyaltyPage() {
         console.log('Loyalty page loaded');
+        this.checkAndApplyTheme();
         loyaltyManager.init();
     }
 
@@ -297,6 +303,10 @@ class App {
      */
     onSettingsPage() {
         console.log('Settings page loaded');
+
+        // Apply theme (don't override toggle state on this page)
+        const isDarkMode = localStorage.getItem('darkMode') !== 'false';
+        this.applyLightMode(!isDarkMode);
 
         // Load saved data
         this.loadSettingsData();
@@ -318,13 +328,15 @@ class App {
                 darkModeToggle.classList.add('active');
             } else {
                 darkModeToggle.classList.remove('active');
+                this.applyLightMode(true);
             }
 
             darkModeToggle.addEventListener('click', () => {
                 darkModeToggle.classList.toggle('active');
-                const newValue = darkModeToggle.classList.contains('active');
-                localStorage.setItem('darkMode', newValue.toString());
-                this.showSettingsToast(newValue ? 'Donkere modus aan' : 'Donkere modus uit');
+                const isDark = darkModeToggle.classList.contains('active');
+                localStorage.setItem('darkMode', isDark.toString());
+                this.applyLightMode(!isDark);
+                this.showSettingsToast(isDark ? 'Donkere modus aan' : 'Lichte modus aan');
             });
         }
 
@@ -484,6 +496,97 @@ class App {
             toast.classList.add('active');
             setTimeout(() => toast.classList.remove('active'), 2500);
         }
+    }
+
+    /**
+     * Apply or remove light mode styling
+     */
+    applyLightMode(isLight) {
+        const styleId = 'light-mode-styles';
+        let styleEl = document.getElementById(styleId);
+
+        if (isLight) {
+            if (!styleEl) {
+                styleEl = document.createElement('style');
+                styleEl.id = styleId;
+                document.head.appendChild(styleEl);
+            }
+            styleEl.textContent = `
+                body, .page {
+                    background: #f5f5f5 !important;
+                }
+                .page {
+                    background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%) !important;
+                }
+                .page h1, .page h2, .page h3, .page p, .page span, .page label {
+                    color: #2e463b !important;
+                }
+                .page header {
+                    background: rgba(255,255,255,0.9) !important;
+                    border-bottom-color: rgba(46,70,59,0.1) !important;
+                }
+                .page header h1, .page header p {
+                    color: #2e463b !important;
+                }
+                .page section, .page .login-card {
+                    background: rgba(255,255,255,0.95) !important;
+                    border-color: rgba(46,70,59,0.1) !important;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+                }
+                .page .modal-content {
+                    background: #ffffff !important;
+                    border-color: rgba(46,70,59,0.2) !important;
+                }
+                .page .modal-input, .page .modal-select {
+                    background: #f5f5f5 !important;
+                    border-color: rgba(46,70,59,0.2) !important;
+                    color: #2e463b !important;
+                }
+                .page .modal-label {
+                    color: #5a7a5a !important;
+                }
+                .bottom-nav {
+                    background: rgba(255,255,255,0.95) !important;
+                    border-top-color: rgba(46,70,59,0.1) !important;
+                }
+                .bottom-nav .nav-item span {
+                    color: #5a7a5a !important;
+                }
+                .bottom-nav .nav-item.active span {
+                    color: #89b865 !important;
+                }
+                .bottom-nav .nav-item svg {
+                    stroke: #5a7a5a !important;
+                }
+                .bottom-nav .nav-item.active svg {
+                    stroke: #89b865 !important;
+                }
+                .page button:not(.login-btn):not(.nav-item):not(.badge-btn) {
+                    background: #89b865 !important;
+                    color: white !important;
+                }
+                .page .toggle-switch {
+                    background: #ccc !important;
+                }
+                .page .toggle-switch.active {
+                    background: #89b865 !important;
+                }
+            `;
+            document.body.classList.add('light-mode');
+        } else {
+            if (styleEl) {
+                styleEl.remove();
+            }
+            document.body.classList.remove('light-mode');
+        }
+    }
+
+    /**
+     * Check and apply theme mode on page load
+     */
+    checkAndApplyTheme() {
+        const isDarkMode = localStorage.getItem('darkMode') !== 'false';
+        this.applyLightMode(!isDarkMode);
     }
 
     /**
