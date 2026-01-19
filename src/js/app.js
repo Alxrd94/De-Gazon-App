@@ -126,6 +126,12 @@ class App {
     onHomePage() {
         console.log('Home page loaded');
 
+        // Apply theme
+        this.checkAndApplyTheme();
+
+        // Load and display user profile
+        this.loadHomeProfile();
+
         // Update points display
         const totalPoints = getTotalPoints();
         const pointsElement = document.getElementById('total-points');
@@ -155,6 +161,22 @@ class App {
         if (pointsBtn) {
             pointsBtn.addEventListener('click', () => router.navigate('loyalty'));
         }
+    }
+
+    /**
+     * Load user profile data for home page
+     */
+    loadHomeProfile() {
+        const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+        const name = profile.name || 'Jan de Tuinier';
+        const city = profile.city || 'Amsterdam';
+        const country = profile.country || 'Nederland';
+
+        const nameEl = document.getElementById('home-user-name');
+        const locationEl = document.getElementById('home-user-location');
+
+        if (nameEl) nameEl.textContent = name;
+        if (locationEl) locationEl.textContent = city + ', ' + country;
     }
 
     /**
@@ -254,6 +276,7 @@ class App {
      */
     onPhotoAnalysisPage() {
         console.log('Photo analysis page loaded');
+        this.checkAndApplyTheme();
         photoAnalysis.init();
     }
 
@@ -262,6 +285,7 @@ class App {
      */
     onFertilizerPlannerPage() {
         console.log('Fertilizer planner page loaded');
+        this.checkAndApplyTheme();
         fertilizerPlanner.init();
     }
 
@@ -270,6 +294,7 @@ class App {
      */
     onLoyaltyPage() {
         console.log('Loyalty page loaded');
+        this.checkAndApplyTheme();
         loyaltyManager.init();
     }
 
@@ -278,6 +303,10 @@ class App {
      */
     onSettingsPage() {
         console.log('Settings page loaded');
+
+        // Apply theme (don't override toggle state on this page)
+        const isDarkMode = localStorage.getItem('darkMode') !== 'false';
+        this.applyLightMode(!isDarkMode);
 
         // Load saved data
         this.loadSettingsData();
@@ -299,13 +328,15 @@ class App {
                 darkModeToggle.classList.add('active');
             } else {
                 darkModeToggle.classList.remove('active');
+                this.applyLightMode(true);
             }
 
             darkModeToggle.addEventListener('click', () => {
                 darkModeToggle.classList.toggle('active');
-                const newValue = darkModeToggle.classList.contains('active');
-                localStorage.setItem('darkMode', newValue.toString());
-                this.showSettingsToast(newValue ? 'Donkere modus aan' : 'Donkere modus uit');
+                const isDark = darkModeToggle.classList.contains('active');
+                localStorage.setItem('darkMode', isDark.toString());
+                this.applyLightMode(!isDark);
+                this.showSettingsToast(isDark ? 'Donkere modus aan' : 'Lichte modus aan');
             });
         }
 
@@ -358,18 +389,19 @@ class App {
         const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
         const name = profile.name || 'Jan de Tuinier';
         const email = profile.email || 'jan@voorbeeld.nl';
-        const location = profile.location || 'Amsterdam, NL';
+        const city = profile.city || 'Amsterdam';
+        const country = profile.country || 'Nederland';
 
         document.getElementById('profile-name').textContent = name;
         document.getElementById('profile-email').textContent = email;
-        document.getElementById('profile-location').textContent = location;
+        document.getElementById('profile-location').textContent = city + ', ' + country;
         document.getElementById('profile-avatar').textContent = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 
         // Load gazon data
         const gazon = JSON.parse(localStorage.getItem('gazonData') || '{}');
         document.getElementById('gazon-area').textContent = (gazon.area || 150) + ' m2';
         document.getElementById('gazon-type').textContent = gazon.type || 'Siergazon';
-        document.getElementById('gazon-soil').textContent = gazon.soil || 'Klei';
+        document.getElementById('gazon-soil').textContent = gazon.soil || 'Aarde';
     }
 
     /**
@@ -388,7 +420,8 @@ class App {
             const profile = JSON.parse(localStorage.getItem('userProfile') || '{}');
             document.getElementById('input-name').value = profile.name || 'Jan de Tuinier';
             document.getElementById('input-email').value = profile.email || 'jan@voorbeeld.nl';
-            document.getElementById('input-location').value = profile.location || 'Amsterdam, NL';
+            document.getElementById('input-city').value = profile.city || 'Amsterdam';
+            document.getElementById('input-country').value = profile.country || 'Nederland';
             modal.classList.add('active');
         });
 
@@ -399,9 +432,10 @@ class App {
         saveBtn.addEventListener('click', () => {
             const name = document.getElementById('input-name').value;
             const email = document.getElementById('input-email').value;
-            const location = document.getElementById('input-location').value;
+            const city = document.getElementById('input-city').value;
+            const country = document.getElementById('input-country').value;
 
-            localStorage.setItem('userProfile', JSON.stringify({ name, email, location }));
+            localStorage.setItem('userProfile', JSON.stringify({ name, email, city, country }));
             this.loadSettingsData();
             modal.classList.remove('active');
             this.showSettingsToast('Profiel opgeslagen');
@@ -428,7 +462,7 @@ class App {
             const gazon = JSON.parse(localStorage.getItem('gazonData') || '{}');
             document.getElementById('input-area').value = gazon.area || 150;
             document.getElementById('input-type').value = gazon.type || 'Siergazon';
-            document.getElementById('input-soil').value = gazon.soil || 'Klei';
+            document.getElementById('input-soil').value = gazon.soil || 'Aarde';
             modal.classList.add('active');
         });
 
@@ -462,6 +496,97 @@ class App {
             toast.classList.add('active');
             setTimeout(() => toast.classList.remove('active'), 2500);
         }
+    }
+
+    /**
+     * Apply or remove light mode styling
+     */
+    applyLightMode(isLight) {
+        const styleId = 'light-mode-styles';
+        let styleEl = document.getElementById(styleId);
+
+        if (isLight) {
+            if (!styleEl) {
+                styleEl = document.createElement('style');
+                styleEl.id = styleId;
+                document.head.appendChild(styleEl);
+            }
+            styleEl.textContent = `
+                body, .page {
+                    background: #f5f5f5 !important;
+                }
+                .page {
+                    background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%) !important;
+                }
+                .page h1, .page h2, .page h3, .page p, .page span, .page label {
+                    color: #2e463b !important;
+                }
+                .page header {
+                    background: rgba(255,255,255,0.9) !important;
+                    border-bottom-color: rgba(46,70,59,0.1) !important;
+                }
+                .page header h1, .page header p {
+                    color: #2e463b !important;
+                }
+                .page section, .page .login-card {
+                    background: rgba(255,255,255,0.95) !important;
+                    border-color: rgba(46,70,59,0.1) !important;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+                }
+                .page .modal-content {
+                    background: #ffffff !important;
+                    border-color: rgba(46,70,59,0.2) !important;
+                }
+                .page .modal-input, .page .modal-select {
+                    background: #f5f5f5 !important;
+                    border-color: rgba(46,70,59,0.2) !important;
+                    color: #2e463b !important;
+                }
+                .page .modal-label {
+                    color: #5a7a5a !important;
+                }
+                .bottom-nav {
+                    background: rgba(255,255,255,0.95) !important;
+                    border-top-color: rgba(46,70,59,0.1) !important;
+                }
+                .bottom-nav .nav-item span {
+                    color: #5a7a5a !important;
+                }
+                .bottom-nav .nav-item.active span {
+                    color: #89b865 !important;
+                }
+                .bottom-nav .nav-item svg {
+                    stroke: #5a7a5a !important;
+                }
+                .bottom-nav .nav-item.active svg {
+                    stroke: #89b865 !important;
+                }
+                .page button:not(.login-btn):not(.nav-item):not(.badge-btn) {
+                    background: #89b865 !important;
+                    color: white !important;
+                }
+                .page .toggle-switch {
+                    background: #ccc !important;
+                }
+                .page .toggle-switch.active {
+                    background: #89b865 !important;
+                }
+            `;
+            document.body.classList.add('light-mode');
+        } else {
+            if (styleEl) {
+                styleEl.remove();
+            }
+            document.body.classList.remove('light-mode');
+        }
+    }
+
+    /**
+     * Check and apply theme mode on page load
+     */
+    checkAndApplyTheme() {
+        const isDarkMode = localStorage.getItem('darkMode') !== 'false';
+        this.applyLightMode(!isDarkMode);
     }
 
     /**
