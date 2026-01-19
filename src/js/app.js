@@ -185,8 +185,41 @@ class App {
         const logoutBtn = document.getElementById('logout-btn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
-                auth.logout();
+                localStorage.clear();
                 router.navigate('login');
+            });
+        }
+
+        // Setup dark mode toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        if (darkModeToggle) {
+            // Load saved preference (default to true/dark mode)
+            const isDarkMode = localStorage.getItem('darkMode') !== 'false';
+            if (isDarkMode) {
+                darkModeToggle.classList.add('active');
+            } else {
+                darkModeToggle.classList.remove('active');
+            }
+
+            darkModeToggle.addEventListener('click', () => {
+                darkModeToggle.classList.toggle('active');
+                const newValue = darkModeToggle.classList.contains('active');
+                localStorage.setItem('darkMode', newValue.toString());
+            });
+        }
+
+        // Setup push notifications toggle (placeholder)
+        const pushToggle = document.getElementById('push-toggle');
+        if (pushToggle) {
+            const pushEnabled = localStorage.getItem('pushEnabled') === 'true';
+            if (pushEnabled) {
+                pushToggle.classList.add('active');
+            }
+
+            pushToggle.addEventListener('click', () => {
+                pushToggle.classList.toggle('active');
+                const newValue = pushToggle.classList.contains('active');
+                localStorage.setItem('pushEnabled', newValue.toString());
             });
         }
     }

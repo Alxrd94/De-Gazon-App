@@ -1,10 +1,14 @@
 <style>
 .settings-page, .settings-page * { opacity: 1 !important; animation: none !important; visibility: visible !important; }
 .settings-page { background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%) !important; color: white !important; }
-.settings-page h1, .settings-page h2, .settings-page h3, .settings-page p, .settings-page span { color: white !important; }
+.settings-page h1, .settings-page h2, .settings-page h3, .settings-page p, .settings-page span, .settings-page a { color: white !important; }
 .settings-page .nav-item.active span:last-child { color: #f29f40 !important; }
+.settings-page .toggle-switch { position: relative; width: 48px; height: 26px; background: rgba(255,255,255,0.2); border-radius: 13px; cursor: pointer; transition: background 0.2s; }
+.settings-page .toggle-switch.active { background: #89b865; }
+.settings-page .toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.2s; }
+.settings-page .toggle-switch.active::after { transform: translateX(22px); }
 </style>
-<div class="page settings-page" id="settings-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 90px;">
+<div class="page settings-page" id="settings-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 100px;">
 
     <!-- Header -->
     <header style="display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1.25rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -12,98 +16,97 @@
         <p style="font-size: 0.875rem; color: rgba(255,255,255,0.7); margin: 0.25rem 0 0;">Beheer je account</p>
     </header>
 
-    <main style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1.5rem;">
+    <main style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;">
 
-        <!-- Account Section -->
-        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Account</h2>
-
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(137,184,101,0.2); display: flex; align-items: center; justify-content: center;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600; color: white; margin: 0;">Profiel bewerken</p>
-                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Naam, locatie, foto</p>
-                    </div>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
+        <!-- Profiel Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #89b865, #538731); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: white;">JT</div>
+                <div style="flex: 1;">
+                    <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0;">Jan de Tuinier</h2>
+                    <p style="font-size: 0.8rem; color: rgba(255,255,255,0.6); margin: 0.25rem 0 0;">jan@voorbeeld.nl</p>
+                    <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0.125rem 0 0;">Amsterdam, NL</p>
                 </div>
+            </div>
+            <button id="edit-profile-btn" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.875rem; font-weight: 500; cursor: pointer;">Profiel bewerken</button>
+        </section>
 
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(242,159,64,0.2); display: flex; align-items: center; justify-content: center;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg>
-                    </div>
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600; color: white; margin: 0;">Privacy</p>
-                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Gegevens en toestemming</p>
-                    </div>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
+        <!-- Gazon Gegevens Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">Gazon Gegevens</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Oppervlakte</span>
+                    <span style="color: white; font-weight: 600; font-size: 0.875rem;">150 m2</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Type gras</span>
+                    <span style="color: white; font-weight: 600; font-size: 0.875rem;">Siergazon</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Grondsoort</span>
+                    <span style="color: white; font-weight: 600; font-size: 0.875rem;">Klei</span>
                 </div>
             </div>
         </section>
 
-        <!-- App Section -->
-        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1.25rem; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.1);">
-            <h2 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">App</h2>
-
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(91,127,196,0.2); display: flex; align-items: center; justify-content: center;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5b7fc4" stroke-width="2">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
+        <!-- App Instellingen Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">App Instellingen</h3>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <p style="color: white; font-weight: 500; margin: 0; font-size: 0.9rem;">Donkere modus</p>
+                        <p style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin: 0.125rem 0 0;">Schakel tussen licht en donker</p>
                     </div>
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600; color: white; margin: 0;">Meldingen</p>
-                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Push notificaties</p>
-                    </div>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
+                    <div class="toggle-switch active" id="dark-mode-toggle"></div>
                 </div>
-
-                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: 0.75rem;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(137,184,101,0.2); display: flex; align-items: center; justify-content: center;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#89b865" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                        </svg>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <p style="color: white; font-weight: 500; margin: 0; font-size: 0.9rem;">Push notificaties</p>
+                        <p style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin: 0.125rem 0 0;">Ontvang herinneringen</p>
                     </div>
-                    <div style="flex: 1;">
-                        <p style="font-weight: 600; color: white; margin: 0;">Help & Support</p>
-                        <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin: 0;">Veelgestelde vragen</p>
-                    </div>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
+                    <div class="toggle-switch" id="push-toggle"></div>
                 </div>
             </div>
         </section>
 
-        <!-- Logout Button -->
-        <button id="logout-btn" style="width: 100%; padding: 1rem; background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.3); border-radius: 0.75rem; color: #dc3545; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
-            </svg>
-            Uitloggen
-        </button>
+        <!-- Over Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">Over</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">App versie</span>
+                    <span style="color: white; font-weight: 500; font-size: 0.875rem;">v1.0.0</span>
+                </div>
+                <a href="https://graszoden.expert" target="_blank" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <span style="color: white; font-size: 0.875rem;">Bezoek onze website</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+                <a href="https://graszoden.expert/collections/gazonmest" target="_blank" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <span style="color: white; font-size: 0.875rem;">Bekijk onze producten</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+                <a href="https://wa.me/31612345678" target="_blank" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <span style="color: white; font-size: 0.875rem;">Contact via WhatsApp</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </a>
+            </div>
+        </section>
 
-        <!-- App Version -->
-        <p style="text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.4); margin: 0;">de Gazon App v1.0.0</p>
+        <!-- Account Card -->
+        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">Account</h3>
+            <p style="color: rgba(255,255,255,0.6); font-size: 0.8rem; margin: 0 0 1rem;">Lid sinds januari 2024</p>
+            <button id="logout-btn" style="width: 100%; padding: 0.875rem; background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.4); border-radius: 0.625rem; color: #ff6b6b; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Uitloggen
+            </button>
+        </section>
 
     </main>
 
@@ -150,7 +153,7 @@
                 <circle cx="12" cy="12" r="3"></circle>
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
             </svg>
-            <span style="font-size: 0.625rem; font-weight: 500; color: #f29f40;">Settings</span>
+            <span style="font-size: 0.625rem; font-weight: 500; color: #f29f40;">Instellingen</span>
         </button>
     </nav>
 </div>
