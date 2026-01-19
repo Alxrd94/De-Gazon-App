@@ -1,6 +1,6 @@
 /**
  * Router Module
- * Handles client-side routing and page navigation with caching
+ * Handles client-side routing and page navigation with instant preloading
  */
 
 class Router {
@@ -9,6 +9,7 @@ class Router {
         this.pageCache = new Map(); // Cache for loaded pages
         this.currentPage = null;
         this.appContainer = document.getElementById('app');
+        this.preloaded = false;
     }
 
     /**
@@ -22,7 +23,31 @@ class Router {
     }
 
     /**
-     * Navigate to a page with caching
+     * Preload all registered pages into cache for instant navigation
+     */
+    async preloadAll() {
+        if (this.preloaded) return;
+
+        const promises = [];
+        this.routes.forEach((route, name) => {
+            if (!this.pageCache.has(name)) {
+                const promise = fetch(route.path + '?v=4')
+                    .then(response => response.ok ? response.text() : null)
+                    .then(html => {
+                        if (html) this.pageCache.set(name, html);
+                    })
+                    .catch(() => {}); // Silently ignore errors during preload
+                promises.push(promise);
+            }
+        });
+
+        await Promise.all(promises);
+        this.preloaded = true;
+        console.log('All pages preloaded');
+    }
+
+    /**
+     * Navigate to a page instantly (no network delay if preloaded)
      * @param {string} name - Route name
      */
     async navigate(name) {
@@ -35,35 +60,34 @@ class Router {
         try {
             let html;
 
-            // Check cache first
+            // Check cache first (instant if preloaded)
             if (this.pageCache.has(name)) {
                 html = this.pageCache.get(name);
             } else {
-                // Fetch page (with version for initial load)
-                const response = await fetch(route.path + '?v=3');
+                // Fallback: fetch page if not cached
+                const response = await fetch(route.path + '?v=4');
                 if (!response.ok) {
                     throw new Error(`Failed to load page: ${response.statusText}`);
                 }
                 html = await response.text();
-                // Cache the page
                 this.pageCache.set(name, html);
             }
 
-            // Update the app container immediately
+            // Update the app container instantly (no transitions)
             this.appContainer.innerHTML = html;
 
             // Update current page
             this.currentPage = name;
 
-            // Update calendar date in navigation
+            // Update calendar date in navigation immediately
             this.updateCalendarDate();
 
-            // Execute onLoad callback if provided
+            // Execute onLoad callback immediately
             if (route.onLoad && typeof route.onLoad === 'function') {
                 route.onLoad();
             }
 
-            // Scroll to top
+            // Scroll to top instantly
             window.scrollTo(0, 0);
         } catch (error) {
             console.error('Error navigating to page:', error);
