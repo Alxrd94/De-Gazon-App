@@ -3,7 +3,7 @@
  * Handles caching and offline functionality
  */
 
-const CACHE_VERSION = 'v1.0.1';
+const CACHE_VERSION = 'v1.0.3';
 const CACHE_NAME = `gazon-app-${CACHE_VERSION}`;
 
 // Files to cache immediately on install
