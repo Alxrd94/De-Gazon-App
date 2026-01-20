@@ -926,6 +926,25 @@ class App {
      * Register service worker for PWA functionality
      */
     async registerServiceWorker() {
+        // TEMPORARILY DISABLED - Service worker causing app to hang
+        // Unregister any existing service workers
+        if ('serviceWorker' in navigator) {
+            try {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                for (let registration of registrations) {
+                    await registration.unregister();
+                    console.log('Unregistered service worker:', registration.scope);
+                }
+                console.log('All service workers unregistered - app should work normally now');
+            } catch (error) {
+                console.error('Error unregistering service workers:', error);
+            }
+        }
+
+        // Service worker registration disabled until path issues are fixed
+        return;
+
+        /* COMMENTED OUT UNTIL FIXED
         if ('serviceWorker' in navigator) {
             try {
                 const registration = await navigator.serviceWorker.register('./service-worker.js');
@@ -939,6 +958,7 @@ class App {
                 console.error('Service Worker registration failed:', error);
             }
         }
+        */
     }
 
     /**
