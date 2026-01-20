@@ -3,7 +3,7 @@
  * Handles caching and offline functionality
  */
 
-const CACHE_VERSION = 'v1.0.2';
+const CACHE_VERSION = 'v1.0.3';
 const CACHE_NAME = `gazon-app-${CACHE_VERSION}`;
 
 // Files to cache immediately on install
@@ -28,8 +28,8 @@ const PRECACHE_URLS = [
     './src/pages/photo-analysis.html',
     './src/pages/fertilizer-planner.html',
     './src/pages/loyalty.html',
-    '/src/assets/icons/icon-192x192.png',
-    '/src/assets/icons/icon-512x512.png'
+    './src/assets/icons/icon-192x192.png',
+    './src/assets/icons/icon-512x512.png'
 ];
 
 // Runtime cache name for dynamic content
