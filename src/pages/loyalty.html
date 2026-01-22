@@ -523,12 +523,10 @@
         </button>
     </nav>
 
+
     <!-- Floating Action Button -->
+    <div class="fab-overlay" id="fab-overlay"></div>
     <div class="fab-container" id="fab-container">
-        <!-- Overlay wanneer open -->
-        <div class="fab-overlay" id="fab-overlay"></div>
-        
-        <!-- Menu opties -->
         <div class="fab-menu" id="fab-menu">
             <div class="fab-option" data-fab-action="gazon-ai">
                 <span class="fab-label">Gazon AI</span>
@@ -536,27 +534,30 @@
             </div>
             <div class="fab-option" data-fab-action="challenge">
                 <span class="fab-label">Challenge</span>
-                <div class="fab-option-btn">📷</div>
+                <div class="fab-option-btn">📸</div>
             </div>
             <div class="fab-option" data-fab-action="scanner">
                 <span class="fab-label">Scanner</span>
                 <div class="fab-option-btn">📊</div>
             </div>
         </div>
-        
-        <!-- Hoofdknop -->
-        <button class="fab-main" id="fab-main">
-            <span class="fab-icon">+</span>
+        <button class="fab-main" id="fab-main" type="button">
+            <span class="fab-icon">📷</span>
         </button>
     </div>
 
     <script>
-    // FAB Functionality
+    // FAB Functionality - Self-contained IIFE
     (function() {
         const fabMain = document.getElementById('fab-main');
         const fabMenu = document.getElementById('fab-menu');
         const fabOverlay = document.getElementById('fab-overlay');
         const fabOptions = document.querySelectorAll('.fab-option');
+
+        if (!fabMain || !fabMenu || !fabOverlay) {
+            console.warn('FAB elements not found');
+            return;
+        }
 
         function toggleFab() {
             fabMain.classList.toggle('active');
@@ -570,23 +571,17 @@
             fabOverlay.classList.remove('active');
         }
 
-        // Click on main button
-        if (fabMain) {
-            fabMain.addEventListener('click', toggleFab);
-        }
+        // Event listeners
+        fabMain.addEventListener('click', toggleFab);
+        fabOverlay.addEventListener('click', closeFab);
 
-        // Click on overlay
-        if (fabOverlay) {
-            fabOverlay.addEventListener('click', closeFab);
-        }
-
-        // Click on options
+        // Option clicks
         fabOptions.forEach(option => {
             option.addEventListener('click', function() {
                 const action = this.getAttribute('data-fab-action');
                 closeFab();
                 
-                // Use router to navigate
+                // Navigate via router
                 if (action === 'gazon-ai') {
                     const navBtn = document.querySelector('[data-page="photo-analysis"]');
                     if (navBtn) navBtn.click();
