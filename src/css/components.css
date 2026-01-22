@@ -713,3 +713,146 @@
         grid-template-columns: repeat(4, 1fr);
     }
 }
+
+/* ===== FLOATING ACTION BUTTON (FAB) ===== */
+
+/* FAB Container */
+.fab-container {
+    position: fixed;
+    bottom: 90px; /* Boven de bottom nav */
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Overlay */
+.fab-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.fab-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Hoofdknop */
+.fab-main {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #89b865;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1001;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fab-main:hover {
+    background: #7aa556;
+    transform: scale(1.05);
+}
+
+.fab-main:active {
+    transform: scale(0.95);
+}
+
+.fab-main.active {
+    background: #e74c3c;
+}
+
+.fab-icon {
+    display: block;
+    transition: transform 0.3s ease;
+    line-height: 1;
+}
+
+.fab-main.active .fab-icon {
+    transform: rotate(45deg);
+}
+
+/* Menu */
+.fab-menu {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.fab-menu.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Menu opties */
+.fab-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+    transition: all 0.3s ease;
+}
+
+.fab-menu.active .fab-option {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.fab-menu.active .fab-option:nth-child(1) { transition-delay: 0.1s; }
+.fab-menu.active .fab-option:nth-child(2) { transition-delay: 0.15s; }
+.fab-menu.active .fab-option:nth-child(3) { transition-delay: 0.2s; }
+
+.fab-option-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #2e463b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.fab-option-btn:hover {
+    transform: scale(1.1);
+    background: #3d5a4a;
+}
+
+.fab-option-btn:active {
+    transform: scale(0.95);
+}
+
+.fab-label {
+    background: #2e463b;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
