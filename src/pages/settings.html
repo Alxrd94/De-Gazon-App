@@ -1,38 +1,85 @@
-<style>
-.settings-page, .settings-page * { opacity: 1 !important; animation: none !important; visibility: visible !important; }
-.settings-page { background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%) !important; color: white !important; }
-.settings-page h1, .settings-page h2, .settings-page h3, .settings-page p, .settings-page span, .settings-page a { color: white !important; }
-.settings-page .nav-item.active span:last-child { color: #f29f40 !important; }
-.settings-page .toggle-switch { position: relative; width: 48px; height: 26px; background: rgba(255,255,255,0.2); border-radius: 13px; cursor: pointer; transition: background 0.2s; }
-.settings-page .toggle-switch.active { background: #89b865; }
-.settings-page .toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.2s; }
-.settings-page .toggle-switch.active::after { transform: translateX(22px); }
-.settings-page .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 300; align-items: center; justify-content: center; padding: 1rem; }
-.settings-page .modal-overlay.active { display: flex; }
-.settings-page .modal-content { background: #2e463b; border-radius: 1rem; padding: 1.5rem; max-width: 340px; width: 100%; border: 1px solid rgba(255,255,255,0.15); }
-.settings-page .modal-input { width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.9rem; margin-bottom: 0.75rem; }
-.settings-page .modal-input:focus { outline: none; border-color: #89b865; }
-.settings-page .modal-select { width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.9rem; margin-bottom: 0.75rem; }
-.settings-page .modal-label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.375rem; }
-.settings-page .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: rgba(137,184,101,0.95); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-size: 0.875rem; z-index: 400; display: none; }
-.settings-page .toast.active { display: block; }
-</style>
-<div class="page settings-page" id="settings-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 100px;">
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2e463b">
+    <title>Instellingen - de Gazon App</title>
 
+    <!-- Centrale CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+
+    <style>
+        /* Toggle switch */
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background var(--transition-fast);
+        }
+        .toggle-switch.active {
+            background: var(--color-accent);
+        }
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: var(--color-white);
+            border-radius: 50%;
+            transition: transform var(--transition-fast);
+        }
+        .toggle-switch.active::after {
+            transform: translateX(22px);
+        }
+
+        /* Modal overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--color-primary);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            max-width: 340px;
+            width: 100%;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+    </style>
+</head>
+<body>
     <!-- Header -->
-    <header style="display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1.25rem; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <h1 style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0;">Instellingen</h1>
-        <p style="font-size: 0.875rem; color: rgba(255,255,255,0.7); margin: 0.25rem 0 0;">Beheer je account</p>
+    <header class="page-header">
+        <h1>Instellingen</h1>
+        <p>Beheer je account</p>
     </header>
 
-    <main style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;">
+    <!-- Content -->
+    <main class="page-content">
 
-        <!-- Profiel Card -->
-        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
+        <!-- Profile Card -->
+        <section class="card">
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                 <div id="profile-avatar-container" style="position: relative; cursor: pointer;">
-                    <div id="profile-avatar" style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #89b865, #538731); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: white; overflow: hidden;">JT</div>
-                    <div style="position: absolute; bottom: 0; right: 0; width: 24px; height: 24px; border-radius: 50%; background: #f29f40; display: flex; align-items: center; justify-content: center; border: 2px solid #2e463b;">
+                    <div id="profile-avatar" style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--color-accent), #538731); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; overflow: hidden;">
+                        <span data-user-name>GU</span>
+                    </div>
+                    <div style="position: absolute; bottom: 0; right: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--color-orange); display: flex; align-items: center; justify-content: center; border: 2px solid var(--color-primary);">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                             <circle cx="12" cy="13" r="4"></circle>
@@ -41,85 +88,95 @@
                     <input type="file" id="profile-photo-input" accept="image/*" style="display: none;">
                 </div>
                 <div style="flex: 1;">
-                    <h2 id="profile-name" style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0;">Jan de Tuinier</h2>
-                    <p id="profile-email" style="font-size: 0.8rem; color: rgba(255,255,255,0.6); margin: 0.25rem 0 0;">jan@voorbeeld.nl</p>
-                    <p id="profile-location" style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0.125rem 0 0;">Amsterdam, NL</p>
+                    <h2 id="profile-name" style="font-size: 1.125rem; font-weight: 600; margin: 0;" data-user-name>Gazon Gebruiker</h2>
+                    <p id="profile-email" class="text-muted" style="font-size: 0.8rem; margin: 0.25rem 0 0;">gazon@voorbeeld.nl</p>
+                    <p id="profile-location" class="text-muted" style="font-size: 0.75rem; margin: 0.125rem 0 0;">Nederland</p>
                 </div>
             </div>
-            <button id="edit-profile-btn" style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.875rem; font-weight: 500; cursor: pointer;">Profiel bewerken</button>
+            <button id="edit-profile-btn" class="btn btn-secondary">Profiel bewerken</button>
         </section>
 
-        <!-- Gazon Gegevens Card -->
-        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
+        <!-- Garden Data -->
+        <section class="card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                <h3 style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">Gazon Gegevens</h3>
+                <h3 class="card-title" style="margin: 0;">Gazon Gegevens</h3>
                 <button id="edit-gazon-btn" style="padding: 0.375rem 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.375rem; color: white; font-size: 0.75rem; cursor: pointer;">Bewerken</button>
             </div>
             <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Oppervlakte</span>
-                    <span id="gazon-area" style="color: white; font-weight: 600; font-size: 0.875rem;">150 m2</span>
+                    <span class="text-muted" style="font-size: 0.875rem;">Oppervlakte</span>
+                    <span id="gazon-area" style="font-weight: 600; font-size: 0.875rem;">100 m²</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Type gras</span>
-                    <span id="gazon-type" style="color: white; font-weight: 600; font-size: 0.875rem;">Siergazon</span>
+                    <span class="text-muted" style="font-size: 0.875rem;">Type gras</span>
+                    <span id="gazon-type" style="font-weight: 600; font-size: 0.875rem;">Speelgazon</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Grondsoort</span>
-                    <span id="gazon-soil" style="color: white; font-weight: 600; font-size: 0.875rem;">Klei</span>
+                    <span class="text-muted" style="font-size: 0.875rem;">Grondsoort</span>
+                    <span id="gazon-soil" style="font-weight: 600; font-size: 0.875rem;">Aarde</span>
                 </div>
             </div>
         </section>
 
-        <!-- App Instellingen Card -->
-        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
-            <h3 style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">App Instellingen</h3>
+        <!-- App Settings -->
+        <section class="card">
+            <h3 class="card-title">App Instellingen</h3>
             <div style="display: flex; flex-direction: column; gap: 1rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <p style="color: white; font-weight: 500; margin: 0; font-size: 0.9rem;">Donkere modus</p>
-                        <p style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin: 0.125rem 0 0;">Schakel tussen licht en donker</p>
+                        <p style="font-weight: 500; margin: 0; font-size: 0.9rem;">Donkere modus</p>
+                        <p class="text-muted" style="font-size: 0.75rem; margin: 0.125rem 0 0;">Altijd aan (vaste modus)</p>
                     </div>
                     <div class="toggle-switch active" id="dark-mode-toggle"></div>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <p style="color: white; font-weight: 500; margin: 0; font-size: 0.9rem;">Push notificaties</p>
-                        <p style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin: 0.125rem 0 0;">Ontvang herinneringen</p>
+                        <p style="font-weight: 500; margin: 0; font-size: 0.9rem;">Push notificaties</p>
+                        <p class="text-muted" style="font-size: 0.75rem; margin: 0.125rem 0 0;">Ontvang herinneringen</p>
                     </div>
                     <div class="toggle-switch" id="push-toggle"></div>
                 </div>
             </div>
         </section>
 
-        <!-- Over Card -->
-        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
-            <h3 style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">Over</h3>
+        <!-- About -->
+        <section class="card">
+            <h3 class="card-title">Over</h3>
             <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">App versie</span>
-                    <span style="color: white; font-weight: 500; font-size: 0.875rem;">v1.0.0</span>
+                    <span class="text-muted" style="font-size: 0.875rem;">App versie</span>
+                    <span style="font-weight: 500; font-size: 0.875rem;">v1.0.0</span>
                 </div>
-                <a href="https://graszoden.expert" target="_blank" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <span style="color: white; font-size: 0.875rem;">Bezoek onze website</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <a href="https://graszoden.expert" target="_blank" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); color: white;">
+                    <span style="font-size: 0.875rem;">Bezoek onze website</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
                 </a>
-                <a href="https://graszoden.expert/" target="_blank" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <span style="color: white; font-size: 0.875rem;">Bekijk onze producten</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                <a href="https://graszoden.expert/" target="_blank" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); color: white;">
+                    <span style="font-size: 0.875rem;">Bekijk onze producten</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
                 </a>
-                <a href="https://wa.me/31625251258" target="_blank" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <span style="color: white; font-size: 0.875rem;">Contact via WhatsApp</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                <a href="https://wa.me/31625251258" target="_blank" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; padding: 0.5rem 0; border-top: 1px solid rgba(255,255,255,0.1); color: white;">
+                    <span style="font-size: 0.875rem;">Contact via WhatsApp</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
                 </a>
             </div>
         </section>
 
-        <!-- Account Card -->
-        <section style="background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border-radius: 1rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.1);">
-            <h3 style="font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7); margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;">Account</h3>
-            <p style="color: rgba(255,255,255,0.6); font-size: 0.8rem; margin: 0 0 1rem;">Lid sinds januari 2024</p>
-            <button id="logout-btn" style="width: 100%; padding: 0.875rem; background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.4); border-radius: 0.625rem; color: #ff6b6b; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+        <!-- Account -->
+        <section class="card">
+            <h3 class="card-title">Account</h3>
+            <p class="text-muted" style="font-size: 0.8rem; margin: 0 0 1rem;">Lid sinds januari 2024</p>
+            <button id="logout-btn" style="width: 100%; padding: 0.875rem; background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.4); border-radius: var(--radius-md); color: #ff6b6b; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                     <polyline points="16 17 21 12 16 7"></polyline>
@@ -134,102 +191,234 @@
     <!-- Profile Edit Modal -->
     <div class="modal-overlay" id="profile-modal">
         <div class="modal-content">
-            <h3 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Profiel bewerken</h3>
-            <label class="modal-label">Naam</label>
-            <input type="text" class="modal-input" id="input-name" placeholder="Je naam">
-            <label class="modal-label">Email</label>
-            <input type="email" class="modal-input" id="input-email" placeholder="je@email.nl">
-            <label class="modal-label">Stad</label>
-            <input type="text" class="modal-input" id="input-city" placeholder="Amsterdam">
-            <label class="modal-label">Land</label>
-            <select class="modal-select" id="input-country">
+            <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 1rem;">Profiel bewerken</h3>
+            <label class="form-label">Naam</label>
+            <input type="text" class="form-input" id="input-name" placeholder="Je naam">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="input-email" placeholder="je@email.nl">
+            <label class="form-label">Stad</label>
+            <input type="text" class="form-input" id="input-city" placeholder="Amsterdam">
+            <label class="form-label">Land</label>
+            <select class="form-select" id="input-country">
                 <option value="Nederland">Nederland</option>
                 <option value="België">België</option>
                 <option value="Duitsland">Duitsland</option>
                 <option value="Luxemburg">Luxemburg</option>
             </select>
             <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
-                <button id="cancel-profile" style="flex: 1; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.875rem; cursor: pointer;">Annuleren</button>
-                <button id="save-profile" style="flex: 1; padding: 0.75rem; background: #89b865; border: none; border-radius: 0.5rem; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer;">Opslaan</button>
+                <button id="cancel-profile" class="btn btn-secondary">Annuleren</button>
+                <button id="save-profile" class="btn btn-primary">Opslaan</button>
             </div>
         </div>
     </div>
 
-    <!-- Gazon Edit Modal -->
+    <!-- Garden Edit Modal -->
     <div class="modal-overlay" id="gazon-modal">
         <div class="modal-content">
-            <h3 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Gazon gegevens</h3>
-            <label class="modal-label">Oppervlakte (m2)</label>
-            <input type="number" class="modal-input" id="input-area" placeholder="150">
-            <label class="modal-label">Type gras</label>
-            <select class="modal-select" id="input-type">
+            <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 1rem;">Gazon gegevens</h3>
+            <label class="form-label">Oppervlakte (m²)</label>
+            <input type="number" class="form-input" id="input-area" placeholder="100">
+            <label class="form-label">Type gras</label>
+            <select class="form-select" id="input-type">
                 <option value="Siergazon">Siergazon</option>
                 <option value="Speelgazon">Speelgazon</option>
                 <option value="Schaduwgazon">Schaduwgazon</option>
                 <option value="Sportgazon">Sportgazon</option>
             </select>
-            <label class="modal-label">Grondsoort</label>
-            <select class="modal-select" id="input-soil">
+            <label class="form-label">Grondsoort</label>
+            <select class="form-select" id="input-soil">
                 <option value="Aarde">Aarde</option>
                 <option value="Klei">Klei</option>
                 <option value="Zand">Zand</option>
                 <option value="Veen">Veen</option>
             </select>
             <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
-                <button id="cancel-gazon" style="flex: 1; padding: 0.75rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.5rem; color: white; font-size: 0.875rem; cursor: pointer;">Annuleren</button>
-                <button id="save-gazon" style="flex: 1; padding: 0.75rem; background: #89b865; border: none; border-radius: 0.5rem; color: white; font-size: 0.875rem; font-weight: 600; cursor: pointer;">Opslaan</button>
+                <button id="cancel-gazon" class="btn btn-secondary">Annuleren</button>
+                <button id="save-gazon" class="btn btn-primary">Opslaan</button>
             </div>
         </div>
     </div>
 
-    <!-- Toast notification -->
-    <div class="toast" id="settings-toast"></div>
-
     <!-- Bottom Navigation -->
-    <nav class="bottom-nav" style="position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-around; align-items: center; padding: 0.75rem 0.5rem; padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px)); background: rgba(26,43,35,0.95); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,255,255,0.1); z-index: 100;">
-        <button class="nav-item" data-page="home" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Home</span>
+    <nav class="bottom-nav">
+        <button class="nav-item" data-page="home">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </span>
+            <span class="nav-label">Home</span>
         </button>
-        <button class="nav-item" data-page="fertilizer-planner" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
-            <div style="position: relative; width: 24px; height: 24px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
+        <button class="nav-item" data-page="fertilizer-planner">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                     <line x1="16" y1="2" x2="16" y2="6"></line>
                     <line x1="8" y1="2" x2="8" y2="6"></line>
                     <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
-                <span class="calendar-date" style="position: absolute; bottom: 1px; left: 50%; transform: translateX(-50%); font-size: 0.5rem; font-weight: 700; color: rgba(255,255,255,0.6);"></span>
-            </div>
-            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Kalender</span>
+                <text x="12" y="17" text-anchor="middle" font-size="8" fill="currentColor" stroke="none" class="calendar-day">19</text>
+            </span>
+            <span class="nav-label">Kalender</span>
         </button>
-        <button class="nav-item" data-page="loyalty" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-            </svg>
-            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Punten</span>
+        <button class="nav-item" data-page="loyalty">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+            </span>
+            <span class="nav-label">Punten</span>
         </button>
-        <button class="nav-item" data-page="challenge" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2">
-                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-                <path d="M4 22h16"></path>
-                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
-                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
-                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
-            </svg>
-            <span style="font-size: 0.625rem; font-weight: 500; color: rgba(255,255,255,0.6);">Challenge</span>
+        <button class="nav-item" data-page="challenge">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                    <path d="M4 22h16"></path>
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                </svg>
+            </span>
+            <span class="nav-label">Challenge</span>
         </button>
-        <button class="nav-item active" data-page="settings" style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem; background: none; border: none; cursor: pointer; padding: 0.25rem 0.75rem;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f29f40" stroke-width="2">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
-            <span style="font-size: 0.625rem; font-weight: 500; color: #f29f40;">Instellingen</span>
+        <button class="nav-item active" data-page="settings">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+            </span>
+            <span class="nav-label">Settings</span>
         </button>
     </nav>
 
-</div>
+    <!-- Centrale JS -->
+    <script src="../assets/js/main.js"></script>
+
+    <!-- Pagina-specifieke JS -->
+    <script>
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            setupEventListeners();
+        });
+
+        function loadSettings() {
+            const data = GazonApp.getUserData();
+
+            // Update profile display
+            document.getElementById('profile-name').textContent = data.profile.name;
+            document.getElementById('profile-email').textContent = data.profile.email || 'gazon@voorbeeld.nl';
+            document.getElementById('profile-location').textContent = data.profile.country || 'Nederland';
+
+            // Update avatar initials
+            const initials = data.profile.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            document.querySelector('#profile-avatar span').textContent = initials;
+
+            // Update garden data
+            document.getElementById('gazon-area').textContent = data.garden.size + ' m²';
+            document.getElementById('gazon-type').textContent = data.garden.grassType;
+            document.getElementById('gazon-soil').textContent = data.garden.soilType;
+
+            // Update toggles
+            if (data.settings.pushNotifications) {
+                document.getElementById('push-toggle').classList.add('active');
+            }
+        }
+
+        function setupEventListeners() {
+            // Edit profile
+            document.getElementById('edit-profile-btn').addEventListener('click', openProfileModal);
+            document.getElementById('cancel-profile').addEventListener('click', closeProfileModal);
+            document.getElementById('save-profile').addEventListener('click', saveProfile);
+
+            // Edit garden
+            document.getElementById('edit-gazon-btn').addEventListener('click', openGazonModal);
+            document.getElementById('cancel-gazon').addEventListener('click', closeGazonModal);
+            document.getElementById('save-gazon').addEventListener('click', saveGazon);
+
+            // Toggles
+            document.getElementById('push-toggle').addEventListener('click', togglePush);
+
+            // Logout
+            document.getElementById('logout-btn').addEventListener('click', logout);
+
+            // Close modals on overlay click
+            document.querySelectorAll('.modal-overlay').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) this.classList.remove('active');
+                });
+            });
+        }
+
+        function openProfileModal() {
+            const data = GazonApp.getUserData();
+            document.getElementById('input-name').value = data.profile.name;
+            document.getElementById('input-email').value = data.profile.email || '';
+            document.getElementById('input-city').value = data.profile.city || '';
+            document.getElementById('input-country').value = data.profile.country || 'Nederland';
+            document.getElementById('profile-modal').classList.add('active');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profile-modal').classList.remove('active');
+        }
+
+        function saveProfile() {
+            const data = GazonApp.getUserData();
+            data.profile.name = document.getElementById('input-name').value;
+            data.profile.email = document.getElementById('input-email').value;
+            data.profile.city = document.getElementById('input-city').value;
+            data.profile.country = document.getElementById('input-country').value;
+            GazonApp.saveUserData(data);
+            loadSettings();
+            closeProfileModal();
+            GazonApp.showToast('Profiel opgeslagen', 'success');
+        }
+
+        function openGazonModal() {
+            const data = GazonApp.getUserData();
+            document.getElementById('input-area').value = data.garden.size;
+            document.getElementById('input-type').value = data.garden.grassType;
+            document.getElementById('input-soil').value = data.garden.soilType;
+            document.getElementById('gazon-modal').classList.add('active');
+        }
+
+        function closeGazonModal() {
+            document.getElementById('gazon-modal').classList.remove('active');
+        }
+
+        function saveGazon() {
+            const data = GazonApp.getUserData();
+            data.garden.size = parseInt(document.getElementById('input-area').value);
+            data.garden.grassType = document.getElementById('input-type').value;
+            data.garden.soilType = document.getElementById('input-soil').value;
+            GazonApp.saveUserData(data);
+            loadSettings();
+            closeGazonModal();
+            GazonApp.showToast('Gazon gegevens opgeslagen', 'success');
+        }
+
+        function togglePush() {
+            const toggle = document.getElementById('push-toggle');
+            const data = GazonApp.getUserData();
+            data.settings.pushNotifications = !data.settings.pushNotifications;
+            GazonApp.saveUserData(data);
+            toggle.classList.toggle('active');
+            GazonApp.showToast('Instellingen bijgewerkt', 'success');
+        }
+
+        function logout() {
+            if (confirm('Weet je zeker dat je wilt uitloggen?')) {
+                localStorage.clear();
+                GazonApp.showToast('Uitgelogd', 'success');
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
