@@ -218,4 +218,19 @@
         return result;
     };
 
+    // Update kalender dag in navigatie
+    GazonApp.updateCalendarDay = function() {
+        const calendarDay = document.querySelector('.calendar-day');
+        if (calendarDay) {
+            calendarDay.textContent = new Date().getDate();
+        }
+    };
+
+    // Auto-initialize calendar day when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', GazonApp.updateCalendarDay);
+    } else {
+        GazonApp.updateCalendarDay();
+    }
+
 })();
