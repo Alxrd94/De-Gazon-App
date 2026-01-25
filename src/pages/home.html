@@ -3,80 +3,6 @@
 .home-page { background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%) !important; color: white !important; }
 .home-page h1, .home-page h2, .home-page h3, .home-page p, .home-page span { color: white !important; }
 .home-page .nav-item.active { color: #f29f40 !important; }
-
-/* Tips & Artikelen Section */
-.articles-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.article-card {
-    display: flex;
-    background: rgba(46, 70, 59, 0.7);
-    border-radius: 0.75rem;
-    overflow: hidden;
-    text-decoration: none;
-    color: #fff;
-    transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.article-card:active {
-    transform: scale(0.98);
-    background: rgba(46, 70, 59, 0.9);
-}
-
-.article-image {
-    width: 100px;
-    min-width: 100px;
-    height: 80px;
-    overflow: hidden;
-    background: linear-gradient(135deg, rgba(137,184,101,0.3) 0%, rgba(46,70,59,0.9) 100%);
-}
-
-.article-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.article-content {
-    padding: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.article-content h3 {
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin: 0 0 0.25rem;
-    line-height: 1.3;
-    color: white !important;
-}
-
-.article-content p {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.7) !important;
-    line-height: 1.4;
-    margin: 0;
-}
-
-.more-articles-link {
-    display: block;
-    text-align: center;
-    margin-top: 1rem;
-    padding: 0.75rem;
-    color: #f29f40;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: opacity 0.2s ease;
-}
-
-.more-articles-link:active {
-    opacity: 0.7;
-}
 </style>
 <div class="page home-page" id="home-page" style="opacity: 1 !important; min-height: 100vh; background: linear-gradient(180deg, #2e463b 0%, #1a2b23 100%); color: white; position: relative; padding-bottom: 90px;">
 
@@ -212,65 +138,32 @@
         <!-- Tips & Articles -->
         <section>
             <h3 style="font-size: 1.125rem; font-weight: 600; color: white; margin: 0 0 1rem;">Tips & Artikelen</h3>
-            <div class="articles-container">
+            <div style="display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem; scroll-snap-type: x mandatory;">
                 <!-- Article 1 -->
-                <a href="https://www.graszoden.expert/wanneer-graszoden-laten-leggen/" target="_blank" rel="noopener" class="article-card">
-                    <div class="article-image">
-                        <img src="https://www.graszoden.expert/wp-content/uploads/2024/01/wanneer-graszoden-leggen.jpg" alt="Graszoden leggen" loading="lazy" onerror="this.style.display='none'">
+                <div style="min-width: 200px; height: 140px; border-radius: 1rem; background: linear-gradient(180deg, rgba(137,184,101,0.3) 0%, rgba(46,70,59,0.9) 100%); position: relative; overflow: hidden; scroll-snap-align: start; cursor: pointer;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+                        <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0;">Wanneer bemesten in het voorjaar?</p>
                     </div>
-                    <div class="article-content">
-                        <h3>Wanneer graszoden laten leggen?</h3>
-                        <p>Het beste moment voor het leggen van graszoden</p>
-                    </div>
-                </a>
-
+                </div>
                 <!-- Article 2 -->
-                <a href="https://www.graszoden.expert/gras-herstellen-tips-voor-een-mooi-gazon/" target="_blank" rel="noopener" class="article-card">
-                    <div class="article-image">
-                        <img src="https://www.graszoden.expert/wp-content/uploads/2024/01/gras-herstellen.jpg" alt="Gras herstellen" loading="lazy" onerror="this.style.display='none'">
+                <div style="min-width: 200px; height: 140px; border-radius: 1rem; background: linear-gradient(180deg, rgba(83,135,49,0.4) 0%, rgba(46,70,59,0.9) 100%); position: relative; overflow: hidden; scroll-snap-align: start; cursor: pointer;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+                        <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0;">5 tips voor een groener gazon</p>
                     </div>
-                    <div class="article-content">
-                        <h3>Gras herstellen</h3>
-                        <p>Tips voor een mooi en gezond gazon</p>
-                    </div>
-                </a>
-
+                </div>
                 <!-- Article 3 -->
-                <a href="https://www.graszoden.expert/gras-groener-maken/" target="_blank" rel="noopener" class="article-card">
-                    <div class="article-image">
-                        <img src="https://www.graszoden.expert/wp-content/uploads/2024/01/gras-groener-maken.jpg" alt="Gras groener maken" loading="lazy" onerror="this.style.display='none'">
+                <div style="min-width: 200px; height: 140px; border-radius: 1rem; background: linear-gradient(180deg, rgba(106,160,74,0.3) 0%, rgba(46,70,59,0.9) 100%); position: relative; overflow: hidden; scroll-snap-align: start; cursor: pointer;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+                        <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0;">Hoe vaak moet je maaien?</p>
                     </div>
-                    <div class="article-content">
-                        <h3>Gras groener maken</h3>
-                        <p>Zo krijg je een felgroene grasmat</p>
-                    </div>
-                </a>
-
+                </div>
                 <!-- Article 4 -->
-                <a href="https://www.graszoden.expert/klaver-in-gazon-bestrijden/" target="_blank" rel="noopener" class="article-card">
-                    <div class="article-image">
-                        <img src="https://www.graszoden.expert/wp-content/uploads/2024/01/klaver-bestrijden.jpg" alt="Klaver bestrijden" loading="lazy" onerror="this.style.display='none'">
+                <div style="min-width: 200px; height: 140px; border-radius: 1rem; background: linear-gradient(180deg, rgba(137,184,101,0.2) 0%, rgba(46,70,59,0.9) 100%); position: relative; overflow: hidden; scroll-snap-align: start; cursor: pointer;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+                        <p style="font-size: 0.875rem; font-weight: 600; color: white; margin: 0;">Onkruid bestrijden zonder chemie</p>
                     </div>
-                    <div class="article-content">
-                        <h3>Klaver in gazon bestrijden</h3>
-                        <p>Effectieve manieren om klaver te verwijderen</p>
-                    </div>
-                </a>
-
-                <!-- Article 5 -->
-                <a href="https://www.graszoden.expert/emelten-en-engerlingen-bestrijden/" target="_blank" rel="noopener" class="article-card">
-                    <div class="article-image">
-                        <img src="https://www.graszoden.expert/wp-content/uploads/2024/01/emelten-engerlingen.jpg" alt="Emelten en engerlingen" loading="lazy" onerror="this.style.display='none'">
-                    </div>
-                    <div class="article-content">
-                        <h3>Emelten en engerlingen bestrijden</h3>
-                        <p>Bescherm je gazon tegen deze plaag</p>
-                    </div>
-                </a>
+                </div>
             </div>
-            <a href="https://www.graszoden.expert/blogs/" target="_blank" rel="noopener" class="more-articles-link">
-                Meer artikelen bekijken →
-            </a>
         </section>
 
     </main>
