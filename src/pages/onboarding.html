@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2e463b">
+    <title>Welkom - de Gazon App</title>
+    <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #2e463b;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .onboarding-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            padding: 20px 24px;
+            padding-top: calc(20px + env(safe-area-inset-top, 0));
+        }
+
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: #f29f40;
+            width: 24px;
+            border-radius: 5px;
+        }
+
+        .progress-dot.completed {
+            background: #89b865;
+        }
+
+        /* Steps Container */
+        .steps-wrapper {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .steps-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.4s ease;
+        }
+
+        .step {
+            min-width: 100%;
+            height: 100%;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Step Content */
+        .step-icon {
+            font-size: 64px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .step-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .step-subtitle {
+            font-size: 16px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .step-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #89b865;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Option Cards */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-card:active {
+            transform: scale(0.98);
+        }
+
+        .option-card.selected {
+            border-color: #89b865;
+            background: rgba(137, 184, 101, 0.2);
+        }
+
+        .option-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .option-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .option-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        /* Size Slider */
+        .size-display {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .size-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #89b865;
+        }
+
+        .size-unit {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .size-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            background: #89b865;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .size-presets {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+
+        .size-preset {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .size-preset:active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            padding: 24px;
+            padding-bottom: calc(24px + env(safe-area-inset-bottom, 0));
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: #89b865;
+            color: #fff;
+        }
+
+        .btn-primary:disabled {
+            background: rgba(137, 184, 101, 0.4);
+            cursor: not-allowed;
+        }
+
+        .btn-skip {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-full {
+            flex: none;
+            width: 100%;
+        }
+
+        /* Welcome Screen */
+        .welcome-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+
+        .welcome-features {
+            margin-top: 32px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+        }
+
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(137, 184, 101, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .feature-text {
+            font-size: 15px;
+        }
+
+        /* Complete Screen */
+        .complete-checkmark {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            background: #89b865;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            animation: scaleIn 0.4s ease;
+        }
+
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .summary-value {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="onboarding-container">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-dots">
+                <div class="progress-dot active" data-step="0"></div>
+                <div class="progress-dot" data-step="1"></div>
+                <div class="progress-dot" data-step="2"></div>
+                <div class="progress-dot" data-step="3"></div>
+                <div class="progress-dot" data-step="4"></div>
+                <div class="progress-dot" data-step="5"></div>
+            </div>
+        </div>
+
+        <!-- Steps -->
+        <div class="steps-wrapper">
+            <div class="steps-track" id="stepsTrack">
+
+                <!-- Step 0: Welcome -->
+                <div class="step" data-step="0">
+                    <div class="step-content">
+                        <div class="welcome-logo">🌿</div>
+                        <h1 class="step-title">Welkom bij de Gazon App</h1>
+                        <p class="step-subtitle">Jouw persoonlijke assistent voor een perfect gazon</p>
+
+                        <div class="welcome-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">📅</div>
+                                <span class="feature-text">Persoonlijk bemestingsschema</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">🔔</div>
+                                <span class="feature-text">Herinneringen voor onderhoud</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">🏆</div>
+                                <span class="feature-text">Deel je gazon in de community</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Name & Location -->
+                <div class="step" data-step="1">
+                    <div class="step-icon">👋</div>
+                    <h1 class="step-title">Wie ben je?</h1>
+                    <p class="step-subtitle">Vertel ons iets over jezelf</p>
+
+                    <div class="step-content">
+                        <div class="form-group">
+                            <label class="form-label">Je naam</label>
+                            <input type="text" class="form-input" id="userName" placeholder="Bijv. Jan">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Je woonplaats</label>
+                            <input type="text" class="form-input" id="userCity" placeholder="Bijv. Amsterdam">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Garden Size -->
+                <div class="step" data-step="2">
+                    <div class="step-icon">📐</div>
+                    <h1 class="step-title">Hoe groot is je gazon?</h1>
+                    <p class="step-subtitle">Dit helpt ons de juiste hoeveelheden te berekenen</p>
+
+                    <div class="step-content">
+                        <div class="size-display">
+                            <span class="size-value" id="sizeValue">100</span>
+                            <span class="size-unit">m²</span>
+                        </div>
+                        <input type="range" class="size-slider" id="sizeSlider" min="10" max="500" value="100" step="10">
+                        <div class="size-presets">
+                            <button class="size-preset" onclick="setSize(25)">Klein</button>
+                            <button class="size-preset" onclick="setSize(100)">Medium</button>
+                            <button class="size-preset" onclick="setSize(250)">Groot</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Grass Type -->
+                <div class="step" data-step="3">
+                    <div class="step-icon">🌱</div>
+                    <h1 class="step-title">Welk type gazon heb je?</h1>
+                    <p class="step-subtitle">Kies wat het beste past bij jouw tuin</p>
+
+                    <div class="step-content">
+                        <div class="options-grid">
+                            <div class="option-card" data-value="speelgazon" onclick="selectGrassType(this)">
+                                <div class="option-icon">⚽</div>
+                                <div class="option-title">Speelgazon</div>
+                                <div class="option-desc">Intensief gebruikt</div>
+                            </div>
+                            <div class="option-card" data-value="siergazon" onclick="selectGrassType(this)">
+                                <div class="option-icon">✨</div>
+                                <div class="option-title">Siergazon</div>
+                                <div class="option-desc">Mooi & verzorgd</div>
+                            </div>
+                            <div class="option-card" data-value="schaduwgazon" onclick="selectGrassType(this)">
+                                <div class="option-icon">🌳</div>
+                                <div class="option-title">Schaduwgazon</div>
+                                <div class="option-desc">Weinig zon</div>
+                            </div>
+                            <div class="option-card" data-value="sportgazon" onclick="selectGrassType(this)">
+                                <div class="option-icon">🏃</div>
+                                <div class="option-title">Sportgazon</div>
+                                <div class="option-desc">Extra sterk</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Soil Type -->
+                <div class="step" data-step="4">
+                    <div class="step-icon">🪴</div>
+                    <h1 class="step-title">Welke grondsoort heb je?</h1>
+                    <p class="step-subtitle">Dit bepaalt hoe je gazon water vasthoudt</p>
+
+                    <div class="step-content">
+                        <div class="options-grid">
+                            <div class="option-card" data-value="zand" onclick="selectSoilType(this)">
+                                <div class="option-icon">🏖️</div>
+                                <div class="option-title">Zandgrond</div>
+                                <div class="option-desc">Droogt snel</div>
+                            </div>
+                            <div class="option-card" data-value="klei" onclick="selectSoilType(this)">
+                                <div class="option-icon">🧱</div>
+                                <div class="option-title">Kleigrond</div>
+                                <div class="option-desc">Houdt water vast</div>
+                            </div>
+                            <div class="option-card" data-value="veen" onclick="selectSoilType(this)">
+                                <div class="option-icon">🌿</div>
+                                <div class="option-title">Veengrond</div>
+                                <div class="option-desc">Voedselrijk</div>
+                            </div>
+                            <div class="option-card" data-value="aarde" onclick="selectSoilType(this)">
+                                <div class="option-icon">🌍</div>
+                                <div class="option-title">Tuinaarde</div>
+                                <div class="option-desc">Gemengd</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Complete -->
+                <div class="step" data-step="5">
+                    <div class="step-content">
+                        <div class="complete-checkmark">✓</div>
+                        <h1 class="step-title">Je bent klaar!</h1>
+                        <p class="step-subtitle">Je persoonlijke gazon profiel is aangemaakt</p>
+
+                        <div class="summary-card">
+                            <div class="summary-item">
+                                <span class="summary-label">Naam</span>
+                                <span class="summary-value" id="summaryName">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Woonplaats</span>
+                                <span class="summary-value" id="summaryCity">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Gazon grootte</span>
+                                <span class="summary-value" id="summarySize">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Grastype</span>
+                                <span class="summary-value" id="summaryGrass">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Grondsoort</span>
+                                <span class="summary-value" id="summarySoil">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons" id="navButtons">
+            <button class="btn btn-primary btn-full" onclick="nextStep()">Aan de slag</button>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let currentStep = 0;
+        const totalSteps = 6;
+
+        const userData = {
+            name: '',
+            city: '',
+            gardenSize: 100,
+            grassType: '',
+            soilType: ''
+        };
+
+        // DOM Elements
+        const stepsTrack = document.getElementById('stepsTrack');
+        const navButtons = document.getElementById('navButtons');
+        const progressDots = document.querySelectorAll('.progress-dot');
+
+        // Size slider
+        const sizeSlider = document.getElementById('sizeSlider');
+        const sizeValue = document.getElementById('sizeValue');
+
+        if (sizeSlider) {
+            sizeSlider.addEventListener('input', function() {
+                sizeValue.textContent = this.value;
+                userData.gardenSize = parseInt(this.value);
+            });
+        }
+
+        function setSize(size) {
+            sizeSlider.value = size;
+            sizeValue.textContent = size;
+            userData.gardenSize = size;
+        }
+
+        // Option selection
+        function selectGrassType(element) {
+            document.querySelectorAll('[data-step="3"] .option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            userData.grassType = element.dataset.value;
+            updateNavButtons();
+        }
+
+        function selectSoilType(element) {
+            document.querySelectorAll('[data-step="4"] .option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            userData.soilType = element.dataset.value;
+            updateNavButtons();
+        }
+
+        // Navigation
+        function nextStep() {
+            // Save current step data
+            if (currentStep === 1) {
+                userData.name = document.getElementById('userName').value || 'Gazon Gebruiker';
+                userData.city = document.getElementById('userCity').value || 'Nederland';
+            }
+
+            if (currentStep < totalSteps - 1) {
+                currentStep++;
+                updateUI();
+            } else {
+                // Complete onboarding
+                completeOnboarding();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateUI();
+            }
+        }
+
+        function skipOnboarding() {
+            if (confirm('Weet je zeker dat je de setup wilt overslaan? Je kunt dit later aanpassen in Instellingen.')) {
+                // Set defaults
+                userData.name = 'Gazon Gebruiker';
+                userData.city = 'Nederland';
+                userData.gardenSize = 100;
+                userData.grassType = 'speelgazon';
+                userData.soilType = 'aarde';
+                completeOnboarding();
+            }
+        }
+
+        function updateUI() {
+            // Update track position
+            stepsTrack.style.transform = `translateX(-${currentStep * 100}%)`;
+
+            // Update progress dots
+            progressDots.forEach((dot, index) => {
+                dot.classList.remove('active', 'completed');
+                if (index === currentStep) {
+                    dot.classList.add('active');
+                } else if (index < currentStep) {
+                    dot.classList.add('completed');
+                }
+            });
+
+            // Update navigation buttons
+            updateNavButtons();
+
+            // Update summary on last step
+            if (currentStep === 5) {
+                updateSummary();
+            }
+        }
+
+        function updateNavButtons() {
+            let html = '';
+
+            if (currentStep === 0) {
+                // Welcome screen
+                html = `<button class="btn btn-primary btn-full" onclick="nextStep()">Aan de slag</button>`;
+            } else if (currentStep === 5) {
+                // Complete screen
+                html = `<button class="btn btn-primary btn-full" onclick="completeOnboarding()">Start de app</button>`;
+            } else {
+                // Middle steps
+                const canContinue = canProceed();
+                html = `
+                    <button class="btn btn-secondary" onclick="prevStep()">Terug</button>
+                    <button class="btn btn-primary" onclick="nextStep()" ${canContinue ? '' : 'disabled'}>Volgende</button>
+                `;
+            }
+
+            navButtons.innerHTML = html;
+        }
+
+        function canProceed() {
+            switch (currentStep) {
+                case 1: return true; // Name is optional
+                case 2: return true; // Size has default
+                case 3: return userData.grassType !== '';
+                case 4: return userData.soilType !== '';
+                default: return true;
+            }
+        }
+
+        function updateSummary() {
+            document.getElementById('summaryName').textContent = userData.name || 'Gazon Gebruiker';
+            document.getElementById('summaryCity').textContent = userData.city || 'Nederland';
+            document.getElementById('summarySize').textContent = userData.gardenSize + ' m²';
+
+            const grassLabels = {
+                'speelgazon': 'Speelgazon',
+                'siergazon': 'Siergazon',
+                'schaduwgazon': 'Schaduwgazon',
+                'sportgazon': 'Sportgazon'
+            };
+            document.getElementById('summaryGrass').textContent = grassLabels[userData.grassType] || '-';
+
+            const soilLabels = {
+                'zand': 'Zandgrond',
+                'klei': 'Kleigrond',
+                'veen': 'Veengrond',
+                'aarde': 'Tuinaarde'
+            };
+            document.getElementById('summarySoil').textContent = soilLabels[userData.soilType] || '-';
+        }
+
+        function completeOnboarding() {
+            // Save to localStorage
+            const appData = {
+                profile: {
+                    name: userData.name || 'Gazon Gebruiker',
+                    city: userData.city || 'Nederland'
+                },
+                garden: {
+                    size: userData.gardenSize,
+                    grassType: userData.grassType || 'speelgazon',
+                    soilType: userData.soilType || 'aarde'
+                },
+                points: {
+                    total: 0
+                },
+                onboardingCompleted: true,
+                memberSince: new Date().toISOString()
+            };
+
+            localStorage.setItem('gazonAppUser', JSON.stringify(appData));
+
+            // Redirect to home
+            window.location.href = './home.html';
+        }
+
+        // Check if already onboarded
+        function checkOnboarding() {
+            const data = localStorage.getItem('gazonAppUser');
+            if (data) {
+                const parsed = JSON.parse(data);
+                if (parsed.onboardingCompleted) {
+                    window.location.href = './home.html';
+                }
+            }
+        }
+
+        // Init
+        checkOnboarding();
+        updateUI();
+    </script>
+</body>
+</html>
