@@ -24,23 +24,24 @@
     <link rel="icon" type="image/png" sizes="512x512" href="./src/assets/icons/icon-512x512.png">
     <link rel="apple-touch-icon" href="./src/assets/icons/icon-192x192.png">
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="./src/css/variables.css">
-    <link rel="stylesheet" href="./src/css/reset.css">
-    <link rel="stylesheet" href="./src/css/main.css">
-    <link rel="stylesheet" href="./src/css/components.css">
-    <link rel="stylesheet" href="./src/css/auth.css">
+    <script>
+        // Check if onboarding is completed
+        const data = localStorage.getItem('gazonAppUser');
+        if (data) {
+            const parsed = JSON.parse(data);
+            if (parsed.onboardingCompleted) {
+                window.location.href = './src/pages/home.html';
+            } else {
+                window.location.href = './src/pages/onboarding.html';
+            }
+        } else {
+            window.location.href = './src/pages/onboarding.html';
+        }
+    </script>
 </head>
 <body style="background: #2e463b; color: white;">
-    <div id="app" style="background: #2e463b; color: white;">
-        <!-- Content will be dynamically loaded -->
-        <div class="loader" style="color: white;">
-            <div class="spinner" style="border-color: rgba(255,255,255,0.3); border-top-color: #89b865;"></div>
-            <p style="color: white;">de Gazon App laden...</p>
-        </div>
+    <div style="padding: 40px; text-align: center; color: white;">
+        <p>Laden...</p>
     </div>
-
-    <!-- Scripts -->
-    <script type="module" src="./src/js/app.js?v=2"></script>
 </body>
 </html>
